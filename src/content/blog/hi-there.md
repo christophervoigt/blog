@@ -11,7 +11,7 @@ I am excited to announce that I have a blog now (tada 🎉). I've been thinking 
 
 ## Technologies
 
-This Blog is build using the new static site generator [Astro](https://astro.build/). It's my first time using it for a project and I'm really impressed so far. I looked at a lot of SSGs before deciding on Astro. I wanted something that was easy to use, had a good community and was easy to deploy. Astro ticks all of those boxes. It's also really fast and has a lot of cool features. I'm really excited to see where it goes in the future.
+This blog is build using the new static site generator [Astro](https://astro.build/). It's my first time using it for a project and I'm really impressed so far. I looked at a lot of SSGs before deciding on Astro. I wanted something that was easy to use, had a good community and was easy to deploy. Astro ticks all of those boxes. It's also really fast and has a lot of cool features. I'm really excited to see where it goes in the future.
 
 The site itself is hosted on [Netlify](https://www.netlify.com/). Which is a great service and comes for free. Once you've connected your [Github repository](https://github.com/chlorophyllkid/blog) to Netlify, it will automatically build and deploy your site whenever you push a new commit.
 
