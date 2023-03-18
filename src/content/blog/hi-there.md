@@ -3,7 +3,7 @@ title: 'Hi there!'
 description: 'The first blog post on the new site. Chris writes a bit about himself and what the tecnology behind the blog.'
 pubDate: 'Mar 14 2023'
 updatedDate: 'Mar 18 2023'
-heroImage: '/public/placeholder-hero.jpg'
+heroImage: '/placeholder-hero.jpg'
 heroImageAlt: 'Logo of the static site generator Astro'
 ---
 
