@@ -1,13 +1,15 @@
 ---
 import BlogPost from '../components/templates/BlogPost.astro'
+
+import imageOfMe from '../assets/me.jpg'
 ---
 
 <BlogPost
   title="About Me"
-  description="Lorem ipsum dolor sit amet"
-  pubDate={new Date('August 08 2021')}
-  updatedDate={new Date('August 08 2022')}
-  heroImage="/placeholder-about.jpg"
+  description="I'm Christopher Voigt - a frontend developer from Dresden, Germany. I have worked in the web industry for over 10 years."
+  pubDate={new Date('March 18 2023')}
+  heroImage={imageOfMe}
+  heroImageAlt="A picture of myself wearing sunglasses on mount fløyen in Bergen, Norway"
 >
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna

@@ -2,7 +2,8 @@
 title: 'Hi there!'
 description: 'The first blog post on the new site. Chris writes a bit about himself and what the tecnology behind the blog.'
 pubDate: 'Mar 14 2023'
-# heroImage: '/placeholder-hero.jpg'
+heroImage: '/public/placeholder-hero.jpg'
+heroImageAlt: 'Logo of the static site generator Astro'
 ---
 
 I am excited to announce that I have a blog now (tada 🎉). I've been thinking about starting one for a while now, but never really got around to it. Having a place where I can write about the things I'm working on or thinking about, was something that I wanted for a long time. I'm also hoping that this will help me to get better at writing and to improve my English skills.
