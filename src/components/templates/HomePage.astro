@@ -1,0 +1,22 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts'
+
+import BaseHead from '../molecules/BaseHead.astro'
+import Header from '../organisms/Header.astro'
+import Footer from '../organisms/Footer.astro'
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+
+  <body>
+    <Header />
+
+    <slot />
+
+    <Footer />
+  </body>
+</html>

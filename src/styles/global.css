@@ -98,7 +98,7 @@ ul {
 ul li {
   display: flex;
 }
-ul li :global(time) {
+ul li time {
   flex: 0 0 130px;
   font-style: italic;
   color: #595959;
