@@ -65,3 +65,57 @@ blockquote {
   margin: 0px;
   font-style: italic;
 }
+
+/* header specific */
+header {
+  margin: 0em 0 2em;
+}
+h2 {
+  margin: 0.5em 0;
+}
+
+/* headerlink */
+a {
+  display: inline-block;
+  text-decoration: none;
+}
+a.active {
+  font-weight: bolder;
+  text-decoration: underline;
+}
+
+/* footer specific */
+footer {
+  padding: 25px;
+  text-align: center;
+}
+
+/* blog index page specific */
+ul {
+  list-style-type: none;
+  padding: unset;
+}
+ul li {
+  display: flex;
+}
+ul li :global(time) {
+  flex: 0 0 130px;
+  font-style: italic;
+  color: #595959;
+}
+ul li a:visited {
+  color: #8e32dc;
+}
+
+/* blog post specific */
+.title {
+  font-size: 2em;
+  margin: 0.25em 0 0;
+}
+hr {
+  border-top: 1px solid #ddd;
+  margin: 1rem 0;
+}
+.last-updated-on {
+  font-style: italic;
+}
