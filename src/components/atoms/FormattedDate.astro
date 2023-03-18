@@ -4,9 +4,9 @@ const { date } = Astro.props
 
 <time datetime={date.toISOString()}>
   {
-    date.toLocaleDateString('de-de', {
+    date.toLocaleDateString('en-us', {
       year: 'numeric',
-      month: 'short',
+      month: 'long',
       day: 'numeric',
     })
   }
