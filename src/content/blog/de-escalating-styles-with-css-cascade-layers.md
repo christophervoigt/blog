@@ -10,7 +10,7 @@ But I had to think about a good use case, that doesn't seem too "constructed". A
 
 ## What are Cascade Layers?
 
-If you haven't heard of Cascade Layers before, there is a great article by Miriam Suzanne on CSS Tricks that explains them incredibly well. And if you wanna read even more about them, I also recommend the documentation on MDN.
+If you haven't heard of Cascade Layers before, there is [a great article](https://css-tricks.com/css-cascade-layers/) by [Miriam Suzanne](https://front-end.social/@mia) on CSS Tricks that explains them incredibly well. And if you wanna read even more about them, I also recommend [the documentation](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_layers) on MDN.
 
 Alright, let's get started with an example.
 
