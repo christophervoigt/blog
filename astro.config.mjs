@@ -5,7 +5,4 @@ import sitemap from '@astrojs/sitemap'
 export default defineConfig({
   site: 'https://christophervoigt.dev/',
   integrations: [sitemap()],
-  experimental: {
-    assets: true,
-  },
 })

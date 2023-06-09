@@ -1,4 +1,4 @@
-import { image, defineCollection, z } from 'astro:content'
+import { defineCollection, z } from 'astro:content'
 
 const blog = defineCollection({
   // Type-check frontmatter using a schema
@@ -14,15 +14,6 @@ const blog = defineCollection({
       .string()
       .optional()
       .transform((str) => (str ? new Date(str) : undefined)),
-    heroImage: z
-      .string()
-      .or(
-        image().refine((img) => img?.width >= 600, {
-          message: 'Hero image must be at least 600 pixels wide!',
-        })
-      )
-      .optional(),
-    heroImageAlt: z.string().optional(),
   }),
 })
 
