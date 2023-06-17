@@ -9,6 +9,7 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
 
 <HomePage>
   <main>
+    <h1>Latest Posts</h1>
     <section>
       <ul>
         {
@@ -31,6 +32,9 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
   }
   ul li {
     display: flex;
+  }
+  ul li + li {
+    margin-top: 1em;
   }
   ul li a:visited {
     color: #8e32dc;
