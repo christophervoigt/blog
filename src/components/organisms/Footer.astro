@@ -1,14 +1,31 @@
 ---
 const today = new Date()
+
+import Link from '../atoms/Link.astro'
 ---
 
 <footer>
-  &copy; {today.getFullYear()} Christopher Voigt. All rights reserved.
+  <nav>
+    <Link href="https://twitter.com/chlorophyllkid" target="_blank">Twitter</Link>
+    <Link href="https://indieweb.social/@christophervoigt" target="_blank">Mastodon</Link>
+    <Link href="https://github.com/chlorophyllkid" target="_blank">GitHub</Link>
+    <Link href="https://codepen.io/chlorophyllkid/" target="_blank">CodePen</Link>
+  </nav>
+  <p>
+    &copy; {today.getFullYear()} Christopher Voigt. All rights reserved.
+  </p>
 </footer>
 
 <style>
   footer {
     padding: 25px;
     text-align: center;
+  }
+
+  nav {
+    margin-block: 1em;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
   }
 </style>

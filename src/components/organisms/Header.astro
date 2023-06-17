@@ -1,7 +1,7 @@
 ---
 import { SITE_TITLE } from '../../consts'
 
-import HeaderLink from '../atoms/HeaderLink.astro'
+import Link from '../atoms/Link.astro'
 ---
 
 <header>
@@ -9,12 +9,8 @@ import HeaderLink from '../atoms/HeaderLink.astro'
     {SITE_TITLE}
   </h2>
   <nav>
-    <HeaderLink href="/">Home</HeaderLink>
-    <HeaderLink href="/blog">Blog</HeaderLink>
-    <HeaderLink href="https://twitter.com/chlorophyllkid" target="_blank">Twitter</HeaderLink>
-    <HeaderLink href="https://indieweb.social/@christophervoigt" target="_blank">Mastodon</HeaderLink>
-    <HeaderLink href="https://github.com/chlorophyllkid" target="_blank">GitHub</HeaderLink>
-    <HeaderLink href="https://codepen.io/chlorophyllkid/" target="_blank">CodePen</HeaderLink>
+    <Link href="/">Home</Link>
+    <Link href="/blog">Blog</Link>
   </nav>
 </header>
 
@@ -24,5 +20,10 @@ import HeaderLink from '../atoms/HeaderLink.astro'
   }
   h2 {
     margin: 0.5em 0;
+  }
+
+  nav {
+    display: flex;
+    gap: 1em;
   }
 </style>
