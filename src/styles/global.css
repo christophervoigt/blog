@@ -1,5 +1,7 @@
+@import './fonts.css';
+
 body {
-  font-family: Verdana, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin: auto;
   padding: 20px;
   max-width: 65ch;
@@ -14,6 +16,17 @@ body {
   justify-content: space-between;
   min-height: 100dvh;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Shantell Sans', Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
 main {
   flex: 1;
 }
