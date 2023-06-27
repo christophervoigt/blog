@@ -2,6 +2,7 @@
 title: 'De-escalating styles with CSS Cascade Layers'
 description: 'How to use CSS Cascade Layers to de-escalate your styles.'
 pubDate: 'Apr 7 2023'
+updatedDate: 'Jun 26 2023'
 ---
 
 CSS Cascade Layers are supported by all major browsers for a while now. Recently, I had a little talk in front of my coworkers, about what they are and how `!important` actually works.
@@ -74,7 +75,7 @@ To resolve this conflict, we have to look at your options. Let's call them escal
 
 1. Reorder your CSS
 1. Make one selector more specific
-1. Add `!important` to one of the properties
+1. Add important to the property
 
 ### Reorder your CSS
 
@@ -93,7 +94,7 @@ form > .formgroup {
 
 Now `form > .formgroup` has a higher specificity than `.hidden`. This looks better, but now you created a dependency to your HTML. If you add another wrapper in-between form and fieldset, you have to change your CSS as well.
 
-### Add `!important` to one of the properties
+### Add important to the property
 
 This is probably the most common solution for specificity conflicts. But it's also the worst one, because it makes it way harder to override the styles later on.
 
