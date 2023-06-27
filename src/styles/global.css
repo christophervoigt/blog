@@ -1,9 +1,9 @@
 @import './fonts.css';
+@import './prism-code-style.css';
 
 body {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: source-serif-pro, Georgia, Cambria, 'Times New Roman', Times, serif;
   margin: auto;
-  padding: 20px;
   max-width: 65ch;
   text-align: left;
   background-color: #fff;
@@ -22,9 +22,27 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Shantell Sans', Arial, Helvetica, sans-serif;
-  font-weight: 500;
+  font-family: 'Shantell Sans', 'Comic Sans MS', Helvetica, sans-serif;
+  font-weight: 700;
   text-wrap: balance;
+}
+
+* + h1,
+* + h2,
+* + h3,
+* + h4,
+* + h5,
+* + h6 {
+  margin-block: 1.5em 0;
+}
+
+* + p,
+* + ul,
+* + ol,
+* + blockquote,
+* + pre,
+* + table {
+  margin-block: 1em 0;
 }
 
 main {
@@ -59,16 +77,6 @@ table {
 img {
   max-width: 100%;
   height: auto;
-}
-code {
-  padding: 2px 5px;
-  background-color: #f2f2f2;
-}
-pre {
-  padding: 1rem;
-}
-pre > code {
-  all: unset;
 }
 blockquote {
   border: 1px solid #999;
