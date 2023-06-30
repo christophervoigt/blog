@@ -1,34 +1,16 @@
+@import './reset.css';
+@import './variables.css';
 @import './fonts.css';
+@import './layout.css';
 @import './prism-code-style.css';
-
-:root {
-  /* font sizes */
-
-  --step--2: clamp(0.72rem, calc(0.81rem + -0.12vw), 0.79rem);
-  --step--1: clamp(0.89rem, calc(0.88rem + 0.02vw), 0.9rem);
-  --step-0: clamp(1rem, calc(0.96rem + 0.22vw), 1.13rem);
-  --step-1: clamp(1.13rem, calc(1.03rem + 0.49vw), 1.41rem);
-  --step-2: clamp(1.27rem, calc(1.09rem + 0.86vw), 1.76rem);
-  --step-3: clamp(1.42rem, calc(1.15rem + 1.35vw), 2.2rem);
-  --step-4: clamp(1.6rem, calc(1.2rem + 1.99vw), 2.75rem);
-  --step-5: clamp(1.8rem, calc(1.23rem + 2.84vw), 3.43rem);
-}
 
 body {
   font-family: source-serif-pro, Georgia, Cambria, 'Times New Roman', Times, serif;
   font-size: var(--step-0);
   line-height: 1.4;
 
-  margin-inline: auto;
-  padding-inline: 1em;
-  max-inline-size: 65ch;
   background-color: #fff;
   color: #444;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100dvh;
 }
 
 h1,
@@ -58,6 +40,9 @@ h4 {
 h5 {
   font-size: var(--step-1);
 }
+small {
+  font-size: var(--step--1);
+}
 
 * + h1,
 * + h2,
@@ -65,20 +50,16 @@ h5 {
 * + h4,
 * + h5,
 * + h6 {
-  margin-block: 1.5em 0;
+  margin-block-start: 1.5em;
 }
 
-* + p,
+.content * + p,
 * + ul,
 * + ol,
 * + blockquote,
 * + pre,
 * + table {
-  margin-block: 1em 0;
-}
-
-main {
-  flex: 1;
+  margin-block-start: 1em;
 }
 
 h1,
@@ -95,16 +76,11 @@ blockquote {
 a {
   color: #3273dc;
 }
+
+/* deal with this when we have to */
 blockquote {
   border: 1px solid #999;
   padding: 2px 0px 2px 20px;
   margin: 0px;
   font-style: italic;
-}
-table {
-  width: 100%;
-}
-img {
-  max-width: 100%;
-  height: auto;
 }

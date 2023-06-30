@@ -1,0 +1,37 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100dvh;
+}
+
+main,
+header,
+footer {
+  margin-inline: auto;
+  inline-size: 100%;
+  max-inline-size: var(--width);
+  padding-inline: calc(var(--grid-gutter) / 2);
+
+  @media (min-width: 75.94rem) {
+    padding-inline: 0;
+  }
+}
+
+main {
+  flex: 1;
+  margin-block: var(--space-l);
+}
+
+.content {
+  max-width: 65ch;
+  margin-inline: auto;
+}
+
+.content + .content {
+  margin-block-start: var(--space-xl-2xl);
+}
+
+.blogPostHeader + .content {
+  margin-block-start: var(--space-m-l);
+}

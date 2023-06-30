@@ -1,0 +1,41 @@
+:root {
+  /* font sizes */
+  /* @link https://utopia.fyi/type/calculator?c=320,16,1.125,1215,18,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,&g=s,m,2xl,12 */
+  --step--2: clamp(0.72rem, calc(0.82rem + -0.13vw), 0.79rem);
+  --step--1: clamp(0.89rem, calc(0.88rem + 0.02vw), 0.9rem);
+  --step-0: clamp(1rem, calc(0.96rem + 0.22vw), 1.13rem);
+  --step-1: clamp(1.13rem, calc(1.02rem + 0.5vw), 1.41rem);
+  --step-2: clamp(1.27rem, calc(1.09rem + 0.88vw), 1.76rem);
+  --step-3: clamp(1.42rem, calc(1.15rem + 1.38vw), 2.2rem);
+  --step-4: clamp(1.6rem, calc(1.19rem + 2.05vw), 2.75rem);
+  --step-5: clamp(1.8rem, calc(1.22rem + 2.92vw), 3.43rem);
+
+  /* spaces */
+  /* @link https://utopia.fyi/space/calculator?c=320,16,1.125,1215,18,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,&g=s,m,2xl,12 */
+  --space-3xs: clamp(0.25rem, calc(0.23rem + 0.11vw), 0.31rem);
+  --space-2xs: clamp(0.5rem, calc(0.48rem + 0.11vw), 0.56rem);
+  --space-xs: clamp(0.75rem, calc(0.71rem + 0.22vw), 0.88rem);
+  --space-s: clamp(1rem, calc(0.96rem + 0.22vw), 1.13rem);
+  --space-m: clamp(1.5rem, calc(1.43rem + 0.34vw), 1.69rem);
+  --space-l: clamp(2rem, calc(1.91rem + 0.45vw), 2.25rem);
+  --space-xl: clamp(3rem, calc(2.87rem + 0.67vw), 3.38rem);
+  --space-2xl: clamp(4rem, calc(3.82rem + 0.89vw), 4.5rem);
+  --space-3xl: clamp(6rem, calc(5.73rem + 1.34vw), 6.75rem);
+
+  --space-3xs-2xs: clamp(0.25rem, calc(0.14rem + 0.56vw), 0.56rem);
+  --space-2xs-xs: clamp(0.5rem, calc(0.37rem + 0.67vw), 0.88rem);
+  --space-xs-s: clamp(0.75rem, calc(0.62rem + 0.67vw), 1.13rem);
+  --space-s-m: clamp(1rem, calc(0.75rem + 1.23vw), 1.69rem);
+  --space-m-l: clamp(1.5rem, calc(1.23rem + 1.34vw), 2.25rem);
+  --space-l-xl: clamp(2rem, calc(1.51rem + 2.46vw), 3.38rem);
+  --space-xl-2xl: clamp(3rem, calc(2.46rem + 2.68vw), 4.5rem);
+  --space-2xl-3xl: clamp(4rem, calc(3.02rem + 4.92vw), 6.75rem);
+
+  /* grid */
+  /* @link https://utopia.fyi/grid/calculator?c=320,16,1.125,1215,18,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,&g=s,m,2xl,12 */
+  --grid-max-width: 75.94rem;
+  --grid-gutter: var(--space-s-m);
+  --grid-columns: 12;
+
+  --width: clamp(16rem, 93vw, var(--grid-max-width));
+}
