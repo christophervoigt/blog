@@ -1,8 +1,8 @@
 ---
-import FormattedDate from '../atoms/FormattedDate.astro'
 import BaseHead from '../molecules/BaseHead.astro'
 import Header from '../organisms/Header.astro'
 import Footer from '../organisms/Footer.astro'
+import BlogPostHeader from '../molecules/BlogPostHeader.astro'
 
 const { title, description, pubDate, updatedDate } = Astro.props
 ---
@@ -17,30 +17,12 @@ const { title, description, pubDate, updatedDate } = Astro.props
     <Header />
 
     <main>
-      <h1>{title}</h1>
-      <FormattedDate date={pubDate} />
-      {
-        updatedDate && (
-          <div class="last-updated-on">
-            Last updated on <FormattedDate date={updatedDate} />
-          </div>
-        )
-      }
-      <hr />
-
-      <slot />
+      <BlogPostHeader title={title} pubDate={pubDate} updatedDate={updatedDate} />
+      <div class="content">
+        <slot />
+      </div>
     </main>
 
     <Footer />
   </body>
 </html>
-
-<style>
-  hr {
-    border-top: 1px solid #ddd;
-    margin: 1rem 0;
-  }
-  .last-updated-on {
-    font-style: italic;
-  }
-</style>
