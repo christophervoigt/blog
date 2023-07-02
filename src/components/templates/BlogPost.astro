@@ -17,9 +17,16 @@ const { title, description, pubDate, updatedDate } = Astro.props
     <Header />
 
     <main>
-      <BlogPostHeader title={title} pubDate={pubDate} updatedDate={updatedDate} />
-      <div class="content">
-        <slot />
+      <div class="bg-container">
+        <div class="container">
+          <BlogPostHeader title={title} pubDate={pubDate} updatedDate={updatedDate} />
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="content">
+          <slot />
+        </div>
       </div>
     </main>
 

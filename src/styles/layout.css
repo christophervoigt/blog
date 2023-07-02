@@ -5,36 +5,35 @@ body {
   min-height: 100dvh;
 }
 
-main,
+main {
+  flex: 1;
+}
+
 header,
-footer {
+footer,
+.container {
   margin-inline: auto;
   inline-size: 100%;
   max-inline-size: var(--max-width);
 }
 
-main {
-  flex: 1;
-}
-
-.content {
-  max-width: 65ch;
-  margin-inline: auto;
-}
-
-.bg-content {
-  background-color: var(--color-bg-content);
+.bg-container {
+  background-color: #ffc66d;
   padding-block: var(--space-xl-2xl);
 }
 
-.content + .content,
-.bg-content + .content,
-.blogPostHeader + .content {
-  /* not sure if I want blogPostHeader in here, since it shares context with the content */
+.container + .container,
+.bg-container + .container,
+.container + .bg-container {
   margin-block-start: var(--space-xl-2xl);
 }
 
 main:has(> :last-child.content) + footer {
   /* add margin to footer if last element in main doen't have background */
   margin-block-start: var(--space-xl-2xl);
+}
+
+.content {
+  max-inline-size: 65ch;
+  margin-inline: auto;
 }
