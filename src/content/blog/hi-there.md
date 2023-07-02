@@ -23,6 +23,5 @@ At the moment, the design is pretty basic. This is actually just the [Astro Star
 
 If you have any further questions, feel free to reach out to me on [Twitter](https://twitter.com/chlorophyllkid) or [Mastodon](https://indieweb.social/@christophervoigt). You can also subscribe to my [RSS feed](/rss.xml). Or you can follow me on [Github](https://github.com/chlorophyllkid) or [CodePen](https://codepen.io/chlorophyllkid/).
 
-Until then, have a good one!
+Until then, have a good one! 👋
 
-Chris
