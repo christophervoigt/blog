@@ -28,7 +28,7 @@ footer,
   margin-block-start: var(--space-xl-2xl);
 }
 
-main:has(> :last-child.content) + footer {
+main:has(> :last-child:not(.bg-container)) + footer {
   /* add margin to footer if last element in main doen't have background */
   margin-block-start: var(--space-xl-2xl);
 }
