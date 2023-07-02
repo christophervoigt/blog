@@ -17,18 +17,17 @@ footer,
   max-inline-size: var(--max-width);
 }
 
-.bg-container {
-  background-color: #ffc66d;
+.yellow-container {
   padding-block: var(--space-xl-2xl);
 }
 
 .container + .container,
-.bg-container + .container,
-.container + .bg-container {
+.yellow-container + .container,
+.container + .yellow-container {
   margin-block-start: var(--space-xl-2xl);
 }
 
-main:has(> :last-child:not(.bg-container)) + footer {
+main:has(> :last-child:not(.yellow-container)) + footer {
   /* add margin to footer if last element in main doen't have background */
   margin-block-start: var(--space-xl-2xl);
 }

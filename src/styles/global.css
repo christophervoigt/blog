@@ -77,6 +77,11 @@ a {
   color: #3273dc;
 }
 
+.yellow-container {
+  color: #222;
+  background-color: #ffc66d;
+}
+
 /* deal with this when we have to */
 blockquote {
   border: 1px solid #999;
