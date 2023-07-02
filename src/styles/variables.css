@@ -38,4 +38,7 @@
   --grid-columns: 12;
 
   --max-width: clamp(18rem, 93vw, var(--grid-max-width));
+
+  /* colors */
+  --link-gradient-color: #ffc66d;
 }
