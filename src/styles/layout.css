@@ -10,17 +10,11 @@ header,
 footer {
   margin-inline: auto;
   inline-size: 100%;
-  max-inline-size: var(--width);
-  padding-inline: calc(var(--grid-gutter) / 2);
-
-  @media (min-width: 75.94rem) {
-    padding-inline: 0;
-  }
+  max-inline-size: var(--max-width);
 }
 
 main {
   flex: 1;
-  margin-block: var(--space-l);
 }
 
 .content {
@@ -28,10 +22,19 @@ main {
   margin-inline: auto;
 }
 
-.content + .content {
+.bg-content {
+  background-color: var(--color-bg-content);
+  padding-block: var(--space-xl-2xl);
+}
+
+.content + .content,
+.bg-content + .content,
+.blogPostHeader + .content {
+  /* not sure if I want blogPostHeader in here, since it shares context with the content */
   margin-block-start: var(--space-xl-2xl);
 }
 
-.blogPostHeader + .content {
-  margin-block-start: var(--space-m-l);
+main:has(> :last-child.content) + footer {
+  /* add margin to footer if last element in main doen't have background */
+  margin-block-start: var(--space-xl-2xl);
 }
