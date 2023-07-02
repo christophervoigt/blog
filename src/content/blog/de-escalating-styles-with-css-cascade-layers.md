@@ -2,7 +2,7 @@
 title: 'De-escalating styles with CSS Cascade Layers'
 description: 'How to use CSS Cascade Layers to de-escalate your styles.'
 pubDate: 'Apr 7 2023'
-updatedDate: 'Jun 26 2023'
+updatedDate: 'Jul 2 2023'
 ---
 
 CSS Cascade Layers are supported by all major browsers for a while now. Recently, I had a little talk in front of my coworkers, about what they are and how `!important` actually works.
@@ -11,7 +11,7 @@ But I had to think about a good use case, that doesn't seem too "constructed". A
 
 ## What are Cascade Layers?
 
-If you haven't heard of Cascade Layers before, there is [a great article](https://css-tricks.com/css-cascade-layers/) by [Miriam Suzanne](https://front-end.social/@mia) on CSS Tricks that explains them incredibly well. And if you wanna read even more about them, I also recommend [the documentation](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_layers) on MDN.
+If you haven't heard of Cascade Layers before, there is [a great article](https://css-tricks.com/css-cascade-layers/) by [Miriam Suzanne](https://front-end.social/@mia) on CSS Tricks that explains them incredibly well. And if you wanna read even more about them, I also recommend the [documentation on MDN](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_layers).
 
 Alright, let's get started with an example.
 
