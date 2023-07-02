@@ -74,23 +74,22 @@ blockquote {
   color: #222;
 }
 
-a {
-  display: inline-block;
+a[href] {
   color: #222;
   outline: 0.1em solid var(--link-gradient-color);
   text-decoration: none;
-  padding: 0.1em;
+  padding-inline: 0.1em;
 
   background-image: linear-gradient(var(--link-gradient-color), var(--link-gradient-color));
   background-repeat: no-repeat;
-  background-size: 100% 0.2em;
-  background-position: 0 90%;
+  background-size: 100% 15%;
+  background-position: 0 100%;
   transition: background-size 0.2s ease-out;
+}
 
-  &:hover,
-  &.active {
-    background-size: 100% 100%;
-  }
+a[href]:hover,
+a[href].active {
+  background-size: 100% 100%;
 }
 
 :link:not(:focus) {
