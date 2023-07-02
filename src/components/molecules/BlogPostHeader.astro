@@ -4,23 +4,25 @@ import FormattedDate from '../atoms/FormattedDate.astro'
 const { title, pubDate, updatedDate } = Astro.props
 ---
 
-  <h1>{title}</h1>
-  <FormattedDate date={pubDate} />
-  {
-    updatedDate && (
-      <p class="last-updated-on">
-        Last updated on <FormattedDate date={updatedDate} />
-      </p>
-    )
-  }
-  <hr />
+<h1>{title}</h1>
+<p>
+  Published on <FormattedDate date={pubDate} />
+</p>
+{
+  updatedDate && (
+    <p class="last-updated-on">
+      Last updated on <FormattedDate date={updatedDate} />
+    </p>
+  )
+}
+<hr />
 
 <style>
   hr {
-    border-top: 1px solid #ddd;
-    margin: 1rem 0;
+    border-color: #444;
+    margin-block: 1rem 0;
   }
-  .last-updated-on {
+  p {
     font-style: italic;
   }
 </style>
