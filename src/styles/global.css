@@ -76,9 +76,10 @@ blockquote {
 
 a[href] {
   color: #222;
-  outline: 0.1em solid var(--link-gradient-color);
+  border-radius: 0.125em;
+  outline: 0.1em solid #222;
   text-decoration: none;
-  padding-inline: 0.1em;
+  padding-inline: 0.125em;
 
   background-image: linear-gradient(var(--link-gradient-color), var(--link-gradient-color));
   background-repeat: no-repeat;
