@@ -19,12 +19,17 @@ import Link from '../atoms/Link.astro'
 <style>
   footer {
     text-align: center;
-    padding-block: 1em;
+    margin-block-end: var(--space-l);
   }
 
   nav {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 1em;
+  }
+
+  nav + p {
+    margin-block-start: 1em;
   }
 </style>
