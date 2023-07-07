@@ -37,7 +37,7 @@
   --grid-gutter: var(--space-s-m);
   --grid-columns: 12;
 
-  --max-width: clamp(18rem, 93vw, var(--grid-max-width));
+  --container-max-width: clamp(18rem, 90cqi, var(--grid-max-width));
 
   /* colors */
   --link-gradient-color: #ffc66d;

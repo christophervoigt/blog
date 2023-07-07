@@ -1,8 +1,7 @@
 body {
+  container: root / inline-size;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 100dvh;
 }
 
 main {
@@ -14,7 +13,7 @@ footer,
 .container {
   margin-inline: auto;
   inline-size: 100%;
-  max-inline-size: var(--max-width);
+  max-inline-size: var(--container-max-width);
 }
 
 .yellow-container {
