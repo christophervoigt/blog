@@ -11,9 +11,8 @@ main {
 header,
 footer,
 .container {
+  max-inline-size: var(--container-max-inline-size);
   margin-inline: auto;
-  inline-size: 100%;
-  max-inline-size: var(--container-max-width);
 }
 
 .yellow-container {
