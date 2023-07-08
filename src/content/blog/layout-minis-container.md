@@ -13,8 +13,8 @@ So I want to reduce the solution to the bare minimum.
 Content of websites is often limited to a certain width on large screens.
 We do this to improve focus and readability and we usually call them containers or wrappers.
 
-On smaller screens we want to use *nearly* the full width of the screen. So they also have to scale down.
-Nearly the full width, because we don't want the content to look like it is glued to the edges of the screen.
+On smaller screens we want to use *nearly* the full width of the screen. So those containers also have to scale down.
+We use Nearly the full width, because we don't want the content to be glued to the edges of the screen.
 
 ## The solution
 
@@ -29,7 +29,7 @@ By using `max-inline-size` we allow the container to scale down on smaller scree
 
 If we only set a maximum width, how do we add space on the left and right side of the container?
 
-Behold the power of CSS!
+Well, behold the power of CSS! 🧙
 
 ## A magical custom property
 
@@ -42,6 +42,7 @@ First of all, you don't have to use a custom property for this, but it increases
 ```
 
 We use the `clamp` function to set a minimum and maximum value for the container width.
+And by choosing a smaller minimum than the smallest screen size we want to support, we add space to both sides of the container.
 
 ### How does clamp work?
 
