@@ -161,6 +161,4 @@ If you happen to have a conflict inside the same layer. You can either move one 
 
 Writing this article made me realize that I should probably start using Cascade Layers in my projects. I'm looking forward to see if they can help me write more maintainable CSS.
 
-Feel free to criticize or correct my thoughts here. I'm always looking for ways to improve my writing.
-
 Have a good one! 👋
