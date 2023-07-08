@@ -42,7 +42,7 @@ First of all, you don't have to use a custom property for this, but it increases
 ```
 
 We use the `clamp` function to set a minimum and maximum value for the container width.
-And by choosing a smaller minimum than the smallest screen size we want to support, we add space to both sides of the container.
+And we add space to both sides of the container by choosing a smaller minimum than the smallest screen size we support.
 
 ### How does clamp work?
 
