@@ -11,16 +11,19 @@ So I want to reduce the solution to the bare minimum.
 ## The problem
 
 Content of websites is often limited to a certain width on large screens.
-We do this to improve focus and readability and we usually call them containers or wrappers.
+We do this to improve focus and readability.
+And to do this we create containers or wrappers that keep our content in check.
 
-On smaller screens we want to use *nearly* the full width of the screen. So those containers also have to scale down.
-We use Nearly the full width, because we don't want the content to be glued to the edges of the screen.
+On smaller screens we want to use *nearly* the full width of the screen.
+Nearly, because we don't want the content to stick to the edges of the screen.
+
+So those containers also have to scale down properly.
 
 ## The solution
 
 ```css
 .container {
-  max-inline-size: var(--container-max-width);
+  max-inline-size: var(--container-max-inline-size);
   margin-inline: auto;
 }
 ```
@@ -37,7 +40,7 @@ First of all, you don't have to use a custom property for this, but it increases
 
 ```css
 :root {
-  --container-max-width: clamp(18rem, 90vw, 76rem);
+  --container-max-inline-size: clamp(18rem, 90vw, 76rem);
 }
 ```
 
