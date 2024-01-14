@@ -1,7 +1,8 @@
 ---
-title: 'Layout Minis: Container'
+title: 'Layout Minis: Container (Part 1)'
 description: 'How to limit container width in the pures way possible.'
 pubDate: 'Jul 8 2023'
+updatedDate: 'Jul 15 2023'
 ---
 
 This is an article about a problem, that has been solved a million times before.
