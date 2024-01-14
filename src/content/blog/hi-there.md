@@ -17,11 +17,11 @@ Oh, and I don't use any kind of analytics, cookies or tracking. I don't care abo
 
 ## Design
 
-At the moment, the design is pretty basic. This is actually just the [Astro Starter Kit: Blog](https://github.com/withastro/astro/tree/latest/examples/blog) default, which I've modified a bit. For now, it's good enough. But I'm looking forward to creating a custom design in the future.
+At the moment, the design is pretty basic. For now, it's good enough. But I'm looking forward to redesign this thing at least once a year, haha.
 
 ## Socials
 
-If you have any further questions, feel free to reach out to me on [Twitter](https://twitter.com/chlorophyllkid) or [Mastodon](https://indieweb.social/@christophervoigt). You can also subscribe to my [RSS feed](/rss.xml). Or you can follow me on [Github](https://github.com/chlorophyllkid) or [CodePen](https://codepen.io/chlorophyllkid/).
+If you have any further questions, feel free to reach out to me on [Mastodon](https://indieweb.social/@christophervoigt). You can also subscribe to my [RSS feed](/rss.xml). Or you can follow me on [Github](https://github.com/chlorophyllkid) or [CodePen](https://codepen.io/chlorophyllkid/).
 
 Until then, have a good one! 👋
 
