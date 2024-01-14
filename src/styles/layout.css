@@ -8,6 +8,10 @@ main {
   flex: 1;
 }
 
+header {
+  padding-block: var(--space-s);
+}
+
 header,
 footer,
 .container {
