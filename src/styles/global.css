@@ -1,5 +1,6 @@
-@import './reset.css';
-@import './variables.css';
+@import './setup/reset.css';
+@import './setup/variables.css';
+
 @import './fonts.css';
 @import './layout.css';
 @import './prism-code-style.css';

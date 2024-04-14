@@ -37,8 +37,6 @@
   --grid-gutter: var(--space-s-m);
   --grid-columns: 12;
 
-  --container-max-inline-size: clamp(18rem, 90cqi, var(--grid-max-inline-size));
-
   /* colors */
   --link-gradient-color: #ffc66d;
 }

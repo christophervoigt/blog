@@ -16,6 +16,7 @@ header,
 footer,
 .container {
   max-inline-size: var(--container-max-inline-size);
+  padding-inline: var(--grid-gutter);
   margin-inline: auto;
 }
 
