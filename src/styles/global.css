@@ -1,6 +1,8 @@
+/* setup */
 @import './setup/reset.css';
 @import './setup/variables.css';
 
+/* other */
 @import './fonts.css';
 @import './layout.css';
 @import './prism-code-style.css';
@@ -29,18 +31,23 @@ h6 {
 h1 {
   font-size: var(--step-5);
 }
+
 h2 {
   font-size: var(--step-4);
 }
+
 h3 {
   font-size: var(--step-3);
 }
+
 h4 {
   font-size: var(--step-2);
 }
+
 h5 {
   font-size: var(--step-1);
 }
+
 small {
   font-size: var(--step--1);
 }
@@ -99,9 +106,10 @@ a[href].active {
 }
 
 .yellow-container {
+  --link-gradient-color: #fff;
+
   color: #222;
   background-color: #ffc66d;
-  --link-gradient-color: #fff;
 }
 
 /* deal with this when we have to */
