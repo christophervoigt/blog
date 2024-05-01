@@ -112,10 +112,10 @@ a[href].active {
   background-color: #ffc66d;
 }
 
-/* deal with this when we have to */
 blockquote {
-  border: 1px solid #999;
-  padding: 2px 0px 2px 20px;
-  margin: 0px;
   font-style: italic;
+
+  border-left: 0.375em solid #ffc66d;
+  padding-inline: 1em;
+  padding-block: 0.5em;
 }
