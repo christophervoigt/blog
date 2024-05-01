@@ -1,8 +1,8 @@
 ---
-title: 'Layout Minis: Container (Part 1)'
+title: 'Minimal CSS approach to content containers'
 description: 'How to limit container width in the pures way possible.'
 pubDate: 'Jul 8 2023'
-updatedDate: 'Jul 15 2023'
+updatedDate: 'May 1 2024'
 ---
 
 This is an article about a problem, that has been solved a million times before.
@@ -11,9 +11,8 @@ So I want to reduce the solution to the bare minimum.
 
 ## The problem
 
-Content of websites is often limited to a certain width on large screens.
-We do this to improve focus and readability.
-And to do this we create containers or wrappers that keep our content in check.
+Content of websites is often limited to a certain width on large screens. This is called tracking.
+We do this to improve focus and readability, which we solve with containers or wrappers that keep our content in check.
 
 On smaller screens we want to use *nearly* the full width of the screen.
 Nearly, because we don't want the content to stick to the edges of the screen.
