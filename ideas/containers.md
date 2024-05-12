@@ -1,5 +1,5 @@
 ---
-title: 'Layout Minis: Container (Part 2)'
+title: 'Containers'
 description: 'How to work with multiple container types.'
 pubDate: 'Jul 8 2023'
 ---
