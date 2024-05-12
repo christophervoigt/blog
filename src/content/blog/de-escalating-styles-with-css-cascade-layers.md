@@ -3,6 +3,7 @@ title: 'De-escalating styles with CSS Cascade Layers'
 description: 'How to use CSS Cascade Layers to de-escalate your styles.'
 pubDate: 'Apr 7 2023'
 updatedDate: 'Jul 2 2023'
+hasCode: true
 ---
 
 CSS Cascade Layers are supported by all major browsers for a while now. Recently, I had a little talk in front of my coworkers, about what they are and how `!important` actually works.

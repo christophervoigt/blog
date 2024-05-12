@@ -4,13 +4,13 @@ import Header from '../organisms/Header.astro'
 import Footer from '../organisms/Footer.astro'
 import BlogPostHeader from '../molecules/BlogPostHeader.astro'
 
-const { title, description, pubDate, updatedDate } = Astro.props
+const { title, description, pubDate, updatedDate, hasCode } = Astro.props
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} hasCode={hasCode} />
   </head>
 
   <body>

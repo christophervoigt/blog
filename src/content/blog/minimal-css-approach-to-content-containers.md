@@ -3,6 +3,7 @@ title: 'Minimal CSS approach to content containers'
 description: 'How to limit container width in the pures way possible.'
 pubDate: 'Jul 8 2023'
 updatedDate: 'May 1 2024'
+hasCode: true
 ---
 
 This is an article about a problem, that has been solved a million times before.
