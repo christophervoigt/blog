@@ -8,7 +8,7 @@
 @import './prism-code-style.css';
 
 body {
-  font-family: source-serif-pro, Georgia, Cambria, 'Times New Roman', Times, serif;
+  font-family: 'Source Serif Pro', Georgia, 'Times New Roman', Times, serif;
   font-size: var(--step-0);
   line-height: 1.4;
 
@@ -22,7 +22,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Shantell Sans', 'Comic Sans MS', Helvetica, sans-serif;
+  font-family: 'Shantell Sans', 'Comic Sans MS', Arial, Helvetica, sans-serif;
   font-weight: 700;
   line-height: 1.2;
   text-wrap: balance;
