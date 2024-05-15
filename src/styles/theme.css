@@ -1,0 +1,33 @@
+/* this has to be set to switch between light or dark */
+:root {
+  --text-color: light-dark(var(--light-text-color), var(--dark-text-color));
+  --headline-color: light-dark(var(--light-headline-color), var(--dark-headline-color));
+  --background-color: light-dark(var(--light-background-color), var(--dark-background-color));
+  --highlight-color: light-dark(var(--light-highlight-color), var(--dark-highlight-color));
+
+  --link-text-color: light-dark(var(--light-link-text-color), var(--dark-link-text-color));
+  --link-background-color: light-dark(var(--light-link-background-color), var(--dark-link-background-color));
+
+  color-scheme: light dark;
+}
+
+.highlight-container {
+  --link-background-color: light-dark(var(--white-1), var(--gray-1));
+
+  color: var(--headline-color);
+  background-color: var(--highlight-color);
+}
+
+/* If user prefers a light appearance */
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+  }
+}
+
+/* If user prefers a dark appearance */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}

@@ -37,6 +37,26 @@
   --grid-gutter: var(--space-s-m);
   --grid-columns: 12;
 
-  /* colors */
-  --link-gradient-color: #ffc66d;
+  /* abstract colors */
+  --yellow-1: #ffc66d;
+  --green-1: #166148;
+  --white-1: #fff;
+
+  --gray-1: #222;
+  --gray-2: #444;
+
+  /* assigned colors */
+  --light-link-text-color: var(--gray-1);
+  --light-link-background-color: var(--yellow-1);
+  --light-headline-color: var(--gray-1);
+  --light-text-color: var(--gray-2);
+  --light-background-color: var(--white-1);
+  --light-highlight-color: var(--yellow-1);
+
+  --dark-link-text-color: var(--white-1);
+  --dark-link-background-color: var(--green-1);
+  --dark-headline-color: var(--white-1);
+  --dark-text-color: var(--white-1);
+  --dark-background-color: var(--gray-1);
+  --dark-highlight-color: var(--green-1);
 }

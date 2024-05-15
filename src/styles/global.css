@@ -3,6 +3,7 @@
 @import './setup/variables.css';
 
 /* other */
+@import './theme.css';
 @import './fonts.css';
 @import './layout.css';
 @import './prism-code-style.css';
@@ -12,8 +13,8 @@ body {
   font-size: var(--step-0);
   line-height: 1.4;
 
-  background-color: #fff;
-  color: #444;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 h1,
@@ -76,20 +77,21 @@ h3,
 h4,
 h5,
 h6,
+hr,
 strong,
 b,
 blockquote {
-  color: #222;
+  color: var(--headline-color);
 }
 
 a[href] {
-  color: #222;
+  color: var(--link-text-color);
   border-radius: 0.125em;
-  outline: 0.1em solid #222;
+  outline: 0.1em solid var(--link-text-color);
   text-decoration: none;
   padding-inline: 0.125em;
 
-  background-image: linear-gradient(var(--link-gradient-color), var(--link-gradient-color));
+  background-image: linear-gradient(var(--link-background-color), var(--link-background-color));
   background-repeat: no-repeat;
   background-size: 100% 15%;
   background-position: 0 100%;
@@ -105,17 +107,10 @@ a[href].active {
   outline-color: transparent;
 }
 
-.yellow-container {
-  --link-gradient-color: #fff;
-
-  color: #222;
-  background-color: #ffc66d;
-}
-
 blockquote {
   font-style: italic;
 
-  border-left: 0.375em solid #ffc66d;
+  border-left: 0.375em solid var(--highlight-color);
   padding-inline: 1em;
   padding-block: 0.5em;
 }
