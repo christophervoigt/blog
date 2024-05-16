@@ -84,6 +84,16 @@ blockquote {
   color: var(--headline-color);
 }
 
+:not(pre) > code {
+  background: var(--code-background-color);
+  color: var(--code-text-color);
+}
+
+.highlight-container {
+  color: var(--headline-color);
+  background-color: var(--highlight-color);
+}
+
 a[href] {
   color: var(--link-text-color);
   border-radius: 0.125em;
