@@ -2,6 +2,7 @@
 title: 'Outgrowing tailwind'
 description: 'Which philosophy changes led me to stop using tailwindcss.'
 pubDate: 'May 1 2024'
+hasCode: true
 ---
 
 I'm not sure if this is a real thing or not, but over the last couple of months I've outgrown tailwindcss.

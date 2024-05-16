@@ -9,7 +9,7 @@
 @import './prism-code-style.css';
 
 body {
-  font-family: 'Source Serif Pro', Georgia, 'Times New Roman', Times, serif;
+  font-family: 'Source Serif 4', Georgia, 'Times New Roman', Times, serif;
   font-size: var(--step-0);
   line-height: 1.4;
 
