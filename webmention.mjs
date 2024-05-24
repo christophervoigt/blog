@@ -50,5 +50,7 @@ function writeWebMention(webmention) {
   fs.writeFileSync(filename, JSON.stringify(entries, null, 2))
 }
 
+console.log(process.env)
+
 const webmentions = await fetchWebmentions()
 webmentions.forEach(writeWebMention)
