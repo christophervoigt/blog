@@ -9,7 +9,16 @@ main {
 }
 
 header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  inline-size: 100%;
   padding-block: var(--space-s);
+}
+
+footer {
+  text-align: center;
+  margin-block-end: var(--space-l);
 }
 
 header,
@@ -20,6 +29,11 @@ footer,
   margin-inline: auto;
 }
 
+main:has(> :last-child:not(.highlight-container)) ~ footer {
+  /* add margin to footer if last element in main doen't have background */
+  margin-block-start: var(--space-xl-2xl);
+}
+
 .highlight-container {
   padding-block: var(--space-xl-2xl);
 }
@@ -27,11 +41,6 @@ footer,
 .container + .container,
 .highlight-container + .container,
 .container + .highlight-container {
-  margin-block-start: var(--space-xl-2xl);
-}
-
-main:has(> :last-child:not(.highlight-container)) + footer {
-  /* add margin to footer if last element in main doen't have background */
   margin-block-start: var(--space-xl-2xl);
 }
 

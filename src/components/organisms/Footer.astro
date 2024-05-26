@@ -5,10 +5,10 @@ import Link from '../atoms/Link.astro'
 ---
 
 <footer>
-  <nav>
-    <Link href="https://indieweb.social/@christophervoigt" target="_blank">Mastodon</Link>
-    <Link href="https://github.com/christophervoigt" target="_blank" rel="me">GitHub</Link>
-    <Link href="https://codepen.io/christophervoigt" target="_blank">CodePen</Link>
+  <nav aria-label="other pages">
+    <Link href="https://indieweb.social/@christophervoigt">Mastodon</Link>
+    <Link href="https://github.com/christophervoigt" rel="me">GitHub</Link>
+    <Link href="https://codepen.io/christophervoigt">CodePen</Link>
   </nav>
   <p>
     &copy; {today.getFullYear()} Christopher Voigt. All rights reserved.
@@ -16,11 +16,6 @@ import Link from '../atoms/Link.astro'
 </footer>
 
 <style>
-  footer {
-    text-align: center;
-    margin-block-end: var(--space-l);
-  }
-
   nav {
     display: flex;
     flex-wrap: wrap;

@@ -3,7 +3,7 @@ import Link from '../atoms/Link.astro'
 ---
 
 <header>
-  <nav>
+  <nav aria-label="main menu">
     <Link href="/">Home</Link>
     <Link href="/blog">Blog</Link>
     <Link href="/rss.xml">RSS</Link>
@@ -11,13 +11,6 @@ import Link from '../atoms/Link.astro'
 </header>
 
 <style>
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    inline-size: 100%;
-  }
-
   h2 {
     margin-block: 0.5em;
   }
