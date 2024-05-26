@@ -10,7 +10,9 @@ const { webmentions } = Astro.props
   {
     webmentions.map((webmention) => (
       <li>
-        {webmention.author.photo ? <img alt="" height="50" src={webmention.author.photo} width="50" /> : null}
+        {webmention.author.photo ? (
+          <img alt="" height="50" src={webmention.author.photo} width="50" loading="lazy" />
+        ) : null}
 
         <p>
           <a href={webmention.author.url} rel="author">
