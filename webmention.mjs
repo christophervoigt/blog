@@ -33,8 +33,8 @@ function fetchWebmentions() {
 
 function writeWebMention(webmention) {
   // Each post will have its own webmentions json file, named after the slug
-  const slug = webmention['wm-target'].replace(`https://${DOMAIN}/`, '').replace(/\/$/, '').replace('/', '--')
-  const filename = `./data/webmentions/${slug || 'home'}.json`
+  const slug = webmention['wm-target'].replace(`https://${DOMAIN}/blog/`, '').replace(/\/$/, '')
+  const filename = `src/data/webmentions/${slug || 'home'}.json`
 
   // Create the file if it doesn't exist
   if (!fs.existsSync(filename)) {
