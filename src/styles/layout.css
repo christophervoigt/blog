@@ -36,6 +36,7 @@ main:has(> :last-child:not(.highlight-container)) ~ footer {
 
 .highlight-container {
   padding-block: var(--space-xl-2xl);
+  padding-inline: var(--space-s);
 }
 
 .container + .container,
