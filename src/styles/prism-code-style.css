@@ -48,7 +48,7 @@ pre[class*='language-'] {
 }
 
 .token.punctuation {
-  color: #ffc66d;
+  color: #fdb944;
 }
 
 .namespace {
@@ -61,7 +61,7 @@ pre[class*='language-'] {
 .token.deleted,
 .token.regex,
 .token.important {
-  color: #ffc66d;
+  color: #fdb944;
 }
 
 .token.selector,
@@ -71,11 +71,11 @@ pre[class*='language-'] {
 .token.builtin,
 .token.inserted,
 .token.atrule > .rule {
-  color: #cc7833;
+  color: #fd8d27;
 }
 
 .token.function {
-  color: #c45837;
+  color: #fd622e;
 }
 
 .token.atrule {
