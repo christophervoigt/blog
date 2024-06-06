@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content'
+
+import FormattedDate from '../../components/atoms/FormattedDate.astro'
+
+const posts = (await getCollection('blog')).sort((a, b) => {
+  const aDate = new Date(a.data.pubDate)
+  const bDate = new Date(b.data.pubDate)
+
+  if (aDate < bDate) {
+    return 1
+  } else if (aDate > bDate) {
+    return -1
+  } else {
+    return 0
+  }
+})
+---
+
+<ul>
+  {
+    posts.map((post) => (
+      <li>
+        <FormattedDate date={post.data.pubDate} />
+        <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  ul {
+    list-style-type: none;
+    padding: unset;
+  }
+  ul li + li {
+    margin-top: 1em;
+  }
+</style>
