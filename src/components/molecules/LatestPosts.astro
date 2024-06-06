@@ -3,37 +3,60 @@ import { getCollection } from 'astro:content'
 
 import FormattedDate from '../../components/atoms/FormattedDate.astro'
 
-const posts = (await getCollection('blog')).sort((a, b) => {
-  const aDate = new Date(a.data.pubDate)
-  const bDate = new Date(b.data.pubDate)
+const posts = (await getCollection('blog'))
+  .sort((a, b) => {
+    const aDate = new Date(a.data.pubDate)
+    const bDate = new Date(b.data.pubDate)
 
-  if (aDate < bDate) {
-    return 1
-  } else if (aDate > bDate) {
-    return -1
-  } else {
-    return 0
-  }
-})
+    if (aDate < bDate) {
+      return 1
+    } else if (aDate > bDate) {
+      return -1
+    } else {
+      return 0
+    }
+  })
+  .slice(0, 4)
 ---
 
-<ul>
+<div class="latest-posts">
   {
     posts.map((post) => (
-      <li>
-        <FormattedDate date={post.data.pubDate} />
-        <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-      </li>
+      <article class="highlight-container">
+        <a href={`/blog/${post.slug}/`} class="teaser">
+          <h3>{post.data.title}</h3>
+        </a>
+
+        <p>
+          <small>
+            <FormattedDate date={post.data.pubDate} />
+          </small>
+        </p>
+      </article>
     ))
   }
-</ul>
+</div>
+
+<a href="/blog/">View all posts</a>
 
 <style>
-  ul {
-    list-style-type: none;
-    padding: unset;
+  .latest-posts {
+    display: grid;
+    gap: var(--grid-gutter);
+    grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr));
   }
-  ul li + li {
-    margin-top: 1em;
+
+  .highlight-container {
+    padding: 1em;
+  }
+
+  article {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  a {
+    display: inline-block;
   }
 </style>

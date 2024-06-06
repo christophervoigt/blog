@@ -78,7 +78,9 @@ small {
 * + ol,
 * + blockquote,
 * + pre,
-* + table {
+* + table,
+* + .latest-posts,
+.latest-posts + * {
   margin-block-start: 1em;
 }
 
@@ -110,27 +112,53 @@ blockquote {
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 
-a[href] {
+a[href]:not(.teaser) {
   color: var(--link-text-color);
   border-radius: 0.125em;
-  outline: 0.1em solid var(--link-text-color);
+  outline: 0.1em solid transparent;
   text-decoration: none;
   padding-inline: 0.125em;
 
   background-image: linear-gradient(var(--link-background-color), var(--link-background-color));
   background-repeat: no-repeat;
-  background-size: 100% 15%;
+  background-size: 100% 0.25rem;
   background-position: 0 100%;
   transition: background-size 0.2s ease-out;
 }
 
-a[href]:hover,
-a[href].active {
+a[href]:not(.teaser):hover,
+a[href]:not(.teaser).active {
   background-size: 100% 100%;
 }
 
-:link:not(:focus) {
-  outline-color: transparent;
+a[href]:not(.teaser):focus {
+  outline-color: var(--link-text-color);
+}
+
+a[href].teaser {
+  color: var(--link-text-color);
+  text-decoration: none;
+}
+
+a[href].teaser:focus {
+  outline: 0;
+}
+
+a[href].teaser::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+article {
+  position: relative;
+  outline: 0.1em solid transparent;
+}
+
+article:hover,
+article:focus-within {
+  outline-color: var(--link-text-color);
 }
 
 blockquote {

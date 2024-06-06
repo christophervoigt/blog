@@ -8,18 +8,15 @@ const { title, pubDate, updatedDate } = Astro.props
 {
   updatedDate ? (
     <p>
-      Last updated on <FormattedDate date={updatedDate} />
+      <small>
+        Last updated on <FormattedDate date={updatedDate} />
+      </small>
     </p>
   ) : (
     <p>
-      Published on <FormattedDate date={pubDate} />
+      <small>
+        Published on <FormattedDate date={pubDate} />
+      </small>
     </p>
   )
 }
-
-<style>
-  p {
-    /* font-style: italic; */
-    font-size: var(--step--1);
-  }
-</style>
