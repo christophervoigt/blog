@@ -34,7 +34,7 @@ main:has(> :last-child:not(.highlight-container)) ~ footer {
   margin-block-start: var(--space-xl-2xl);
 }
 
-.highlight-container {
+.hero {
   padding-block: var(--space-xl-2xl);
   padding-inline: var(--space-s);
 }
