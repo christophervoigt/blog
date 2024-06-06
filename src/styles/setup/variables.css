@@ -37,6 +37,8 @@
   --grid-gutter: var(--space-s-m);
   --grid-columns: 12;
 
+  --content-width: 75ch;
+
   /* colors */
   --yellow-100: #ffe180;
   --yellow-200: #ffda60;

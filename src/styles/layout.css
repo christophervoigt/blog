@@ -46,6 +46,6 @@ main:has(> :last-child:not(.highlight-container)) ~ footer {
 }
 
 .content {
-  max-inline-size: 75ch;
+  max-inline-size: var(--content-width);
   margin-inline: auto;
 }
