@@ -79,8 +79,8 @@ small {
 * + blockquote,
 * + pre,
 * + table,
-* + .latest-posts,
-.latest-posts + * {
+* + .posts,
+.posts + * {
   margin-block-start: 1em;
 }
 
@@ -111,6 +111,8 @@ blockquote {
 }
 
 /* BlogPostHeader and Teaser */
+
+.teaser_color,
 .blogPostHeader {
   color: var(--headline-color);
   background-color: var(--highlight-color);
@@ -128,7 +130,7 @@ blockquote {
 
 /* Links */
 
-a[href]:not(.teaser) {
+a[href]:not(.teaser_link) {
   color: var(--link-text-color);
   border-radius: 0.125em;
   outline: 0.1em solid transparent;
@@ -142,37 +144,11 @@ a[href]:not(.teaser) {
   transition: background-size 0.2s ease-out;
 }
 
-a[href]:not(.teaser):hover,
-a[href]:not(.teaser).active {
+a[href]:not(.teaser_link):hover,
+a[href]:not(.teaser_link).active {
   background-size: 100% 100%;
 }
 
-a[href]:not(.teaser):focus {
-  outline-color: var(--link-text-color);
-}
-
-a[href].teaser {
-  color: var(--link-text-color);
-  text-decoration: none;
-}
-
-a[href].teaser:focus {
-  outline: 0;
-}
-
-a[href].teaser::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  cursor: pointer;
-}
-
-article {
-  position: relative;
-  outline: 0.1em solid transparent;
-}
-
-article:hover,
-article:focus-within {
+a[href]:not(.teaser_link):focus {
   outline-color: var(--link-text-color);
 }
