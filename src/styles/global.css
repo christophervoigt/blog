@@ -97,12 +97,21 @@ blockquote {
   color: var(--headline-color);
 }
 
+blockquote {
+  font-style: italic;
+
+  border-left: 0.375em solid var(--highlight-color);
+  padding-inline: var(--space-s);
+  padding-block: var(--space-2xs);
+}
+
 :not(pre) > code {
   background: var(--code-background-color);
   color: var(--code-text-color);
 }
 
-.highlight-container {
+/* BlogPostHeader and Teaser */
+.blogPostHeader {
   color: var(--headline-color);
   background-color: var(--highlight-color);
   border-radius: 0.5rem;
@@ -111,6 +120,13 @@ blockquote {
     rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
+
+.blogPostHeader {
+  padding-block: var(--space-xl-2xl);
+  padding-inline: var(--space-s);
+}
+
+/* Links */
 
 a[href]:not(.teaser) {
   color: var(--link-text-color);
@@ -159,12 +175,4 @@ article {
 article:hover,
 article:focus-within {
   outline-color: var(--link-text-color);
-}
-
-blockquote {
-  font-style: italic;
-
-  border-left: 0.375em solid var(--highlight-color);
-  padding-inline: 1em;
-  padding-block: 0.5em;
 }
