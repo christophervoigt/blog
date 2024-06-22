@@ -23,12 +23,18 @@ const { slug, data } = Astro.props
     flex-direction: column;
     justify-content: flex-end;
 
-    padding: var(--space-xs);
+    padding-inline: var(--space-s);
+    padding-block-end: var(--space-s);
+    padding-block-start: var(--space-xl);
+
     outline: 0.1em solid transparent;
-    aspect-ratio: 1 / 1;
   }
 
-  @container (min-width: 36rem) {
+  @container (min-width: calc(37.25rem)) {
+    .teaser {
+      aspect-ratio: 1 / 1;
+      padding-block-start: var(--space-s);
+    }
     .teaser:nth-of-type(3n + 1) {
       aspect-ratio: 2 / 1;
       grid-column: span 2; /* outside knowledge of grid */
