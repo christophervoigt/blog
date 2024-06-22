@@ -8,6 +8,10 @@
 @import './layout.css';
 @import './prism-code-style.css';
 
+@view-transition {
+  navigation: auto;
+}
+
 body {
   font-family: 'Source Serif 4', Georgia, 'Times New Roman', Times, serif;
   font-size: var(--step-0);
@@ -112,7 +116,7 @@ blockquote {
 
 /* BlogPostHeader and Teaser */
 
-.teaser_color,
+.teaser,
 .blogPostHeader {
   color: var(--headline-color);
   background-color: var(--highlight-color);
