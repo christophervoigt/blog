@@ -4,70 +4,35 @@ import FormattedDate from '../atoms/FormattedDate.astro'
 const { slug, data } = Astro.props
 ---
 
-<article>
-  <div class="teaser">
-    <div class="teaser_color"></div>
+<article class="teaser">
+  <a href={`/blog/${slug}/`} class="teaser_link">
+    <h3>{data.title}</h3>
+  </a>
 
-    <div class="teaser_content">
-      <a href={`/blog/${slug}/`} class="teaser_link">
-        <h3>{data.title}</h3>
-      </a>
-
-      <p>
-        <small>
-          <FormattedDate date={data.pubDate} />
-        </small>
-      </p>
-    </div>
-  </div>
+  <p>
+    <small>
+      <FormattedDate date={data.pubDate} />
+    </small>
+  </p>
 </article>
 
 <style>
-  article {
-    container: article / inline-size;
-  }
-
   .teaser {
     position: relative;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-
-    outline: 0.1em solid transparent;
-
-    display: flex;
-    flex-direction: column;
-
-    block-size: 100%;
-  }
-
-  .teaser_color {
-    block-size: var(--space-xl);
-    inline-size: 100%;
-  }
-
-  @container (min-width: 25rem) {
-    .teaser {
-      flex-direction: row;
-
-      border-bottom-left-radius: 0.5rem;
-      border-top-right-radius: 0;
-    }
-
-    .teaser_color {
-      aspect-ratio: auto;
-      inline-size: var(--space-xl);
-      block-size: auto;
-      flex-shrink: 0;
-    }
-  }
-
-  .teaser_content {
-    padding: var(--space-s);
-    flex-grow: 1;
-
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+
+    padding: var(--space-xs);
+    outline: 0.1em solid transparent;
+    aspect-ratio: 1 / 1;
+  }
+
+  @container (min-width: 36rem) {
+    .teaser:nth-of-type(3n + 1) {
+      aspect-ratio: 2 / 1;
+      grid-column: span 2; /* outside knowledge of grid */
+    }
   }
 
   .teaser:hover,
