@@ -1,0 +1,64 @@
+---
+import FormattedDate from '../atoms/FormattedDate.astro'
+
+const { slug, data } = Astro.props
+---
+
+<article class="teaser">
+  <a href={`/blog/${slug}/`} class="teaser_link">
+    <h3>{data.title}</h3>
+  </a>
+
+  <p>
+    <small>
+      <FormattedDate date={data.pubDate} />
+    </small>
+  </p>
+</article>
+
+<style>
+  .teaser {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    padding-inline: var(--space-s);
+    padding-block-end: var(--space-s);
+    padding-block-start: var(--space-xl);
+
+    outline: 0.1em solid transparent;
+  }
+
+  @container (min-width: calc(37.25rem)) {
+    .teaser {
+      aspect-ratio: 1 / 1;
+      padding-block-start: var(--space-s);
+    }
+    .teaser:nth-of-type(3n + 1) {
+      aspect-ratio: 2 / 1;
+      grid-column: span 2; /* outside knowledge of grid */
+    }
+  }
+
+  .teaser:hover,
+  .teaser:focus-within {
+    outline-color: var(--link-text-color);
+  }
+
+  .teaser_link {
+    color: var(--link-text-color);
+    text-decoration: none;
+  }
+
+  .teaser_link:focus {
+    outline: 0;
+  }
+
+  .teaser_link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+  }
+</style>

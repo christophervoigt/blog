@@ -8,6 +8,10 @@
 @import './layout.css';
 @import './prism-code-style.css';
 
+@view-transition {
+  navigation: auto;
+}
+
 body {
   font-family: 'Source Serif 4', Georgia, 'Times New Roman', Times, serif;
   font-size: var(--step-0);
@@ -78,7 +82,9 @@ small {
 * + ol,
 * + blockquote,
 * + pre,
-* + table {
+* + table,
+* + .posts,
+.posts + * {
   margin-block-start: 1em;
 }
 
@@ -95,12 +101,23 @@ blockquote {
   color: var(--headline-color);
 }
 
+blockquote {
+  font-style: italic;
+
+  border-left: 0.375em solid var(--highlight-color);
+  padding-inline: var(--space-s);
+  padding-block: var(--space-2xs);
+}
+
 :not(pre) > code {
   background: var(--code-background-color);
   color: var(--code-text-color);
 }
 
-.highlight-container {
+/* BlogPostHeader and Teaser */
+
+.teaser,
+.blogPostHeader {
   color: var(--headline-color);
   background-color: var(--highlight-color);
   border-radius: 0.5rem;
@@ -110,33 +127,32 @@ blockquote {
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 
-a[href] {
+.blogPostHeader {
+  padding-block: var(--space-xl-2xl);
+  padding-inline: var(--space-s);
+}
+
+/* Links */
+
+a[href]:not(.teaser_link) {
   color: var(--link-text-color);
   border-radius: 0.125em;
-  outline: 0.1em solid var(--link-text-color);
+  outline: 0.1em solid transparent;
   text-decoration: none;
   padding-inline: 0.125em;
 
   background-image: linear-gradient(var(--link-background-color), var(--link-background-color));
   background-repeat: no-repeat;
-  background-size: 100% 15%;
+  background-size: 100% 0.25rem;
   background-position: 0 100%;
   transition: background-size 0.2s ease-out;
 }
 
-a[href]:hover,
-a[href].active {
+a[href]:not(.teaser_link):hover,
+a[href]:not(.teaser_link).active {
   background-size: 100% 100%;
 }
 
-:link:not(:focus) {
-  outline-color: transparent;
-}
-
-blockquote {
-  font-style: italic;
-
-  border-left: 0.375em solid var(--highlight-color);
-  padding-inline: 1em;
-  padding-block: 0.5em;
+a[href]:not(.teaser_link):focus {
+  outline-color: var(--link-text-color);
 }
