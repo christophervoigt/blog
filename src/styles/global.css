@@ -112,6 +112,7 @@ blockquote {
 :not(pre) > code {
   background: var(--code-background-color);
   color: var(--code-text-color);
+  border-radius: 0.125em;
 }
 
 /* BlogPostHeader and Teaser */
@@ -139,7 +140,7 @@ a[href]:not(.teaser_link) {
   border-radius: 0.125em;
   outline: 0.1em solid transparent;
   text-decoration: none;
-  padding-inline: 0.125em;
+  padding-inline: 0.3em;
 
   background-image: linear-gradient(var(--link-background-color), var(--link-background-color));
   background-repeat: no-repeat;

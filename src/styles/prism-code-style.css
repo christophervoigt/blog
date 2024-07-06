@@ -1,10 +1,7 @@
 /* Inline code */
 :not(pre) > code {
   white-space: normal;
-  font-size: 1rem;
-  line-height: 1.5;
   padding-inline: 0.3em;
-  padding-block: 0.15em;
 }
 
 code,
