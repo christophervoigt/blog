@@ -33,11 +33,11 @@
 
   /* grid */
   /* @link https://utopia.fyi/grid/calculator?c=320,16,1.125,1215,18,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,&g=s,m,2xl,12 */
-  --grid-max-inline-size: 76rem;
+  --grid-max-inline-size: 75rem;
   --grid-gutter: var(--space-s-m);
   --grid-columns: 12;
 
-  --content-width: 75ch;
+  --content-width: 60ch;
 
   /* colors */
   --yellow-100: #ffe180;

@@ -1,16 +1,16 @@
 @font-face {
-  font-family: 'Source Serif 4';
-  src: url('/fonts/SourceSerif4-Regular--subset.woff2') format('woff2');
+  font-family: 'LINE Seed';
+  src: url('/fonts/LINE_Seed_regular.woff2') format('woff2');
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Shantell Sans';
-  src: url('/fonts/ShantellSans--subset.woff2') format('woff2');
+  font-family: 'LINE Seed';
+  src: url('/fonts/LINE_Seed_extrabold.woff2') format('woff2');
   font-style: normal;
-  font-weight: 100 700;
+  font-weight: 700 900;
   font-display: swap;
 }
 
