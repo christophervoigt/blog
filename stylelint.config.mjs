@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   plugins: ['stylelint-order'],
   rules: {
     'at-rule-empty-line-before': [
