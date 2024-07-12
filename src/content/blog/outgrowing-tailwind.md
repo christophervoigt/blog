@@ -14,7 +14,7 @@ The more breakpoints we use, the more code get's shipped. And the amount of unus
 
 Tailwind is right in the middle of that. It has class prefixes to adjust the sizes, spacings and layouts over many breakpoints. Making those class attributes even longer then they are already.
 
-To solve that problem I started to look into fluid typography and spacing. [Utopia](https://utopia.fyi/) solved that for me. I heard of the tool before, but never bothered to use it in a real project. Utopia creates a bunch of CSS custom properties depending on your settings. These make use of the `clamp`  function to define upper and lower boundries and have a scaling size between. Hence creating breakpoint-less responsiveness.
+To solve that problem I started to look into fluid typography and spacing. [Utopia](https://utopia.fyi/) solved that for me. I heard of the tool before, but never bothered to use it in a real project. Utopia creates a bunch of CSS custom properties depending on your settings. These make use of the `clamp` function to define upper and lower boundries and have a scaling size between. Hence creating breakpoint-less responsiveness.
 
 I looked for ways to do similar breakpoint-less things with common layouts. Which is where I discovered `auto-fill` for CSS Grids.
 This feature blew my mind. I knew grid-template-columns had a `repeat` function, but I always assumed the first argument had to be a number. Turns out it doesn't. And it does exactly what I wanted. Instead of using arbitrary breakpoints to break layout, let the layout break when it has the space to do so. Removing the necessity of a media query completely.
@@ -37,13 +37,6 @@ It solved problems we had at the time. But going forward I will no longer recomm
 
 This somehow feels to me like when we stoped using bootstrap as a base for our projects. Or when we stopped using jQuery.
 
-Moving on from frameworks is usually a good thing. Because either   it is no longer needed for the use case. Or you learned something that overcomes the need for the framework in the first place.
+Moving on from frameworks is usually a good thing. Because either it is no longer needed for the use case. Or you learned something that overcomes the need for the framework in the first place.
 
-
-
-
-
-
-
-
-
+Have a good one!

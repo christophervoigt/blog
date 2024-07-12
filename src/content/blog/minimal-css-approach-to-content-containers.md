@@ -15,7 +15,7 @@ So I want to reduce the solution to the bare minimum.
 Content of websites is often limited to a certain width on large screens. This is called tracking.
 We do this to improve focus and readability, which we solve with containers or wrappers that keep our content in check.
 
-On smaller screens we want to use *nearly* the full width of the screen.
+On smaller screens we want to use _nearly_ the full width of the screen.
 Nearly, because we don't want the content to stick to the edges of the screen.
 
 So those containers also have to scale down properly.
@@ -33,7 +33,7 @@ By using `max-inline-size` we allow the container to scale down on smaller scree
 
 If we only set a maximum width, how do we add space on the left and right side of the container?
 
-Well, behold the power of CSS! 🧙
+Well, behold the power of CSS!
 
 ## A magical custom property
 
@@ -51,6 +51,7 @@ And we add space to both sides of the container by choosing a smaller minimum th
 ### How does clamp work?
 
 `clamp` has 3 parameters:
+
 1. a minimum value
 1. a scaling function
 1. a maximum value
@@ -60,11 +61,11 @@ The scaling function is used to calculate the value between the minimum and maxi
 
 ### Adjusting the container width
 
-We choose a minimum value of  `18rem`, which is 288px. If you add 16px to the left and right, you get **320px**, which is the width of an iPhone 5 in portrait mode. 320px might be the smallest width we want to support.
+We choose a minimum value of `18rem`, which is 288px. If you add 16px to the left and right, you get **320px**, which is the width of an iPhone 5 in portrait mode. 320px might be the smallest width we want to support.
 
 The maximum value is `76rem`, which is **1216px**. On screens wider than that the container will be centered.
 
-*If your project uses differend limits, you can adjust the minimum and maximum value to your needs.*
+_If your project uses differend limits, you can adjust the minimum and maximum value to your needs._
 
 ## Full example
 
@@ -86,4 +87,4 @@ You can use this in any project.
 You don't even need a breakpoint for this.
 This is truly as pure as it gets.
 
-Have a good one! 👋
+Have a good one!
