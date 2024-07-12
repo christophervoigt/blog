@@ -114,10 +114,8 @@ blockquote {
   border-radius: 0.125em;
 }
 
-/* BlogPostHeader and Teaser */
-
-.teaser,
-.blogPostHeader {
+/* Highlight elements */
+.-highlight {
   color: var(--headline-color);
   background-color: var(--highlight-color);
   border-radius: 0.5rem;
@@ -127,13 +125,7 @@ blockquote {
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 
-.blogPostHeader {
-  padding-block: var(--space-xl-2xl);
-  padding-inline: var(--space-s);
-}
-
 /* Links */
-
 a[href]:not(.teaser_link) {
   color: var(--link-text-color);
   border-radius: 0.125em;

@@ -1,16 +1,16 @@
 /* this has to be set to switch between light or dark */
 :root {
-  --background-color: light-dark(var(--gray-100), var(--gray-900));
-  --highlight-color: light-dark(var(--yellow-400), var(--green-800));
+  --background-color: light-dark(var(--gray-50), var(--gray-1000));
+  --highlight-color: light-dark(var(--yellow-200), var(--green-800));
 
-  --text-color: light-dark(var(--gray-800), var(--gray-300));
-  --headline-color: light-dark(var(--gray-900), var(--gray-200));
+  --text-color: light-dark(var(--gray-900), var(--gray-100));
+  --headline-color: light-dark(var(--gray-900), var(--gray-100));
 
-  --link-text-color: light-dark(var(--gray-900), var(--gray-200));
-  --link-background-color: light-dark(var(--yellow-200), var(--green-700));
+  --link-text-color: light-dark(var(--gray-1000), var(--gray-50));
+  --link-background-color: light-dark(var(--yellow-200), var(--green-800));
 
-  --code-text-color: light-dark(var(--gray-800), var(--gray-200));
-  --code-background-color: light-dark(var(--gray-300), var(--gray-700));
+  --code-text-color: light-dark(var(--gray-1000), var(--gray-50));
+  --code-background-color: light-dark(var(--gray-200), var(--gray-800));
 
   color-scheme: light dark;
 }
@@ -29,9 +29,9 @@
   }
 }
 
-.highlight-container {
-  --text-color: light-dark(var(--gray-800), var(--gray-100));
-  --headline-color: light-dark(var(--gray-900), var(--gray-100));
+.-highlight {
+  --text-color: light-dark(var(--gray-1000), var(--gray-50));
+  --headline-color: light-dark(var(--gray-1000), var(--gray-50));
 
-  --link-background-color: light-dark(var(--gray-100), var(--gray-900));
+  --link-background-color: light-dark(var(--gray-50), var(--gray-1000));
 }

@@ -4,7 +4,7 @@ import FormattedDate from '../atoms/FormattedDate.astro'
 const { slug, data } = Astro.props
 ---
 
-<article class="teaser">
+<article class="teaser -highlight">
   <a href={`/blog/${slug}/`} class="teaser_link">
     <h3>{data.title}</h3>
   </a>
@@ -27,7 +27,7 @@ const { slug, data } = Astro.props
     padding-block-end: var(--space-s);
     padding-block-start: var(--space-xl);
 
-    outline: 0.1em solid transparent;
+    outline: 0.25em solid transparent;
   }
 
   @container (min-width: calc(37.25rem)) {
