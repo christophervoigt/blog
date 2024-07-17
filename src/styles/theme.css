@@ -1,13 +1,13 @@
 /* this has to be set to switch between light or dark */
 :root {
   --background-color: light-dark(var(--gray-50), var(--gray-1000));
-  --highlight-color: light-dark(var(--yellow-200), var(--green-800));
+  --highlight-color: light-dark(var(--green-200), var(--green-700));
 
   --text-color: light-dark(var(--gray-900), var(--gray-100));
   --headline-color: light-dark(var(--gray-900), var(--gray-100));
 
   --link-text-color: light-dark(var(--gray-1000), var(--gray-50));
-  --link-background-color: light-dark(var(--yellow-200), var(--green-800));
+  --link-background-color: light-dark(var(--green-200), var(--green-700));
 
   --code-text-color: light-dark(var(--gray-1000), var(--gray-50));
   --code-background-color: light-dark(var(--gray-200), var(--gray-800));

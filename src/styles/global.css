@@ -137,12 +137,15 @@ a[href]:not(.teaser_link) {
   background-repeat: no-repeat;
   background-size: 100% 0.25rem;
   background-position: 0 100%;
-  transition: background-size 0.2s ease-out;
+  transition:
+    background-size 0.2s ease-out,
+    outline-color 0.2s ease-out;
 }
 
 a[href]:not(.teaser_link):hover,
 a[href]:not(.teaser_link).active {
   background-size: 100% 100%;
+  outline-color: var(--link-text-color);
 }
 
 a[href]:not(.teaser_link):focus {
