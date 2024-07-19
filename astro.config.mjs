@@ -8,4 +8,7 @@ export default defineConfig({
   markdown: {
     syntaxHighlight: 'prism',
   },
+  build: {
+    inlineStylesheets: 'always',
+  },
 })
