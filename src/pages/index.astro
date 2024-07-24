@@ -1,23 +1,18 @@
 ---
+import { SITE_DESCRIPTION } from '../consts'
+
 import LatestPosts from '../components/organisms/LatestPosts.astro'
-import HomePage from '../components/templates/HomePage.astro'
+import Page from '../components/templates/Page.astro'
 ---
 
-<HomePage>
+<Page title="Home" description={SITE_DESCRIPTION}>
   <main>
     <div class="container">
-      <div class="content">
-        <h1>Hi, I'm Chris</h1>
+      <div class="content -left">
+        <h1>Christopher Voigt</h1>
         <p>
-          I am currently working as a senior front-end developer at <a href="https://www.queo.de/en">queo</a> in Dresden,
-          Germany. And this blog aims to reflect the topics that I work on or the tools that I work with.
-        </p>
-        <p>
-          I am very new to blogging. And as most of the developers I know, I am usually not known for finishing side
-          projects that I start. So I am sorry in advance, if there hasn't been a recent post in quite some time.
-        </p>
-        <p>
-          But feel free to explore the <a href="/blog">Blog</a>. Maybe you'll find something interesting.
+          I'm a front-end developer and UX designer. And this is where I write about the topics that I work on or the
+          tools that I work with.
         </p>
       </div>
     </div>
@@ -27,4 +22,4 @@ import HomePage from '../components/templates/HomePage.astro'
       <LatestPosts />
     </div>
   </main>
-</HomePage>
+</Page>
