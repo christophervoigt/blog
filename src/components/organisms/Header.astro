@@ -5,14 +5,17 @@ import Link from '../atoms/Link.astro'
 <header>
   <nav aria-label="main menu">
     <Link href="/">Home</Link>
+    <Link href="/about">About</Link>
     <Link href="/blog">Blog</Link>
-    <Link href="/rss.xml">RSS</Link>
   </nav>
+
+  <Link href="/rss.xml">RSS</Link>
 </header>
 
 <style>
-  h2 {
-    margin-block: 0.5em;
+  header {
+    display: flex;
+    justify-content: space-between;
   }
 
   nav {
