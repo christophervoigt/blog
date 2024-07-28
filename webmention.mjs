@@ -38,7 +38,7 @@ function writeWebMention(webmention) {
 
 	// Create the file if it doesn't exist
 	if (!fs.existsSync(filename)) {
-		fs.writeFileSync(filename, JSON.stringify([webmention], null, 2))
+		fs.writeFileSync(filename, JSON.stringify([webmention]))
 		return
 	}
 
@@ -47,7 +47,7 @@ function writeWebMention(webmention) {
 		.filter((wm) => wm['wm-id'] !== webmention['wm-id'])
 		.concat([webmention])
 	entries.sort((a, b) => a['wm-id'] - b['wm-id'])
-	fs.writeFileSync(filename, JSON.stringify(entries, null, 2))
+	fs.writeFileSync(filename, JSON.stringify(entries))
 }
 
 const webmentions = await fetchWebmentions()
