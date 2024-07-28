@@ -26,13 +26,6 @@ const posts = (await getCollection('blog'))
 <a href="/blog/">View all posts</a>
 
 <style>
-  .posts {
-    container: posts / inline-size;
-    display: grid;
-    gap: var(--grid-gutter);
-    grid-template-columns: repeat(auto-fill, minmax(min(24rem, 100%), 1fr));
-  }
-
   a {
     display: inline-block;
   }

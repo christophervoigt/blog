@@ -20,11 +20,3 @@ const posts = (await getCollection('blog')).sort((a, b) => {
 <div class="posts">
   {posts.map((post) => <Teaser {...post} />)}
 </div>
-
-<style>
-  .posts {
-    display: grid;
-    gap: var(--grid-gutter);
-    grid-template-columns: repeat(auto-fill, minmax(min(24rem, 100%), 1fr));
-  }
-</style>
