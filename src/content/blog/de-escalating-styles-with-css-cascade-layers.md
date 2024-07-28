@@ -22,19 +22,19 @@ Say you're building a form for your customers, where they can apply for sport co
 
 ```html
 <form>
-  <fieldset class="formgroup">
-    <legend>Personal Information</legend>
-    <!-- ... -->
-  </fieldset>
-  <fieldset class="formgroup">
-    <legend>Course</legend>
-    <!-- ... -->
-  </fieldset>
-  <fieldset class="formgroup">
-    <legend>Payment Information</legend>
-    <!-- ... -->
-  </fieldset>
-  <button type="submit">Send</button>
+	<fieldset class="formgroup">
+		<legend>Personal Information</legend>
+		<!-- ... -->
+	</fieldset>
+	<fieldset class="formgroup">
+		<legend>Course</legend>
+		<!-- ... -->
+	</fieldset>
+	<fieldset class="formgroup">
+		<legend>Payment Information</legend>
+		<!-- ... -->
+	</fieldset>
+	<button type="submit">Send</button>
 </form>
 ```
 
@@ -42,8 +42,8 @@ To structure your form fields, you add some styles to the `formgroup` class, e.g
 
 ```css
 .formgroup {
-  display: flex;
-  /* ... */
+	display: flex;
+	/* ... */
 }
 ```
 
@@ -51,18 +51,18 @@ There could be courses that don't need any payment information because they're f
 
 ```css
 .hidden {
-  display: none;
+	display: none;
 }
 ```
 
 ```html
 <form>
-  <!-- ... -->
-  <fieldset class="formgroup hidden">
-    <legend>Payment Information</legend>
-    <!-- ... -->
-  </fieldset>
-  <!-- ... -->
+	<!-- ... -->
+	<fieldset class="formgroup hidden">
+		<legend>Payment Information</legend>
+		<!-- ... -->
+	</fieldset>
+	<!-- ... -->
 </form>
 ```
 
@@ -88,8 +88,8 @@ You could do that by adding a parent selector to `formgroup`:
 
 ```css
 form > .formgroup {
-  display: flex;
-  /* ... */
+	display: flex;
+	/* ... */
 }
 ```
 
@@ -116,14 +116,14 @@ You could add `formgroup` to a `components` layer:
 
 ```css
 .hidden {
-  display: none;
+	display: none;
 }
 
 @layer components {
-  .formgroup {
-    display: flex;
-    /* ... */
-  }
+	.formgroup {
+		display: flex;
+		/* ... */
+	}
 }
 ```
 
@@ -137,16 +137,16 @@ You can move both `hidden` and `formgroup` into layers:
 @layer components, utilities;
 
 @layer utilities {
-  .hidden {
-    display: none;
-  }
+	.hidden {
+		display: none;
+	}
 }
 
 @layer components {
-  .formgroup {
-    display: flex;
-    /* ... */
-  }
+	.formgroup {
+		display: flex;
+		/* ... */
+	}
 }
 ```
 

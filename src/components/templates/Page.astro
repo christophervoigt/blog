@@ -10,15 +10,15 @@ const { title, description } = Astro.props
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <BaseHead title={`${title} | ${SITE_TITLE}`} description={description} />
-  </head>
+	<head>
+		<BaseHead title={`${title} | ${SITE_TITLE}`} description={description} />
+	</head>
 
-  <body>
-    <Header />
+	<body>
+		<Header />
 
-    <slot />
+		<slot />
 
-    <Footer />
-  </body>
+		<Footer />
+	</body>
 </html>

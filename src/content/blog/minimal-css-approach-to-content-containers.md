@@ -24,8 +24,8 @@ So those containers also have to scale down properly.
 
 ```css
 .container {
-  max-inline-size: var(--container-max-inline-size);
-  margin-inline: auto;
+	max-inline-size: var(--container-max-inline-size);
+	margin-inline: auto;
 }
 ```
 
@@ -41,7 +41,7 @@ First of all, you don't have to use a custom property for this, but it increases
 
 ```css
 :root {
-  --container-max-inline-size: clamp(18rem, 90vw, 76rem);
+	--container-max-inline-size: clamp(18rem, 90vw, 76rem);
 }
 ```
 
@@ -71,12 +71,12 @@ _If your project uses differend limits, you can adjust the minimum and maximum v
 
 ```css
 :root {
-  --container-max-inline-size: clamp(18rem, 90vw, 76rem);
+	--container-max-inline-size: clamp(18rem, 90vw, 76rem);
 }
 
 .container {
-  max-inline-size: var(--container-max-inline-size);
-  margin-inline: auto;
+	max-inline-size: var(--container-max-inline-size);
+	margin-inline: auto;
 }
 ```
 

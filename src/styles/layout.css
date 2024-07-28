@@ -1,56 +1,56 @@
 body {
-  container: root / inline-size;
-  display: flex;
-  flex-direction: column;
+	container: root / inline-size;
+	display: flex;
+	flex-direction: column;
 }
 
 main {
-  flex: 1;
+	flex: 1;
 }
 
 header {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--grid-gutter);
-  align-items: center;
-  padding-block: var(--space-s);
+	display: flex;
+	justify-content: space-between;
+	gap: var(--grid-gutter);
+	align-items: center;
+	padding-block: var(--space-s);
 }
 
 header,
 footer {
-  inline-size: 100%;
+	inline-size: 100%;
 }
 
 header,
 footer,
 .container {
-  max-inline-size: var(--grid-max-inline-size);
-  padding-inline: var(--grid-gutter);
-  margin-inline: auto;
+	max-inline-size: var(--grid-max-inline-size);
+	padding-inline: var(--grid-gutter);
+	margin-inline: auto;
 }
 
 main:has(> :last-child) ~ footer {
-  margin-block-start: var(--space-xl-2xl);
+	margin-block-start: var(--space-xl-2xl);
 }
 
 header ~ main {
-  margin-block-start: var(--space-s-m);
+	margin-block-start: var(--space-s-m);
 }
 
 .container + .container {
-  margin-block-start: var(--space-xl-2xl);
+	margin-block-start: var(--space-xl-2xl);
 }
 
 .content {
-  max-inline-size: var(--content-width);
+	max-inline-size: var(--content-width);
 }
 
 .content:not(.-left) {
-  margin-inline: auto;
+	margin-inline: auto;
 }
 
 .posts {
-  display: grid;
-  gap: var(--grid-gutter);
-  grid-template-columns: repeat(auto-fill, minmax(min(24rem, 100%), 1fr));
+	display: grid;
+	gap: var(--grid-gutter);
+	grid-template-columns: repeat(auto-fill, minmax(min(24rem, 100%), 1fr));
 }

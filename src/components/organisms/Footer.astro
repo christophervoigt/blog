@@ -5,49 +5,49 @@ import Link from '../atoms/Link.astro'
 ---
 
 <footer>
-  <div class="wrapper">
-    <nav aria-label="social media">
-      <Link href="https://indieweb.social/@christophervoigt" rel="me">Mastodon</Link>
-      <Link href="https://github.com/christophervoigt">GitHub</Link>
-      <Link href="https://codepen.io/christophervoigt">CodePen</Link>
-    </nav>
+	<div class="wrapper">
+		<nav aria-label="social media">
+			<Link href="https://indieweb.social/@christophervoigt" rel="me">Mastodon</Link>
+			<Link href="https://github.com/christophervoigt">GitHub</Link>
+			<Link href="https://codepen.io/christophervoigt">CodePen</Link>
+		</nav>
 
-    <p>
-      <small>
-        &copy; 2023-{today.getFullYear()} Christopher Voigt
-      </small>
-    </p>
-  </div>
+		<p>
+			<small>
+				&copy; 2023-{today.getFullYear()} Christopher Voigt
+			</small>
+		</p>
+	</div>
 </footer>
 
 <style>
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: var(--grid-gutter);
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: var(--grid-gutter);
 
-    /* reason fo the wrapper need */
-    padding-block: var(--space-l);
-    border-block-start: 1px solid var(--border-color);
+		/* reason fo the wrapper need */
+		padding-block: var(--space-l);
+		border-block-start: 1px solid var(--border-color);
 
-    @media (min-width: 35rem) {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-  }
+		@media (min-width: 35rem) {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
 
-  nav {
-    display: flex;
-    column-gap: var(--grid-gutter);
-  }
+	nav {
+		display: flex;
+		column-gap: var(--grid-gutter);
+	}
 
-  p {
-    white-space: nowrap;
+	p {
+		white-space: nowrap;
 
-    @media (min-width: 35rem) {
-      justify-self: flex-end;
-      text-align: right;
-    }
-  }
+		@media (min-width: 35rem) {
+			justify-self: flex-end;
+			text-align: right;
+		}
+	}
 </style>

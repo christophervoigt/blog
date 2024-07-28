@@ -13,35 +13,35 @@ const { title, description, pubDate, updatedDate, hasCode, webmentions } = Astro
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <BaseHead title={`${title} | ${SITE_TITLE}`} description={description} hasCode={hasCode} />
-  </head>
+	<head>
+		<BaseHead title={`${title} | ${SITE_TITLE}`} description={description} hasCode={hasCode} />
+	</head>
 
-  <body>
-    <Header />
+	<body>
+		<Header />
 
-    <main>
-      <div class="container">
-        <BlogPostHeader title={title} pubDate={pubDate} updatedDate={updatedDate} />
-      </div>
+		<main>
+			<div class="container">
+				<BlogPostHeader title={title} pubDate={pubDate} updatedDate={updatedDate} />
+			</div>
 
-      <div class="container">
-        <div class="content">
-          <slot />
-        </div>
-      </div>
+			<div class="container">
+				<div class="content">
+					<slot />
+				</div>
+			</div>
 
-      {
-        !!webmentions.length && (
-          <div class="container">
-            <div class="content">
-              <Webmentions webmentions={webmentions} />
-            </div>
-          </div>
-        )
-      }
-    </main>
+			{
+				!!webmentions.length && (
+					<div class="container">
+						<div class="content">
+							<Webmentions webmentions={webmentions} />
+						</div>
+					</div>
+				)
+			}
+		</main>
 
-    <Footer />
-  </body>
+		<Footer />
+	</body>
 </html>

@@ -10,8 +10,4 @@ But on most websites we have multiple types of containers. Usualy there is a con
 
 ## Background containers
 
-
-
-
-
 ## Article containers
