@@ -12,6 +12,8 @@
   --code-text-color: light-dark(var(--gray-1000), var(--gray-50));
   --code-background-color: light-dark(var(--gray-200), var(--gray-800));
 
+  --border-color: light-dark(var(--gray-300), var(--gray-700));
+
   color-scheme: light dark;
 }
 

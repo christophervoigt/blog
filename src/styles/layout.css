@@ -11,14 +11,14 @@ main {
 header {
   display: flex;
   justify-content: space-between;
+  gap: var(--grid-gutter);
   align-items: center;
-  inline-size: 100%;
   padding-block: var(--space-s);
 }
 
+header,
 footer {
-  text-align: center;
-  margin-block-end: var(--space-l);
+  inline-size: 100%;
 }
 
 header,
@@ -47,4 +47,10 @@ header ~ main {
 
 .content:not(.-left) {
   margin-inline: auto;
+}
+
+.posts {
+  display: grid;
+  gap: var(--grid-gutter);
+  grid-template-columns: repeat(auto-fill, minmax(min(24rem, 100%), 1fr));
 }
