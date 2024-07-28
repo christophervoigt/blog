@@ -1,4 +1,6 @@
 ---
+import { SITE_TITLE } from '../../consts'
+
 import BaseHead from '../molecules/BaseHead.astro'
 import BlogPostHeader from '../molecules/BlogPostHeader.astro'
 
@@ -12,7 +14,7 @@ const { title, description, pubDate, updatedDate, hasCode, webmentions } = Astro
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} hasCode={hasCode} />
+    <BaseHead title={`${title} | ${SITE_TITLE}`} description={description} hasCode={hasCode} />
   </head>
 
   <body>
