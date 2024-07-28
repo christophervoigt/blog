@@ -11,14 +11,14 @@ main {
 header {
   display: flex;
   justify-content: space-between;
+  gap: var(--grid-gutter);
   align-items: center;
-  inline-size: 100%;
   padding-block: var(--space-s);
 }
 
+header,
 footer {
-  text-align: center;
-  margin-block-end: var(--space-l);
+  inline-size: 100%;
 }
 
 header,
