@@ -5,7 +5,7 @@ on:
     - cron: '0 * * * *'
 
 jobs:
-  webmentions:
+  auctionHouse:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
