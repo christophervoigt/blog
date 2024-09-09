@@ -72,10 +72,10 @@ const refinedItems = itemIds.map(async (itemId) => {
 	const itemName = itemData.name
 
 	let itemAuctions = auctions.filter((auction) => auction.item.id === itemId)
-	const itemAmount = itemAuctions.length
+	const totalAuctions = itemAuctions.length
 
 	let itemPrice = 0
-	if (itemAmount > 0) {
+	if (totalAuctions > 0) {
 		itemAuctions.sort((a, b) => {
 			if (a.unit_price < b.unit_price) {
 				return -1
@@ -92,7 +92,7 @@ const refinedItems = itemIds.map(async (itemId) => {
 	return {
 		id: itemId,
 		name: itemName,
-		amount: itemAmount,
+		auctions: totalAuctions,
 		price: itemPrice,
 	}
 })
@@ -100,4 +100,4 @@ const refinedItems = itemIds.map(async (itemId) => {
 const items = await Promise.all(refinedItems)
 
 const filename = `src/data/worldofwarcraft/auctions.json`
-fs.writeFileSync(filename, JSON.stringify([items]))
+fs.writeFileSync(filename, JSON.stringify(items))
