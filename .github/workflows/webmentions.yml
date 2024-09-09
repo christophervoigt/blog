@@ -23,7 +23,7 @@ jobs:
           WEBMENTION_API_KEY: ${{ secrets.WEBMENTION_API_KEY }}
         run: |
           npm ci
-          node ./webmention.mjs
+          node ./scripts/webmentions.mjs
 
       - name: Commit to repository
         env:
