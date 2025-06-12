@@ -2,17 +2,18 @@
 import FormattedDate from '../atoms/FormattedDate.astro'
 
 const { slug, data } = Astro.props
+const { title, pubDate } = data
 ---
 
 <article class="teaser -highlight">
 	<div class="teaser_content">
 		<a href={`/blog/${slug}/`} class="teaser_link">
-			<h3>{data.title}</h3>
+			<h3>{title}</h3>
 		</a>
 
 		<p>
 			<small>
-				<FormattedDate date={data.pubDate} />
+				<FormattedDate date={pubDate} />
 			</small>
 		</p>
 	</div>
