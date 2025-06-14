@@ -1,11 +1,13 @@
 /* setup */
-@import './setup/reset.css';
-@import './setup/variables.css';
+@import './reset.css';
+@import './variables.css';
 
 /* other */
 @import './theme.css';
 @import './fonts.css';
 @import './layout.css';
+
+/* code blocks */
 @import './prism-code-style.css';
 
 body {
