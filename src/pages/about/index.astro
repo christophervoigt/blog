@@ -1,4 +1,6 @@
 ---
+import Link from '../../components/atoms/Link.astro'
+
 import Page from '../../components/templates/Page.astro'
 ---
 
@@ -8,18 +10,35 @@ import Page from '../../components/templates/Page.astro'
 			<div class="content -left">
 				<h1>Hi, I'm Chris</h1>
 				<p>
-					I'm 32 years old. I live in Dresden, Germany. And I am currently working as a senior front-end developer at
+					I am 33, I live in <a
+						href="https://www.google.de/maps/place/Dresden/@51.0767179,13.6077818,11z/data=!3m1!4b1!4m6!3m5!1s0x4709cf29101ad6a9:0x421b1cb4288feb0!8m2!3d51.0504088!4d13.7372621!16zL20vMDliOW0?entry=ttu&g_ep=EgoyMDI1MDYxMS4wIKXMDSoASAFQAw%3D%3D"
+						>Dresden</a
+					> and I currently work as a senior front-end developer at
 					<a href="https://www.queo.de/en">queo</a>.
 				</p>
 				<p>
-					This blog aims to reflect the topics that I work on or the tools that I work with. Although I am very new to
-					blogging and currently more concerned with the structure and design of this page than with the content, I want
-					to write more.
+					And this website aims to reflect the topics that I work on or the tools that I work with (which are mostly
+					HTML/CSS/JS). I'm not 100% sure that this page will just be a blog, a portfolio or a collection of things I
+					find interesting. We'll find out together, I guess. Haha.
 				</p>
 				<p>
-					So feel free to explore the few articles I have on my <a href="/blog">Blog</a> so far. Maybe you'll find something
+					Feel free to explore the few articles I have on my <a href="/blog">Blog</a> so far. Maybe you'll find something
 					interesting.
 				</p>
+				<p>Until then, you can also find me on these plattforms:</p>
+				<ul>
+					<li>
+						<Link href="https://indieweb.social/@christophervoigt" rel="me">Mastodon</Link>
+					</li>
+					<li>
+						<Link href="https://github.com/christophervoigt" rel="me">GitHub</Link>
+					</li>
+					<li>
+						<Link href="https://codepen.io/christophervoigt">CodePen</Link>
+					</li>
+				</ul>
+
+				<p>Thank you for stopping by!</p>
 			</div>
 		</div>
 	</main>
