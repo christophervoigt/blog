@@ -112,8 +112,12 @@ blockquote {
 
 /* Highlight elements */
 .-highlight {
+	--text-color: light-dark(var(--gray-1000), var(--gray-50));
+	--headline-color: light-dark(var(--gray-1000), var(--gray-50));
+	--link-background-color: light-dark(var(--gray-50), var(--gray-1000));
+
 	color: var(--headline-color);
-	background-color: var(--highlight-color);
+	background: var(--highlight-gradient);
 	border-radius: 0.5rem;
 	box-shadow:
 		rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset,
