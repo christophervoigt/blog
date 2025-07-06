@@ -4,41 +4,43 @@ import FormattedDate from '../atoms/FormattedDate.astro'
 const { webmentions } = Astro.props
 ---
 
-<p class="h4">Webmentions</p>
+<div class="container">
+	<section class="webmentions">
+		<h2 class="sr-only">Webmentions</h2>
 
-<ul>
-	{
-		webmentions.map((webmention) => (
-			<li>
-				{webmention.author.photo ? (
-					<img alt="" height="50" src={webmention.author.photo} width="50" loading="lazy" />
-				) : null}
+		<ul>
+			{
+				webmentions.map((webmention) => (
+					<li>
+						{webmention.author.photo ? (
+							<img alt="" height="50" src={webmention.author.photo} width="50" loading="lazy" />
+						) : null}
 
-				<p>
-					<a href={webmention.author.url} rel="author">
-						{webmention.author.name}
-					</a>
+						<p>
+							<a href={webmention.author.url}>{webmention.author.name}</a>
 
-					<br />
+							<br />
 
-					{webmention['wm-property'] === 'like-of' ? (
-						<>
-							liked on
-							<FormattedDate date={new Date(webmention['wm-received'])} />
-						</>
-					) : null}
+							{webmention['wm-property'] === 'like-of' ? (
+								<>
+									liked on
+									<FormattedDate date={new Date(webmention['wm-received'])} />
+								</>
+							) : null}
 
-					{webmention['wm-property'] === 'repost-of' ? (
-						<>
-							reposted on
-							<FormattedDate date={new Date(webmention['wm-received'])} />
-						</>
-					) : null}
-				</p>
-			</li>
-		))
-	}
-</ul>
+							{webmention['wm-property'] === 'repost-of' ? (
+								<>
+									reposted on
+									<FormattedDate date={new Date(webmention['wm-received'])} />
+								</>
+							) : null}
+						</p>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</div>
 
 <style>
 	ul {
@@ -58,7 +60,7 @@ const { webmentions } = Astro.props
 	}
 
 	p {
-		margin: 0;
+		margin-block-start: 0;
 	}
 
 	img {

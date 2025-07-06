@@ -1,0 +1,63 @@
+/* reset */
+@import './reset.css';
+
+/* basics */
+@import './basics/color.css';
+@import './basics/layout.css';
+@import './basics/typography.css';
+
+/* specials */
+@import './specials/prism-code-blocks.css';
+
+body {
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+/* transformed markdown text blocks */
+.content {
+	& *:not(.sr-only) + :is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, table) {
+		margin-block-start: 1em;
+	}
+
+	& li:has(a[href]) + li {
+		margin-block-start: 0.5em;
+	}
+}
+
+.footnotes {
+	margin-block-start: var(--space-s);
+	padding-block-start: var(--space-s);
+	border-block-start: 2px solid var(--border-color);
+}
+
+.posts {
+	display: grid;
+	gap: var(--grid-gutter);
+	grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+
+	margin-block-start: 1em;
+}
+
+/* Highlight elements */
+.-highlight {
+	--text-color: light-dark(var(--black), var(--white));
+	--headline-color: light-dark(var(--black), var(--white));
+	--link-background-color: light-dark(var(--white), var(--black));
+
+	color: var(--headline-color);
+	background: var(--highlight-gradient);
+	border-radius: 0.5rem;
+	box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset;
+}

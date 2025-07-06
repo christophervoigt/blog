@@ -4,7 +4,7 @@ const today = new Date()
 import Link from '../atoms/Link.astro'
 ---
 
-<footer>
+<footer class="container">
 	<div class="wrapper">
 		<nav aria-label="social media">
 			<Link href="https://indieweb.social/@christophervoigt" rel="me">Mastodon</Link>
@@ -26,11 +26,7 @@ import Link from '../atoms/Link.astro'
 		flex-direction: column;
 		gap: var(--grid-gutter);
 
-		/* reason fo the wrapper need */
-		padding-block: var(--space-l);
-		border-block-start: 1px solid var(--border-color);
-
-		@media (min-width: 35rem) {
+		@media (width >= 35rem) {
 			flex-direction: row;
 			justify-content: space-between;
 			align-items: center;
@@ -39,13 +35,13 @@ import Link from '../atoms/Link.astro'
 
 	nav {
 		display: flex;
-		column-gap: var(--grid-gutter);
+		column-gap: 1em;
 	}
 
 	p {
 		white-space: nowrap;
 
-		@media (min-width: 35rem) {
+		@media (width >= 35rem) {
 			justify-self: flex-end;
 			text-align: right;
 		}

@@ -1,0 +1,92 @@
+:root {
+	/****************/
+	/* basic colors */
+	/****************/
+	--sky-300: oklch(0.8861 0.06718750000000001 220);
+	--sky-400: oklch(0.8212 0.11250000000000003 220);
+	--sky-500: oklch(0.7366 0.17343750000000002 220);
+	--sky-600: oklch(0.5977 0.14062500000000003 220);
+	--sky-700: oklch(0.5098 0.12031250000000003 220);
+	--sky-800: oklch(0.3999 0.09375000000000001 220);
+
+	--turquoise-300: oklch(0.8836 0.06718750000000001 184);
+	--turquoise-400: oklch(0.8161 0.11250000000000003 184);
+	--turquoise-500: oklch(0.7283 0.17343750000000002 184);
+	--turquoise-600: oklch(0.5908 0.14062500000000003 184);
+	--turquoise-700: oklch(0.5044 0.12031250000000003 184);
+	--turquoise-800: oklch(0.3945 0.09375000000000001 184);
+
+	--yellow-300: oklch(0.8909 0.06718750000000001 96);
+	--yellow-400: oklch(0.8295 0.11250000000000003 96);
+	--yellow-500: oklch(0.7519 0.17343750000000002 96);
+	--yellow-600: oklch(0.6113 0.14062500000000003 96);
+	--yellow-700: oklch(0.5215 0.12031250000000003 96);
+	--yellow-800: oklch(0.4102 0.09375000000000001 96);
+
+	--bronze-300: oklch(0.896 0.06718750000000001 61);
+	--bronze-400: oklch(0.8371 0.11250000000000003 61);
+	--bronze-500: oklch(0.7639 0.17343750000000002 61);
+	--bronze-600: oklch(0.6201 0.14062500000000003 61);
+	--bronze-700: oklch(0.5303 0.12031250000000003 61);
+	--bronze-800: oklch(0.416 0.09375000000000001 61);
+
+	--coral-300: oklch(0.8988 0.06718750000000001 32);
+	--coral-400: oklch(0.8419 0.11250000000000003 32);
+	--coral-500: oklch(0.7703 0.17343750000000002 32);
+	--coral-600: oklch(0.626 0.14062500000000003 32);
+	--coral-700: oklch(0.5347 0.12031250000000003 32);
+	--coral-800: oklch(0.4189 0.09375000000000001 32);
+
+	--gray-50: oklch(100% 0 0);
+	--gray-100: oklch(95% 0 0);
+	--gray-200: oklch(88% 0 0);
+	--gray-300: oklch(80% 0 0);
+	--gray-400: oklch(72% 0 0);
+	--gray-500: oklch(65% 0 0);
+	--gray-600: oklch(58% 0 0);
+	--gray-700: oklch(50% 0 0);
+	--gray-800: oklch(42% 0 0);
+	--gray-900: oklch(35% 0 0);
+	--gray-1000: oklch(28% 0 0);
+
+	/********************/
+	/* color by purpose */
+	/********************/
+	--white: var(--gray-50);
+	--black: var(--gray-900);
+
+	--text-color: light-dark(var(--black), var(--white));
+	--background-color: light-dark(var(--white), var(--black));
+
+	--headline-color: light-dark(var(--black), var(--white));
+
+	--link-text-color: light-dark(var(--black), var(--white));
+	--link-background-color: light-dark(var(--bronze-400), var(--sky-700));
+
+	--code-text-color: light-dark(var(--white), var(--black));
+	--code-background-color: light-dark(var(--gray-800), var(--gray-100));
+	--pre-code-background-color: light-dark(var(--gray-900), var(--gray-1000));
+
+	--border-color: light-dark(var(--gray-300), var(--gray-700));
+
+	--highlight-color: light-dark(var(--bronze-400), var(--turquoise-600));
+	--highlight-gradient: linear-gradient(
+		135deg,
+		light-dark(var(--bronze-400), var(--sky-700)) 0%,
+		light-dark(var(--coral-500), var(--turquoise-600)) 100%
+	);
+}
+
+/* If user prefers a light appearance */
+@media (prefers-color-scheme: light) {
+	:root {
+		color-scheme: light;
+	}
+}
+
+/* If user prefers a dark appearance */
+@media (prefers-color-scheme: dark) {
+	:root {
+		color-scheme: dark;
+	}
+}

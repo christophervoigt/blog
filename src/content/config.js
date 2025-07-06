@@ -15,6 +15,7 @@ const blog = defineCollection({
 			.optional()
 			.transform((str) => (str ? new Date(str) : undefined)),
 		hasCode: z.boolean().optional(),
+		status: z.string().optional(),
 	}),
 })
 

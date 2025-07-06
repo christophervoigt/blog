@@ -2,12 +2,16 @@
 :not(pre) > code {
 	white-space: normal;
 	padding-inline: 0.3em;
+	padding-block: 0.1em;
+	background: var(--code-background-color);
+	color: var(--code-text-color);
+	border-radius: 0.125em;
 }
 
 code,
 pre[class*='language-'] {
 	color: #f8f8f2;
-	background: #2e2e2e;
+	background: var(--pre-code-background-color);
 	font-family: 'Consolas', Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 	text-align: left;
 	white-space: pre;
@@ -31,10 +35,11 @@ pre[class*='language-css'] {
 
 /* Code blocks */
 pre[class*='language-'] {
-	padding: 1em;
+	padding: var(--space-2xs-m);
 	overflow: auto;
 	border-radius: 0.5em;
 	box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset;
+	margin-inline: calc(-1 * var(--space-3xs-m));
 }
 
 .token.comment,

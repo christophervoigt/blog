@@ -16,7 +16,8 @@ const posts = (await getCollection('blog'))
 			return 0
 		}
 	})
-	.slice(0, 3)
+	.filter((post) => post.data.status !== 'draft')
+	.slice(0, 4)
 ---
 
 <div class="posts">
@@ -28,5 +29,6 @@ const posts = (await getCollection('blog'))
 <style>
 	a {
 		display: inline-block;
+		margin-block-start: 1em;
 	}
 </style>

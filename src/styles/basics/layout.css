@@ -1,0 +1,75 @@
+:root {
+	/* spaces */
+	/* @link https://utopia.fyi/space/calculator?c=316,16,1.125,1110,20,1.25,4,2,&s=0.75%7C0.5%7C0.25,1.5%7C2%7C3%7C4%7C6,&g=s,m,xl,8 */
+	--space-3xs: clamp(0.25rem, 0.2251rem + 0.1259vw, 0.3125rem);
+	--space-2xs: clamp(0.5rem, 0.4503rem + 0.2519vw, 0.625rem);
+	--space-xs: clamp(0.75rem, 0.6754rem + 0.3778vw, 0.9375rem);
+	--space-s: clamp(1rem, 0.9005rem + 0.5038vw, 1.25rem);
+	--space-m: clamp(1.5rem, 1.3508rem + 0.7557vw, 1.875rem);
+	--space-l: clamp(2rem, 1.801rem + 1.0076vw, 2.5rem);
+	--space-xl: clamp(3rem, 2.7015rem + 1.5113vw, 3.75rem);
+	--space-2xl: clamp(4rem, 3.602rem + 2.0151vw, 5rem);
+	--space-3xl: clamp(6rem, 5.403rem + 3.0227vw, 7.5rem);
+
+	/* One-up pairs */
+	--space-3xs-2xs: clamp(0.25rem, 0.1008rem + 0.7557vw, 0.625rem);
+	--space-2xs-xs: clamp(0.5rem, 0.3259rem + 0.8816vw, 0.9375rem);
+	--space-xs-s: clamp(0.75rem, 0.551rem + 1.0076vw, 1.25rem);
+	--space-s-m: clamp(1rem, 0.6518rem + 1.7632vw, 1.875rem);
+	--space-m-l: clamp(1.5rem, 1.102rem + 2.0151vw, 2.5rem);
+	--space-l-xl: clamp(2rem, 1.3035rem + 3.5264vw, 3.75rem);
+	--space-xl-2xl: clamp(3rem, 2.204rem + 4.0302vw, 5rem);
+	--space-2xl-3xl: clamp(4rem, 2.6071rem + 7.0529vw, 7.5rem);
+
+	/* Custom pairs */
+	--space-3xs-m: clamp(0.25rem, -0.3967rem + 3.2746vw, 1.875rem);
+	--space-2xs-m: clamp(0.5rem, -0.0472rem + 2.7708vw, 1.875rem);
+	--space-xs-m: clamp(0.75rem, 0.3023rem + 2.267vw, 1.875rem);
+
+	/* grid */
+	/* @link https://utopia.fyi/grid/calculator?c=316,16,1.125,1110,20,1.25,4,2,&s=0.75%7C0.5%7C0.25,1.5%7C2%7C3%7C4%7C6,&g=s,m,xl,8 */
+	--grid-max-width: 46.88rem;
+	--grid-gutter: var(--space-s-m, clamp(1rem, 0.3629rem + 3.2258vw, 1.875rem));
+	--grid-columns: 8;
+}
+
+body {
+	container: root / inline-size;
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	flex: 1;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+	gap: var(--grid-gutter);
+	align-items: center;
+}
+
+header,
+footer {
+	inline-size: 100%;
+	padding-block: var(--space-s);
+}
+
+.content {
+	padding-inline: var(--grid-gutter);
+}
+
+.container {
+	max-inline-size: var(--grid-max-width);
+	padding-inline: var(--grid-gutter);
+	margin-inline: auto;
+}
+
+main:has(> :last-child) ~ footer {
+	margin-block-start: var(--space-xl-2xl);
+}
+
+.container + .container {
+	margin-block-start: var(--space-l-xl);
+}

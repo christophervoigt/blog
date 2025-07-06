@@ -1,0 +1,124 @@
+@import './font/LINE SEED.css';
+@import './font/Consolas.css';
+
+:root {
+	/* font sizes */
+	/* @link https://utopia.fyi/type/calculator?c=316,16,1.125,1110,20,1.25,5,2,&s=0.75%7C0.5%7C0.25,1.5%7C2%7C3%7C4%7C6,s-l&g=s,m,xl,8 */
+	--step--2: clamp(0.7901rem, 0.7862rem + 0.0199vw, 0.8rem);
+	--step--1: clamp(0.8889rem, 0.8447rem + 0.2239vw, 1rem);
+	--step-0: clamp(1rem, 0.9005rem + 0.5038vw, 1.25rem);
+	--step-1: clamp(1.125rem, 0.9509rem + 0.8816vw, 1.5625rem);
+	--step-2: clamp(1.2656rem, 0.992rem + 1.3854vw, 1.9531rem);
+	--step-3: clamp(1.4238rem, 1.0188rem + 2.0505vw, 2.4414rem);
+	--step-4: clamp(1.6018rem, 1.0247rem + 2.9218vw, 3.0518rem);
+}
+
+body {
+	font-family: 'LINE Seed', Arial, Helvetica, sans-serif;
+	font-size: var(--step-0);
+	line-height: 1.4;
+}
+
+/* headlines */
+:is(h1, .h1, h2, .h2, h3, .h3, h4, .h4) {
+	text-wrap: balance;
+	color: var(--headline-color);
+}
+
+h1,
+.h1 {
+	font-size: var(--step-4);
+	font-weight: 900;
+	line-height: calc(var(--background-grid-size) * 3);
+}
+
+:is(h2, .h2, h3, .h3, h4, .h4) {
+	font-weight: 700;
+}
+
+h2,
+.h2 {
+	font-size: var(--step-3);
+	line-height: calc(var(--background-grid-size) * 2);
+}
+
+:is(h3, .h3) {
+	font-size: var(--step-2);
+}
+
+:is(h4, .h4) {
+	font-size: var(--step-1);
+}
+
+:is(h5, .h5, h6, .h6) {
+	font-size: var(--step-0);
+}
+
+p {
+	line-height: var(--background-grid-size);
+}
+
+/* paragraphs */
+/* @ToDo */
+
+/* links */
+a[href]:not(.teaser_link) {
+	color: var(--link-text-color);
+	border-radius: 0.125em;
+	outline: 0.1em solid transparent;
+	text-decoration: none;
+	padding-inline: 0.3em;
+
+	background-image: linear-gradient(var(--link-background-color), var(--link-background-color));
+	background-repeat: no-repeat;
+	background-size: 100% 0.25rem;
+	background-position: 0 100%;
+	transition:
+		background-size 0.2s ease-out,
+		outline-color 0.2s ease-out;
+}
+
+a[href]:not(.teaser_link):hover,
+a[href]:not(.teaser_link).active {
+	background-size: 100% 100%;
+	outline-color: var(--link-text-color);
+}
+
+a[href]:not(.teaser_link):focus {
+	outline-color: var(--link-text-color);
+}
+
+/* images */
+/* @ToDo */
+
+/* blockquotes, cites and footnotes */
+blockquote {
+	border-left: 0.375em solid var(--highlight-color);
+	padding-inline: var(--space-s);
+	padding-block: var(--space-2xs);
+
+	font-weight: 700;
+}
+
+cite {
+	font-style: normal;
+	font-weight: 400;
+	line-height: var(--background-grid-size);
+
+	& sup {
+		margin-inline-start: 0.25em;
+	}
+}
+
+/* tables */
+/* @ToDo */
+
+/* lists */
+/* @ToDo */
+
+/* other */
+/* @ToDo */
+
+small {
+	font-size: var(--step--1);
+}

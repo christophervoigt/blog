@@ -15,7 +15,9 @@ p,
 figure,
 blockquote,
 dl,
-dd {
+dd,
+ol,
+ul {
 	margin: 0;
 }
 

@@ -2,7 +2,7 @@
 title: 'Hi there!'
 description: 'The first blog post on the new site. Chris writes a bit about himself and the technology behind the blog.'
 pubDate: 'Mar 14 2023'
-updatedDate: 'Jun 14 2025'
+updatedDate: 'Jul 6 2025'
 ---
 
 I am excited to announce that I have a blog now - tada! I've been thinking about starting one for a while now, but never really got around to it. Having a place where I can write about the things I'm working on or thinking about, was something that I wanted for a long time. I'm also hoping that this will help me to get better at writing and to improve my English skills.
@@ -19,7 +19,9 @@ I use Webmentions to show people who liked or replied to my posts. But I don't u
 
 At the moment, the design is pretty minimalistic. Which I find good enough, haha.
 
-I used [Utopia](https://utopia.fyi/) to create variables for font sizes and spacing. The colors are from a palette that was shared on [digitalsynopsis.com](https://digitalsynopsis.com/design/beautiful-color-gradient-palettes/). And the font is called [LINE Seed](https://seed.line.me/index_en.html).
+I used [Utopia](https://utopia.fyi/) to create variables for font sizes, spacings and my eight column grid. The colors are from a palette that was shared on [digitalsynopsis.com](https://digitalsynopsis.com/design/beautiful-color-gradient-palettes/). Which I then tried to harmonize with [this cool tool](https://harmonizer.evilmartians.com/).
+
+And for the font I chose [LINE Seed](https://seed.line.me/index_en.html). I like it for headlines, but I think I will change it to something else for the body text.
 
 ## Socials
 

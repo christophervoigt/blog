@@ -2,6 +2,7 @@
 title: 'Outgrowing tailwind'
 description: 'Which philosophy changes led me to stop using tailwindcss.'
 pubDate: 'May 1 2024'
+updatedDate: 'Jul 6 2025'
 hasCode: true
 ---
 
@@ -23,7 +24,7 @@ This is a feature not possible with the default grid of tailwind. The foundation
 
 ## Before you raise your pitchforks
 
-> "But Chris, you can configure tailwind to use the auto-fill layout that you want! That's not a tailwind problem!"
+> But Chris, you can configure tailwind to use auto-fill layout, if you want! That's not a tailwind problem!
 
 Yes, that's true. It's not a problem with tailwind per se. And I don't want to argue that you should stop using it in your projects.
 
