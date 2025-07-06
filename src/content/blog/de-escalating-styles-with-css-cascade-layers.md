@@ -1,18 +1,18 @@
 ---
 title: 'De-escalating styles with CSS Cascade Layers'
-description: 'How to use CSS Cascade Layers to de-escalate your styles.'
+description: 'How to use CSS cascade layers to de-escalate your styles.'
 pubDate: 'Apr 7 2023'
 updatedDate: 'Jul 2 2023'
 hasCode: true
 ---
 
-CSS Cascade Layers are supported by all major browsers for a while now. Recently, I had a little talk in front of my coworkers, about what they are and how `!important` actually works.
+CSS cascade layers are supported by all major browsers for a while now. Recently, I had a little talk in front of my coworkers, about what they are and how `!important` actually works.
 
 But I had to think about a good use case, that doesn't seem too "constructed". And I believe I finally found a good showcase, on why they can be useful.
 
 ## What are Cascade Layers?
 
-If you haven't heard of Cascade Layers before, there is [a great article](https://css-tricks.com/css-cascade-layers/) by [Miriam Suzanne](https://front-end.social/@mia) on CSS Tricks that explains them incredibly well. And if you wanna read even more about them, I also recommend the [documentation on MDN.](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_layers)
+If you haven't heard of cascade layers before, there is [a great article](https://css-tricks.com/css-cascade-layers/) by [Miriam Suzanne](https://front-end.social/@mia) on CSS Tricks that explains them incredibly well. And if you wanna read even more about them, I also recommend the [documentation on MDN.](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_layers)
 
 Alright, let's get started with an example.
 
@@ -154,12 +154,12 @@ By declaring a layer order at the top of your stylesheet, you make sure that all
 
 ## De-escalation as a default
 
-I think the best way to use Cascade Layers is to de-escalate your styles by default. There will be a lot of cases where you have to escalate the priority of some selectors. Taking a step back at the start is a good way to make sure that you have more options to escalate your styles, if you have to.
+I think the best way to use cascade layers is to de-escalate your styles by default. There will be a lot of cases where you have to escalate the priority of some selectors. Taking a step back at the start is a good way to make sure that you have more options to escalate your styles, if you have to.
 
 If you happen to have a conflict inside the same layer. You can either move one of the classes to a different layer, or you can simply remove the layer around it. And add priority by unlayering the selector.
 
 ## My takeaway from this
 
-Writing this article made me realize that I should probably start using Cascade Layers in my projects. I'm looking forward to see if they can help me write more maintainable CSS.
+Writing this article made me realize that I should probably start using cascade layers in my projects. I'm looking forward to see if they can help me write more maintainable CSS.
 
 Have a good one!

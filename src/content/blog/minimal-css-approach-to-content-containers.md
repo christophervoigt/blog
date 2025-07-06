@@ -1,6 +1,6 @@
 ---
 title: 'Minimal CSS approach to content containers'
-description: 'How to limit container width in the pures way possible.'
+description: 'How I'll limit my container widths going forward.'
 pubDate: 'Jul 8 2023'
 updatedDate: 'May 1 2024'
 hasCode: true

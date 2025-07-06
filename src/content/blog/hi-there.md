@@ -1,6 +1,6 @@
 ---
 title: 'Hi there!'
-description: 'The first blog post on the new site. Chris writes a bit about himself and the technology behind the blog.'
+description: 'The first blog post on my new site. I write a bit about myself and the technology behind this blog.'
 pubDate: 'Mar 14 2023'
 updatedDate: 'Jul 6 2025'
 ---
