@@ -1,4 +1,5 @@
 export default {
+	plugins: ['prettier-plugin-astro'],
 	trailingComma: 'es5',
 	tabWidth: 2,
 	semi: false,
@@ -6,4 +7,5 @@ export default {
 	useTabs: true,
 	quoteProps: 'consistent',
 	printWidth: 120,
+	endOfLine: 'lf',
 }
