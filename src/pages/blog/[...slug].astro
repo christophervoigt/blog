@@ -29,6 +29,15 @@ const { post, webmentions } = Astro.props
 const { data } = post
 const { title, description, pubDate, updatedDate, hasCode } = data
 const { Content } = await render(post)
+
+// Structured data for blog post
+const blogStructuredData = {
+	title,
+	description,
+	pubDate: new Date(pubDate).toISOString(),
+	updatedDate: updatedDate ? new Date(updatedDate).toISOString() : undefined,
+	image: '/placeholder-social.jpg', // You can add image field to your blog posts frontmatter
+}
 ---
 
 <Page
@@ -38,6 +47,8 @@ const { Content } = await render(post)
 	updatedDate={updatedDate}
 	hasCode={hasCode}
 	webmentions={webmentions}
+	structuredDataType="BlogPosting"
+	structuredData={blogStructuredData}
 >
 	<div class="container">
 		<div class="blogPostHeader -highlight">

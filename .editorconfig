@@ -1,0 +1,14 @@
+# editorconfig.org
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+
+# JS, CSS, HTML should use tabs, to reduce conflicts
+[*.{json,js,jsx,mjs,ts,tsx,astro,css,html}]
+indent_style = tab
+
+# Markdown uses trailing whitespace for line breaks
+[*.md]
+trim_trailing_whitespace = false

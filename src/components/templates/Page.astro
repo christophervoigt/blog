@@ -3,13 +3,22 @@ import '../../styles/_index.css'
 
 import { SITE_TITLE } from '../../consts'
 
+import StructuredData from '../atoms/StructuredData.astro'
 import Header from '../organisms/Header.astro'
 import Footer from '../organisms/Footer.astro'
 import Webmentions from '../organisms/Webmentions.astro'
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
-const { title, description, hasCode = false, image = '/placeholder-social.jpg', webmentions = [] } = Astro.props
+const {
+	title,
+	description,
+	hasCode = false,
+	image = '/placeholder-social.jpg',
+	webmentions = [],
+	structuredDataType = 'WebSite',
+	structuredData = {},
+} = Astro.props
 ---
 
 <!doctype html>
@@ -60,6 +69,9 @@ const { title, description, hasCode = false, image = '/placeholder-social.jpg', 
 
 		<!-- Mastodon -->
 		<meta property="fediverse:creator" content="@christophervoigt@indieweb.social" />
+
+		<!-- Structured Data -->
+		<StructuredData type={structuredDataType} data={structuredData} />
 	</head>
 
 	<body>

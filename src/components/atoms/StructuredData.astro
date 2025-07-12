@@ -1,0 +1,125 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts'
+
+const { type = 'WebSite', data = {} } = Astro.props
+
+const baseUrl = Astro.site?.href || 'https://christophervoigt.dev'
+const currentUrl = new URL(Astro.url.pathname, baseUrl).href
+
+// Generate structured data based on type
+let structuredData: any
+
+switch (type) {
+	case 'BlogPosting':
+		structuredData = {
+			'@context': 'https://schema.org',
+			'@type': 'BlogPosting',
+			'headline': data.title,
+			'description': data.description,
+			'url': currentUrl,
+			'datePublished': data.pubDate,
+			'dateModified': data.updatedDate || data.pubDate,
+			'author': {
+				'@type': 'Person',
+				'name': 'Christopher Voigt',
+				'url': baseUrl,
+			},
+			'publisher': {
+				'@type': 'Person',
+				'name': 'Christopher Voigt',
+				'url': baseUrl,
+			},
+			'mainEntityOfPage': {
+				'@type': 'WebPage',
+				'@id': currentUrl,
+			},
+			'image': data.image ? new URL(data.image, baseUrl).href : new URL('/placeholder-social.jpg', baseUrl).href,
+			'inLanguage': 'en-US',
+			'isPartOf': {
+				'@type': 'Blog',
+				'name': SITE_TITLE,
+				'url': baseUrl,
+			},
+		}
+		break
+
+	case 'Person':
+		structuredData = {
+			'@context': 'https://schema.org',
+			'@type': 'Person',
+			'name': 'Christopher Voigt',
+			'jobTitle': 'Senior Front-End Developer',
+			'worksFor': {
+				'@type': 'Organization',
+				'name': 'queo',
+				'url': 'https://www.queo.de/en',
+			},
+			'address': {
+				'@type': 'PostalAddress',
+				'addressLocality': 'Dresden',
+				'addressCountry': 'Germany',
+			},
+			'url': baseUrl,
+			'sameAs': ['https://indieweb.social/@christophervoigt', 'https://github.com/chlorophyllkid'],
+			'knowsAbout': ['Frontend Development', 'Web Performance', 'Accessibility', 'HTML', 'CSS', 'JavaScript'],
+		}
+		break
+
+	case 'Blog':
+		structuredData = {
+			'@context': 'https://schema.org',
+			'@type': 'Blog',
+			'name': SITE_TITLE,
+			'description': SITE_DESCRIPTION,
+			'url': new URL('/blog', baseUrl).href,
+			'author': {
+				'@type': 'Person',
+				'name': 'Christopher Voigt',
+				'url': baseUrl,
+			},
+			'publisher': {
+				'@type': 'Person',
+				'name': 'Christopher Voigt',
+				'url': baseUrl,
+			},
+			'inLanguage': 'en-US',
+			'isPartOf': {
+				'@type': 'WebSite',
+				'name': SITE_TITLE,
+				'url': baseUrl,
+			},
+		}
+		break
+
+	case 'WebSite':
+	default:
+		structuredData = {
+			'@context': 'https://schema.org',
+			'@type': 'WebSite',
+			'name': SITE_TITLE,
+			'description': SITE_DESCRIPTION,
+			'url': baseUrl,
+			'author': {
+				'@type': 'Person',
+				'name': 'Christopher Voigt',
+				'url': baseUrl,
+				'sameAs': ['https://indieweb.social/@christophervoigt', 'https://github.com/chlorophyllkid'],
+			},
+			'publisher': {
+				'@type': 'Person',
+				'name': 'Christopher Voigt',
+				'url': baseUrl,
+			},
+		}
+		break
+}
+
+// Clean up undefined values
+const cleanStructuredData = JSON.parse(
+	JSON.stringify(structuredData, (key, value) => {
+		return value === undefined ? null : value
+	})
+)
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(cleanStructuredData)} />
