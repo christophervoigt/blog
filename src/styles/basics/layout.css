@@ -29,7 +29,7 @@
 	/* grid */
 	/* @link https://utopia.fyi/grid/calculator?c=316,16,1.125,1110,20,1.25,4,2,&s=0.75%7C0.5%7C0.25,1.5%7C2%7C3%7C4%7C6,&g=s,m,xl,8 */
 	--grid-max-width: 46.88rem;
-	--grid-gutter: var(--space-s-m, clamp(1rem, 0.3629rem + 3.2258vw, 1.875rem));
+	--grid-gutter: var(--space-m, clamp(1.5rem, 1.3508rem + 0.7557vw, 1.875rem));
 	--grid-columns: 8;
 }
 
