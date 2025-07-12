@@ -75,6 +75,16 @@ const {
 	</head>
 
 	<body>
+		<!-- Background SVG Filter for Grain Effect -->
+		<svg width="0" height="0" aria-hidden="true">
+			<filter id="grain" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
+				<feTurbulence type="fractalNoise" baseFrequency=".713" numOctaves="3"></feTurbulence>
+				<feColorMatrix type="saturate" values="0"></feColorMatrix>
+				<feComponentTransfer> <feFuncA type="linear" slope="0.66"></feFuncA> </feComponentTransfer>
+				<feBlend in2="SourceGraphic" mode="overlay"></feBlend>
+			</filter>
+		</svg>
+
 		<Header />
 
 		<main>
