@@ -6,9 +6,6 @@
 @import './basics/layout.css';
 @import './basics/typography.css';
 
-/* specials */
-@import './specials/prism-code-blocks.css';
-
 body {
 	color: var(--text-color);
 	background-color: var(--background-color);
@@ -62,4 +59,42 @@ body {
 
 	clip-path: inset(0 0 0 0 round 0.5rem);
 	filter: url(#grain);
+}
+
+/* Inline code */
+:not(pre) > code {
+	white-space: normal;
+	padding-inline: 0.3em;
+	padding-block: 0.1em;
+	background: var(--code-background-color);
+	color: var(--code-text-color);
+	border-radius: 0.125em;
+}
+
+code,
+pre[data-language] {
+	font-family: 'Consolas', Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+	-moz-tab-size: 2;
+	-o-tab-size: 2;
+	tab-size: 2;
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[data-language] {
+	padding-block: var(--space-xs-s);
+	padding-inline: var(--space-xs-m);
+	margin-inline: calc(-1 * var(--space-xs-m));
+
+	overflow: auto;
+	border-radius: 0.5rem;
 }
