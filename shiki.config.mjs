@@ -62,6 +62,8 @@ const shikiConfig = {
 					'punctuation.colon.graphql',
 					'punctuation.or.graphql',
 					'punctuation.assignment.graphql',
+					'support.function',
+					'variable.legacy.builtin.python',
 				],
 				settings: {
 					foreground: '#CC7833',
@@ -113,12 +115,6 @@ const shikiConfig = {
 				scope: ['variable', 'variable.legacy.builtin.python'],
 				settings: {
 					foreground: '#D0D0FF',
-				},
-			},
-			{
-				scope: ['support.function', 'variable.legacy.builtin.python'],
-				settings: {
-					foreground: '#C45837',
 				},
 			},
 			{
