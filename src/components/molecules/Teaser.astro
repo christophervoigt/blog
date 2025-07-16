@@ -1,14 +1,16 @@
 ---
 import FormattedDate from '../atoms/FormattedDate.astro'
 
-const { slug, data } = Astro.props
+const { slug, data, headlineLevel } = Astro.props
 const { title, pubDate } = data
+
+const Heading = headlineLevel || 'h3'
 ---
 
 <article class="teaser -highlight">
 	<div class="teaser_content">
 		<a href={`/blog/${slug}/`} class="teaser_link">
-			<h3>{title}</h3>
+			<Heading>{title}</Heading>
 		</a>
 
 		<p>

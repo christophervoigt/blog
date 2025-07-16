@@ -20,5 +20,5 @@ const posts = (await getCollection('blog'))
 ---
 
 <div class="posts">
-	{posts.map((post) => <Teaser {...post} />)}
+	{posts.map((post) => <Teaser {...post} headlineLevel="h2" />)}
 </div>
