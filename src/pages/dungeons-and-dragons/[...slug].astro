@@ -18,13 +18,25 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props
 const { data } = post
-const { name } = data
+const { name, abilities } = data
 const { Content } = await render(post)
 ---
 
 <Page title={name} description={''}>
 	<div class="container content">
 		<h1>{name}</h1>
+
+		{
+			abilities && (
+				<ul class="abilities">
+					{Object.entries(abilities).map(([key, value]) => (
+						<li>
+							<strong>{key}:</strong> {value}
+						</li>
+					))}
+				</ul>
+			)
+		}
 
 		<Content />
 	</div>
