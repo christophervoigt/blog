@@ -77,16 +77,10 @@
 	);
 }
 
-/* If user prefers a light appearance */
-@media (prefers-color-scheme: light) {
-	:root {
-		color-scheme: light;
-	}
+html {
+	color-scheme: light;
 }
 
-/* If user prefers a dark appearance */
-@media (prefers-color-scheme: dark) {
-	:root {
-		color-scheme: dark;
-	}
+html[data-theme='dark'] {
+	color-scheme: dark;
 }
