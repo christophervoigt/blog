@@ -1,5 +1,6 @@
 ---
 import Link from '../atoms/Link.astro'
+import ThemeSwitch from '../atoms/ThemeSwitch/ThemeSwitch.astro'
 ---
 
 <header class="container">
@@ -9,7 +10,8 @@ import Link from '../atoms/Link.astro'
 		<Link href="/blog">Blog</Link>
 	</nav>
 
-	<Link href="/rss.xml">RSS</Link>
+	<!-- <Link href="/rss.xml">RSS</Link> -->
+	<ThemeSwitch />
 </header>
 
 <style>
