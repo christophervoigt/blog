@@ -74,8 +74,8 @@ a[href]:not(.teaser_link) {
 	background-size: 100% 0.25rem;
 	background-position: 0 100%;
 	transition:
-		background-size 0.2s ease-out,
-		outline-color 0.2s ease-out;
+		background-size 0.25s cubic-bezier(0, 0, 0.5, 1),
+		outline-color 0.25s cubic-bezier(0, 0, 0.5, 1);
 }
 
 a[href]:not(.teaser_link):hover,
