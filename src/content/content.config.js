@@ -26,7 +26,7 @@ const skill = z.object({
 	disadvantage: z.boolean().optional(),
 })
 
-const characters = defineCollection({
+const dnd = defineCollection({
 	loader: glob({ pattern: '**/*.md', base: './src/content/dnd' }),
 	schema: z.object({
 		name: z.string(),
@@ -118,4 +118,4 @@ const characters = defineCollection({
 	}),
 })
 
-export const collections = { blog, characters }
+export const collections = { blog, dnd }

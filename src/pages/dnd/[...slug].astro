@@ -5,9 +5,9 @@ import Page from '../../components/templates/Page.astro'
 import CharacterSheet from '../../components/organisms/CharacterSheet/CharacterSheet.astro'
 
 export async function getStaticPaths() {
-	const posts = await getCollection('characters')
+	const characters = await getCollection('dnd')
 
-	return posts.map((post) => {
+	return characters.map((post) => {
 		const { slug } = post
 
 		return {
