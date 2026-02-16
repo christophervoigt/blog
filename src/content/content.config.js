@@ -19,8 +19,15 @@ const blog = defineCollection({
 	}),
 })
 
+const skill = z.object({
+	base_value: z.number(),
+	proficiency: z.boolean().optional(),
+	expertise: z.boolean().optional(),
+	disadvantage: z.boolean().optional(),
+})
+
 const characters = defineCollection({
-	loader: glob({ pattern: '**/*.md', base: './src/content/dungeons-and-dragons' }),
+	loader: glob({ pattern: '**/*.md', base: './src/content/dnd' }),
 	schema: z.object({
 		name: z.string(),
 		class: z.string(),
@@ -42,12 +49,12 @@ const characters = defineCollection({
 		}),
 
 		saving_throws: z.object({
-			strength: z.boolean(),
-			dexterity: z.boolean(),
-			constitution: z.boolean(),
-			intelligence: z.boolean(),
-			wisdom: z.boolean(),
-			charisma: z.boolean(),
+			strength: skill,
+			dexterity: skill,
+			constitution: skill,
+			intelligence: skill,
+			wisdom: skill,
+			charisma: skill,
 		}),
 
 		senses: z.object({
@@ -62,6 +69,52 @@ const characters = defineCollection({
 			languages: z.array(z.string()),
 			tools: z.array(z.string()),
 		}),
+
+		skills: z.object({
+			acrobatics: skill,
+			animal_handling: skill,
+			arcana: skill,
+			athletics: skill,
+			deception: skill,
+			history: skill,
+			insight: skill,
+			intimidation: skill,
+			investigation: skill,
+			medicine: skill,
+			nature: skill,
+			perception: skill,
+			performance: skill,
+			persuasion: skill,
+			religion: skill,
+			sleight_of_hand: skill,
+			stealth: skill,
+			survival: skill,
+		}),
+
+		background: z
+			.object({
+				title: z.string(),
+				feature: z.string(),
+				description: z.string(),
+			})
+			.optional(),
+
+		characteristics: z
+			.object({
+				alignment: z.string().optional(),
+				gender: z.string().optional(),
+				eyes: z.string().optional(),
+				size: z.string().optional(),
+				race: z.string().optional(),
+				hair: z.string().optional(),
+				height: z.string().optional(),
+				weight: z.string().optional(),
+				personality_traits: z.string().optional(),
+				ideals: z.string().optional(),
+				bonds: z.string().optional(),
+				flaws: z.string().optional(),
+			})
+			.optional(),
 	}),
 })
 

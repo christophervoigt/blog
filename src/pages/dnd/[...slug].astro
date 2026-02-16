@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content'
 
 import Page from '../../components/templates/Page.astro'
+import CharacterSheet from '../../components/organisms/CharacterSheet/CharacterSheet.astro'
 
 export async function getStaticPaths() {
 	const posts = await getCollection('dungeons-and-dragons')
@@ -18,26 +19,13 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props
 const { data } = post
-const { name, abilities } = data
+const { name, class: charClass, subclass, level } = data
+
 const { Content } = await render(post)
 ---
 
-<Page title={name} description={''}>
-	<div class="container content">
-		<h1>{name}</h1>
-
-		{
-			abilities && (
-				<ul class="abilities">
-					{Object.entries(abilities).map(([key, value]) => (
-						<li>
-							<strong>{key}:</strong> {value}
-						</li>
-					))}
-				</ul>
-			)
-		}
-
+<Page title={name} description={`${name} — Level ${level} ${subclass ? subclass + ' ' : ''}${charClass}`}>
+	<CharacterSheet {...data}>
 		<Content />
-	</div>
+	</CharacterSheet>
 </Page>

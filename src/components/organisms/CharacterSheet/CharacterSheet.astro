@@ -1,0 +1,358 @@
+---
+import './CharacterSheet.css'
+
+interface Props {
+	name: string
+	class: string
+	subclass?: string
+	level: number
+	hit_points: number
+	armor_class: number
+	speed: string
+	proficiency_bonus: number
+	initiative: number
+	abilities: Record<string, number>
+	saving_throws: Record<string, { base_value: number; proficiency?: boolean }>
+	senses?: {
+		passive_perception?: number
+		darkvision?: string
+		blindsight?: string
+	}
+	training: Record<string, string[]>
+	skills: Record<string, { base_value: number; proficiency?: boolean; disadvantage?: boolean }>
+	background?: {
+		title: string
+		feature: string
+		description: string
+	}
+	characteristics?: {
+		race?: string
+		alignment?: string
+		gender?: string
+		size?: string
+		eyes?: string
+		hair?: string
+		personality_traits?: string
+		ideals?: string
+		bonds?: string
+		flaws?: string
+	}
+}
+
+const {
+	name,
+	class: charClass,
+	subclass,
+	level,
+	hit_points,
+	armor_class,
+	speed,
+	proficiency_bonus,
+	initiative,
+	abilities,
+	saving_throws,
+	senses,
+	training,
+	skills,
+	background,
+	characteristics,
+} = Astro.props
+
+function modifier(score: number) {
+	const mod = Math.floor((score - 10) / 2)
+	return mod >= 0 ? `+${mod}` : `${mod}`
+}
+
+function formatSkillName(key: string) {
+	return key
+		.split('_')
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(' ')
+}
+
+function formatModifier(value: number) {
+	return value >= 0 ? `+${value}` : `${value}`
+}
+
+function formatSavingThrow(save: { base_value: number; proficiency?: boolean }) {
+	const total = save.base_value + (save.proficiency ? proficiency_bonus : 0)
+	return formatModifier(total)
+}
+
+function skillModifier(skill: { base_value: number; proficiency?: boolean }) {
+	const total = skill.base_value + (skill.proficiency ? proficiency_bonus : 0)
+	return total >= 0 ? `+${total}` : `${total}`
+}
+
+const abilityOrder = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma']
+const abilityAbbr: Record<string, string> = {
+	strength: 'STR',
+	dexterity: 'DEX',
+	constitution: 'CON',
+	intelligence: 'INT',
+	wisdom: 'WIS',
+	charisma: 'CHA',
+}
+
+const skillAbilityMap: Record<string, string> = {
+	acrobatics: 'dexterity',
+	animal_handling: 'wisdom',
+	arcana: 'intelligence',
+	athletics: 'strength',
+	deception: 'charisma',
+	history: 'intelligence',
+	insight: 'wisdom',
+	intimidation: 'charisma',
+	investigation: 'intelligence',
+	medicine: 'wisdom',
+	nature: 'intelligence',
+	perception: 'wisdom',
+	performance: 'charisma',
+	persuasion: 'charisma',
+	religion: 'intelligence',
+	sleight_of_hand: 'dexterity',
+	stealth: 'dexterity',
+	survival: 'wisdom',
+}
+---
+
+<div class="character-sheet">
+	<!-- Header -->
+	<div class="cs-header">
+		<div>
+			<h1 class="cs-name">{name}</h1>
+			<p class="cs-subtitle">
+				Level {level}
+				{subclass && <span>{subclass}</span>}
+				{charClass}
+				{characteristics?.race && <span>· {characteristics.race}</span>}
+			</p>
+		</div>
+	</div>
+
+	<!-- Core Stats Bar -->
+	<div class="cs-core-stats">
+		<div class="cs-stat">
+			<span class="cs-stat-value">{armor_class}</span>
+			<span class="cs-stat-label">Armor Class</span>
+		</div>
+		<div class="cs-stat">
+			<span class="cs-stat-value">{hit_points}</span>
+			<span class="cs-stat-label">Hit Points</span>
+		</div>
+		<div class="cs-stat">
+			<span class="cs-stat-value">{speed}</span>
+			<span class="cs-stat-label">Speed</span>
+		</div>
+		<div class="cs-stat">
+			<span class="cs-stat-value">{formatModifier(initiative)}</span>
+			<span class="cs-stat-label">Initiative</span>
+		</div>
+		<div class="cs-stat">
+			<span class="cs-stat-value">+{proficiency_bonus}</span>
+			<span class="cs-stat-label">Proficiency</span>
+		</div>
+	</div>
+
+	<!-- Body: Abilities Sidebar + Details -->
+	<div class="cs-body">
+		<!-- Left: Abilities -->
+		<div class="cs-abilities-section">
+			<h2 class="cs-section-title">Abilities</h2>
+			<div class="cs-abilities">
+				{
+					abilityOrder.map((key) => (
+						<div class="cs-ability">
+							<span class="cs-ability-score">{abilities[key]}</span>
+							<span class="cs-ability-mod">{modifier(abilities[key])}</span>
+							<span class="cs-ability-name">{abilityAbbr[key]}</span>
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<!-- Saving Throws -->
+		<section class="cs-saves">
+			<h2 class="cs-section-title">Saving Throws</h2>
+			<ul class="cs-list">
+				{
+					abilityOrder.map((key) => {
+						const save = saving_throws[key]
+						const proficient = save.proficiency
+						return (
+							<li>
+								<span class="cs-list-label">
+									{proficient && <span class="cs-proficient">● </span>}
+									{formatSkillName(key)}
+								</span>
+								<span class="cs-list-value">{formatSavingThrow(save)}</span>
+							</li>
+						)
+					})
+				}
+			</ul>
+		</section>
+
+		<!-- Skills -->
+		<section class="cs-skills">
+			<h2 class="cs-section-title">Skills</h2>
+			<ul class="cs-list">
+				{
+					Object.entries(skills).map(([key, skill]) => {
+						const total = skillModifier(skill)
+						const proficient = skill.proficiency
+						const disadvantaged = skill.disadvantage
+						return (
+							<li class:list={[{ 'cs-disadvantage': disadvantaged }]}>
+								<span class="cs-list-label">
+									{proficient && <span class="cs-proficient">● </span>}
+									{formatSkillName(key)}
+									<span class="cs-ability-mod">({abilityAbbr[skillAbilityMap[key]]})</span>
+								</span>
+								<span class="cs-list-value">{total}</span>
+							</li>
+						)
+					})
+				}
+			</ul>
+		</section>
+
+		<!-- Senses -->
+		{
+			senses && (
+				<section class="cs-senses-section">
+					<h2 class="cs-section-title">Senses</h2>
+					<ul class="cs-senses">
+						{senses.passive_perception !== undefined && (
+							<li>
+								<span>Passive Perception</span>
+								<strong>{senses.passive_perception}</strong>
+							</li>
+						)}
+						{senses.darkvision && (
+							<li>
+								<span>Darkvision</span>
+								<strong>{senses.darkvision}</strong>
+							</li>
+						)}
+						{senses.blindsight && (
+							<li>
+								<span>Blindsight</span>
+								<strong>{senses.blindsight}</strong>
+							</li>
+						)}
+					</ul>
+				</section>
+			)
+		}
+
+		<!-- Training / Proficiencies -->
+		<section class="cs-proficiencies">
+			<h2 class="cs-section-title">Proficiencies</h2>
+			{
+				Object.entries(training).map(([category, items]) => (
+					<div class="cs-training-group">
+						<p class="cs-training-label">{formatSkillName(category)}</p>
+						<ul class="cs-tags">
+							{items.map((item) => (
+								<li>{item}</li>
+							))}
+						</ul>
+					</div>
+				))
+			}
+		</section>
+
+		<!-- Background -->
+		{
+			background && (
+				<section class="cs-background">
+					<h2 class="cs-section-title">Background — {background.title}</h2>
+					<p class="cs-background-feature">{background.feature}</p>
+					<p class="cs-background-desc">{background.description}</p>
+				</section>
+			)
+		}
+
+		<!-- Characteristics -->
+		{
+			characteristics && (
+				<section class="cs-characteristics">
+					<h2 class="cs-section-title">Characteristics</h2>
+
+					<div class="cs-physical">
+						{characteristics.alignment && (
+							<div class="cs-physical-item">
+								<span class="cs-trait-label">Alignment</span>
+								<span class="cs-trait-value">{characteristics.alignment}</span>
+							</div>
+						)}
+						{characteristics.race && (
+							<div class="cs-physical-item">
+								<span class="cs-trait-label">Race</span>
+								<span class="cs-trait-value">{characteristics.race}</span>
+							</div>
+						)}
+						{characteristics.gender && (
+							<div class="cs-physical-item">
+								<span class="cs-trait-label">Gender</span>
+								<span class="cs-trait-value">{characteristics.gender}</span>
+							</div>
+						)}
+						{characteristics.size && (
+							<div class="cs-physical-item">
+								<span class="cs-trait-label">Size</span>
+								<span class="cs-trait-value">{characteristics.size}</span>
+							</div>
+						)}
+						{characteristics.eyes && (
+							<div class="cs-physical-item">
+								<span class="cs-trait-label">Eyes</span>
+								<span class="cs-trait-value">{characteristics.eyes}</span>
+							</div>
+						)}
+						{characteristics.hair && (
+							<div class="cs-physical-item">
+								<span class="cs-trait-label">Hair</span>
+								<span class="cs-trait-value">{characteristics.hair}</span>
+							</div>
+						)}
+					</div>
+
+					<div class="cs-traits-grid">
+						{characteristics.personality_traits && (
+							<div class="cs-trait">
+								<p class="cs-trait-label">Personality Traits</p>
+								<p class="cs-trait-value">{characteristics.personality_traits}</p>
+							</div>
+						)}
+						{characteristics.ideals && (
+							<div class="cs-trait">
+								<p class="cs-trait-label">Ideals</p>
+								<p class="cs-trait-value">{characteristics.ideals}</p>
+							</div>
+						)}
+						{characteristics.bonds && (
+							<div class="cs-trait">
+								<p class="cs-trait-label">Bonds</p>
+								<p class="cs-trait-value">{characteristics.bonds}</p>
+							</div>
+						)}
+						{characteristics.flaws && (
+							<div class="cs-trait">
+								<p class="cs-trait-label">Flaws</p>
+								<p class="cs-trait-value">{characteristics.flaws}</p>
+							</div>
+						)}
+					</div>
+				</section>
+			)
+		}
+
+		<!-- Notes from Markdown Content -->
+		<div class="cs-notes content">
+			<slot />
+		</div>
+	</div>
+</div>

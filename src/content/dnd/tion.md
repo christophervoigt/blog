@@ -18,12 +18,20 @@ abilities:
   charisma: 10
 
 saving_throws:
-  strength: 7
-  dexterity: 0
-  constitution: 6
-  intelligence: 0
-  wisdom: 1
-  charisma: 0
+  strength:
+    base_value: 4
+    proficiency: true
+  dexterity:
+    base_value: 0
+  constitution:
+    base_value: 3
+    proficiency: true
+  intelligence:
+    base_value: 0
+  wisdom:
+    base_value: 1
+  charisma:
+    base_value: 0
 
 senses:
   passive_perception: 14
@@ -64,7 +72,6 @@ skills:
     base_value: 1
   intimidation:
     base_value: 0
-    proficiency: true
   investigation:
     base_value: 0
   medicine:
@@ -88,6 +95,7 @@ skills:
     disadvantage: true
   survival:
     base_value: 1
+    proficiency: true
 
 background:
   title: Gladiator

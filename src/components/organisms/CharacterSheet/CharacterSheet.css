@@ -1,0 +1,334 @@
+/* Character Sheet Layout */
+.character-sheet {
+	--cs-border: 2px solid var(--border-color);
+	--cs-radius: 0.5rem;
+	--cs-cell-padding: var(--space-2xs) var(--space-xs);
+
+	max-inline-size: var(--grid-max-width);
+	padding-inline: var(--grid-gutter);
+	margin-inline: auto;
+}
+
+/* Header */
+.cs-header {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: var(--space-xs);
+	align-items: baseline;
+	padding-block-end: var(--space-xs);
+	border-block-end: var(--cs-border);
+}
+
+.cs-name {
+	font-size: var(--step-4);
+	font-weight: 900;
+	line-height: 1.1;
+}
+
+.cs-subtitle {
+	font-size: var(--step-0);
+	color: var(--gray-600);
+}
+
+/* Core Stats Bar */
+.cs-core-stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-2xs);
+	margin-block-start: var(--space-s);
+}
+
+.cs-stat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: var(--space-2xs) var(--space-2xs);
+	border: var(--cs-border);
+	border-radius: var(--cs-radius);
+	min-inline-size: 5.5rem;
+	flex: 1;
+}
+
+.cs-stat-value {
+	font-size: var(--step-2);
+	font-weight: 900;
+	line-height: 1;
+	color: var(--headline-color);
+}
+
+.cs-stat-label {
+	font-size: var(--step--2);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--gray-600);
+	margin-block-start: 0.15em;
+}
+
+/* Main Grid */
+.cs-body {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--space-m);
+	margin-block-start: var(--space-m);
+	grid-template-areas:
+		"abilities"
+		"saves"
+		"skills"
+		"senses"
+		"proficiencies"
+		"background"
+		"characteristics"
+		"notes";
+}
+
+@media (min-width: 40rem) {
+	.cs-body {
+		grid-template-columns: 1fr 2fr;
+		grid-template-areas:
+			"abilities saves"
+			"abilities skills"
+			"senses proficiencies"
+			"background background"
+			"characteristics characteristics"
+			"notes notes";
+	}
+}
+
+.cs-abilities-section {
+	grid-area: abilities;
+}
+
+.cs-saves {
+	grid-area: saves;
+}
+
+.cs-skills {
+	grid-area: skills;
+}
+
+.cs-senses-section {
+	grid-area: senses;
+}
+
+.cs-proficiencies {
+	grid-area: proficiencies;
+}
+
+/* Section Headings */
+.cs-section-title {
+	font-size: var(--step--1);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--headline-color);
+	padding-block-end: var(--space-3xs);
+	border-block-end: var(--cs-border);
+	margin-block-end: var(--space-2xs);
+}
+
+/* Abilities Column */
+.cs-abilities {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: var(--space-2xs);
+}
+
+@media (min-width: 40rem) {
+	.cs-abilities {
+		flex-direction: column;
+	}
+}
+
+.cs-ability {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: var(--space-2xs) var(--space-xs);
+	border: var(--cs-border);
+	border-radius: var(--cs-radius);
+	text-align: center;
+	flex: 1;
+	min-inline-size: 5rem;
+}
+
+.cs-ability-score {
+	font-size: var(--step-2);
+	font-weight: 900;
+	line-height: 1;
+	color: var(--headline-color);
+}
+
+.cs-ability-mod {
+	font-size: var(--step--1);
+	color: var(--gray-600);
+}
+
+.cs-ability-name {
+	font-size: var(--step--2);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	margin-block-start: 0.2em;
+}
+
+
+
+/* Saving Throws & Skills */
+.cs-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.cs-list li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: var(--space-3xs) 0;
+	font-size: var(--step--1);
+}
+
+.cs-list li + li {
+	border-block-start: 1px solid light-dark(var(--gray-100), var(--gray-900));
+}
+
+.cs-list-label {
+	text-transform: capitalize;
+}
+
+.cs-list-value {
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+.cs-proficient {
+	color: var(--highlight-color);
+}
+
+.cs-disadvantage {
+	opacity: 0.5;
+}
+
+/* Training / Proficiencies */
+.cs-training-group + .cs-training-group {
+	margin-block-start: var(--space-xs);
+}
+
+.cs-training-label {
+	font-size: var(--step--2);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--gray-600);
+	margin-block-end: var(--space-3xs);
+}
+
+.cs-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-3xs);
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.cs-tags li {
+	font-size: var(--step--2);
+	padding: 0.15em 0.5em;
+	border: 1px solid var(--border-color);
+	border-radius: 0.25rem;
+}
+
+/* Senses */
+.cs-senses {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.cs-senses li {
+	display: flex;
+	justify-content: space-between;
+	padding: var(--space-3xs) 0;
+	font-size: var(--step--1);
+}
+
+.cs-senses li + li {
+	border-block-start: 1px solid light-dark(var(--gray-100), var(--gray-900));
+}
+
+/* Background */
+.cs-background {
+	grid-area: background;
+}
+
+.cs-background-feature {
+	font-size: var(--step--1);
+	font-weight: 700;
+	color: var(--highlight-color);
+	margin-block-end: var(--space-3xs);
+}
+
+.cs-background-desc {
+	font-size: var(--step--1);
+	line-height: 1.5;
+}
+
+/* Characteristics */
+.cs-characteristics {
+	grid-area: characteristics;
+}
+
+.cs-traits-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(14rem, 100%), 1fr));
+	gap: var(--space-xs);
+}
+
+.cs-trait {
+	padding: var(--space-2xs) var(--space-xs);
+	border: var(--cs-border);
+	border-radius: var(--cs-radius);
+}
+
+.cs-trait-label {
+	font-size: var(--step--2);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--gray-600);
+	margin-block-end: 0.15em;
+}
+
+.cs-trait-value {
+	font-size: var(--step--1);
+}
+
+/* Physical attributes grid */
+.cs-physical {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-2xs);
+	margin-block-end: var(--space-xs);
+}
+
+.cs-physical-item {
+	display: flex;
+	flex-direction: column;
+	padding: var(--space-3xs) var(--space-xs);
+	border: var(--cs-border);
+	border-radius: var(--cs-radius);
+}
+
+.cs-physical-item .cs-trait-label {
+	margin-block-end: 0;
+}
+
+.cs-physical-item .cs-trait-value {
+	font-weight: 700;
+}
+
+/* Notes / Content area */
+.cs-notes {
+	grid-area: notes;
+	margin-block-start: var(--space-xs);
+}
