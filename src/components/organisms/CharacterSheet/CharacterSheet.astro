@@ -183,7 +183,14 @@ const skillAbilityMap: Record<string, string> = {
 						return (
 							<li>
 								<span class="cs-list-label">
-									{proficient && <span class="cs-proficient">● </span>}
+									{proficient && (
+										<>
+											<span class="cs-proficient" aria-hidden="true">
+												●{' '}
+											</span>
+											<span class="sr-only">Proficient in </span>
+										</>
+									)}
 									{formatSkillName(key)}
 								</span>
 								<span class="cs-list-value">{formatSavingThrow(save)}</span>
@@ -206,7 +213,14 @@ const skillAbilityMap: Record<string, string> = {
 						return (
 							<li class:list={[{ 'cs-disadvantage': disadvantaged }]}>
 								<span class="cs-list-label">
-									{proficient && <span class="cs-proficient">● </span>}
+									{proficient && (
+										<>
+											<span class="cs-proficient" aria-hidden="true">
+												●{' '}
+											</span>
+											<span class="sr-only">Proficient in </span>
+										</>
+									)}
 									{formatSkillName(key)}
 									<span class="cs-ability-mod">({abilityAbbr[skillAbilityMap[key]]})</span>
 								</span>

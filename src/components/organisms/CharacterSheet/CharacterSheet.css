@@ -71,26 +71,26 @@
 	gap: var(--space-m);
 	margin-block-start: var(--space-m);
 	grid-template-areas:
-		"abilities"
-		"saves"
-		"skills"
-		"senses"
-		"proficiencies"
-		"background"
-		"characteristics"
-		"notes";
+		'abilities'
+		'saves'
+		'skills'
+		'senses'
+		'proficiencies'
+		'background'
+		'characteristics'
+		'notes';
 }
 
 @media (min-width: 40rem) {
 	.cs-body {
 		grid-template-columns: 1fr 2fr;
 		grid-template-areas:
-			"abilities saves"
-			"abilities skills"
-			"senses proficiencies"
-			"background background"
-			"characteristics characteristics"
-			"notes notes";
+			'abilities saves'
+			'abilities skills'
+			'senses proficiencies'
+			'background background'
+			'characteristics characteristics'
+			'notes notes';
 	}
 }
 
@@ -170,8 +170,6 @@
 	letter-spacing: 0.05em;
 	margin-block-start: 0.2em;
 }
-
-
 
 /* Saving Throws & Skills */
 .cs-list {
