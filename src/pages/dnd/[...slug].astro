@@ -1,0 +1,31 @@
+---
+import { getCollection, render } from 'astro:content'
+
+import Page from '../../components/templates/Page.astro'
+import CharacterSheet from '../../components/organisms/CharacterSheet/CharacterSheet.astro'
+
+export async function getStaticPaths() {
+	const posts = await getCollection('dungeons-and-dragons')
+
+	return posts.map((post) => {
+		const { slug } = post
+
+		return {
+			params: { slug },
+			props: { post },
+		}
+	})
+}
+
+const { post } = Astro.props
+const { data } = post
+const { name, class: charClass, subclass, level } = data
+
+const { Content } = await render(post)
+---
+
+<Page title={name} description={`${name} — Level ${level} ${subclass ? subclass + ' ' : ''}${charClass}`}>
+	<CharacterSheet {...data}>
+		<Content />
+	</CharacterSheet>
+</Page>

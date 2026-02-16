@@ -1,0 +1,31 @@
+---
+import Page from '../../components/templates/Page.astro'
+
+import { getCollection } from 'astro:content'
+
+const characters = (await getCollection('dungeons-and-dragons')).sort((a, b) => {
+	if (a.data.name < b.data.name) {
+		return 1
+	} else if (a.data.name > b.data.name) {
+		return -1
+	} else {
+		return 0
+	}
+})
+---
+
+<Page title="My D&D Characters" description="This is an overview of the D&D characters that I played over the years.">
+	<div class="container">
+		<h1>D&D Characters</h1>
+
+		<ul>
+			{
+				characters.map(({ data: { name }, slug }) => (
+					<li>
+						<a href={`/dnd/${slug}`}>{name}</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</Page>
