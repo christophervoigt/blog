@@ -1,10 +1,22 @@
 ---
+export interface Props {
+	date: Date | string | number
+}
+
 const { date } = Astro.props
+
+// Normalize the date input once to avoid redundant Date construction
+const normalizedDate = new Date(date)
+
+// Validate that the date is valid
+if (isNaN(normalizedDate.getTime())) {
+	throw new Error(`Invalid date provided to FormattedDate: ${date}`)
+}
 ---
 
-<time datetime={new Date(date).toISOString()}>
+<time datetime={normalizedDate.toISOString()}>
 	{
-		new Date(date).toLocaleDateString('en-us', {
+		normalizedDate.toLocaleDateString('en-us', {
 			year: 'numeric',
 			month: 'long',
 			day: 'numeric',
