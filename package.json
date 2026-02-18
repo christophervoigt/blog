@@ -13,7 +13,12 @@
 	"dependencies": {
 		"@astrojs/rss": "^4.0.15",
 		"@astrojs/sitemap": "^3.7.0",
-		"astro": "^5.17.2"
+		"@modelcontextprotocol/sdk": "^1.26.0",
+		"@netlify/functions": "^5.1.2",
+		"astro": "^5.17.2",
+		"express": "^5.2.1",
+		"serverless-http": "^4.0.0",
+		"zod": "^3.25.76"
 	},
 	"devDependencies": {
 		"@shikijs/colorized-brackets": "^3.22.0",

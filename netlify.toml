@@ -1,0 +1,5 @@
+[[redirects]]
+  force = true
+  from = "/mcp"
+  status = 200
+  to = "/.netlify/functions/express-mcp-server"
