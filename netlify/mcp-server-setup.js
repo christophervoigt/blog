@@ -28,8 +28,8 @@ export const setupMCPServer = () => {
 			title: 'Notification Stream',
 			description: 'Starts sending periodic notifications for testing resumability.',
 			inputSchema: {
-				count: z.number().min(1).describe('Number of notifications to send'),
-				interval: z.number().min(100).describe('Interval in milliseconds between notifications'),
+				count: z.number().min(1).max(6).describe('Number of notifications to send'),
+				interval: z.number().min(1000).max(10000).describe('Interval in milliseconds between notifications'),
 			},
 			outputSchema: {
 				message: z.string(),

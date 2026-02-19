@@ -2,7 +2,7 @@ import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/
 
 import { setupMCPServer } from '../mcp-server-setup.js'
 
-export default async (req) => {
+export default async (request) => {
 	// In stateless mode, create a new instance of transport and server for each request
 	// to ensure complete isolation. A single instance would cause request ID collisions
 	// when multiple clients connect concurrently.
@@ -15,7 +15,7 @@ export default async (req) => {
 
 	let response
 	try {
-		response = await transport.handleRequest(req)
+		response = await transport.handleRequest(request)
 	} catch (error) {
 		await transport.close()
 		await server.close()
@@ -60,5 +60,5 @@ export default async (req) => {
 
 export const config = {
 	path: '/mcp',
-	preferStatic: true,
+	preferStatic: false,
 }
