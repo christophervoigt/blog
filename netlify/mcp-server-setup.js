@@ -81,20 +81,28 @@ export const setupMCPServer = () => {
 			title: 'Greeting Template',
 			description: 'A simple greeting prompt template',
 			argsSchema: {
-				name: z.string().describe('Name to include in greeting'),
+				name: z
+					.string()
+					.max(100, 'Name must be at most 100 characters long')
+					.regex(/^[\p{L}\p{N}\s'_ -]+$/u, 'Name contains invalid characters')
+					.describe('Name to include in greeting'),
 			},
 		},
-		({ name }) => ({
-			messages: [
-				{
-					role: 'user',
-					content: {
-						type: 'text',
-						text: `Please greet ${name} in a friendly manner.`,
+		({ name }) => {
+			const safeName = name.trim()
+
+			return {
+				messages: [
+					{
+						role: 'user',
+						content: {
+							type: 'text',
+							text: `Please greet ${safeName} in a friendly manner.`,
+						},
 					},
-				},
-			],
-		})
+				],
+			}
+		}
 	)
 
 	return server

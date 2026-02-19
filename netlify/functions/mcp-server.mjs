@@ -13,7 +13,14 @@ export default async (req) => {
 
 	await server.connect(transport)
 
-	const response = await transport.handleRequest(req)
+	let response
+	try {
+		response = await transport.handleRequest(req)
+	} catch (error) {
+		await transport.close()
+		await server.close()
+		throw error
+	}
 
 	// Clean up after the response is done
 	if (response.body) {
@@ -34,7 +41,10 @@ export default async (req) => {
 				await transport.close()
 				await server.close()
 			}
-		})()
+		})().catch((error) => {
+			// Prevent unhandled promise rejections from stream processing and cleanup
+			console.error('Error while processing MCP server stream:', error)
+		})
 
 		return new Response(readable, {
 			status: response.status,
