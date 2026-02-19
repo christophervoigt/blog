@@ -3,6 +3,17 @@ import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/
 import { setupMCPServer } from '../mcp-server-setup.js'
 
 export default async (request) => {
+	const apiKey = process.env.MCP_API_KEY
+	if (apiKey) {
+		const authorization = request.headers.get('Authorization')
+		if (authorization !== `Bearer ${apiKey}`) {
+			return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+				status: 401,
+				headers: { 'Content-Type': 'application/json' },
+			})
+		}
+	}
+
 	// In stateless mode, create a new instance of transport and server for each request
 	// to ensure complete isolation. A single instance would cause request ID collisions
 	// when multiple clients connect concurrently.
