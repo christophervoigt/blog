@@ -10,16 +10,16 @@ export async function getStaticPaths() {
 	const posts = await getCollection('blog')
 
 	return posts.map((post) => {
-		const { slug } = post
+		const id = post.id
 
-		const filename = `src/data/webmentions/${slug}.json`
+		const filename = `src/data/webmentions/${id}.json`
 		let webmentions = []
 		if (fs.existsSync(filename)) {
 			webmentions = JSON.parse(fs.readFileSync(filename, 'utf8'))
 		}
 
 		return {
-			params: { slug },
+			params: { id },
 			props: { post, webmentions },
 		}
 	})

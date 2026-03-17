@@ -8,10 +8,10 @@ export async function getStaticPaths() {
 	const characters = await getCollection('dnd')
 
 	return characters.map((post) => {
-		const { slug } = post
+		const id = post.id
 
 		return {
-			params: { slug },
+			params: { id },
 			props: { post },
 		}
 	})

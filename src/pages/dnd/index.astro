@@ -20,9 +20,9 @@ const characters = (await getCollection('dnd')).sort((a, b) => {
 
 		<ul>
 			{
-				characters.map(({ data: { name }, slug }) => (
+				characters.map(({ data: { name }, id }) => (
 					<li>
-						<a href={`/dnd/${slug}`}>{name}</a>
+						<a href={`/dnd/${id}`}>{name}</a>
 					</li>
 				))
 			}
