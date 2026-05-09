@@ -4,7 +4,7 @@
 	--cs-radius: 0.5rem;
 	--cs-cell-padding: var(--space-2xs) var(--space-xs);
 	--cs-muted-color: light-dark(var(--gray-700), var(--gray-300));
-	--cs-accent-color: light-dark(var(--bronze-800), var(--bronze-400));
+	--cs-accent-color: light-dark(var(--bronze-700), var(--turquoise-400));
 
 	max-inline-size: var(--grid-max-width);
 	padding-inline: var(--grid-gutter);
@@ -61,6 +61,7 @@
 .cs-stat-label {
 	font-size: var(--step--2);
 	text-transform: uppercase;
+	text-align: center;
 	letter-spacing: 0.05em;
 	color: var(--cs-muted-color);
 	margin-block-start: 0.15em;

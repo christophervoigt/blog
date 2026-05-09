@@ -1,5 +1,5 @@
 ---
-name: Tion "Eisenmähne"
+name: Tion "Ironmane"
 class: Fighter
 subclass: Echoknight
 level: 5
