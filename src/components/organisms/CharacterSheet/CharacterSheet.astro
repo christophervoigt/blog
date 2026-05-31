@@ -180,17 +180,11 @@ const skillAbilityMap: Record<string, string> = {
 					abilityOrder.map((key) => {
 						const save = saving_throws[key]
 						const proficient = save.proficiency
+
 						return (
-							<li>
+							<li class:list={[{ 'cs-proficient': proficient }]}>
 								<span class="cs-list-label">
-									{proficient && (
-										<>
-											<span class="cs-proficient" aria-hidden="true">
-												●{' '}
-											</span>
-											<span class="sr-only">Proficient in </span>
-										</>
-									)}
+									{proficient && <span class="sr-only">Proficient in </span>}
 									{formatSkillName(key)}
 								</span>
 								<span class="cs-list-value">{formatSavingThrow(save)}</span>
@@ -210,17 +204,12 @@ const skillAbilityMap: Record<string, string> = {
 						const total = skillModifier(skill)
 						const proficient = skill.proficiency
 						const disadvantaged = skill.disadvantage
+
 						return (
-							<li class:list={[{ 'cs-disadvantage': disadvantaged }]}>
+							<li class:list={[{ 'cs-disadvantage': disadvantaged, 'cs-proficient': proficient }]}>
 								<span class="cs-list-label">
-									{proficient && (
-										<>
-											<span class="cs-proficient" aria-hidden="true">
-												●{' '}
-											</span>
-											<span class="sr-only">Proficient in </span>
-										</>
-									)}
+									{proficient && <span class="sr-only">Proficient in </span>}
+									{disadvantaged && <span class="sr-only">Disadvantaged in </span>}
 									{formatSkillName(key)}
 									<span class="cs-ability-mod">({abilityAbbr[skillAbilityMap[key]]})</span>
 								</span>

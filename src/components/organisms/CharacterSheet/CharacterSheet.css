@@ -164,7 +164,7 @@
 
 .cs-ability-mod {
 	font-size: var(--step--1);
-	color: var(--cs-muted-color);
+	font-weight: normal;
 }
 
 .cs-ability-name {
@@ -185,8 +185,9 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: var(--space-3xs) 0;
+	padding: var(--space-3xs);
 	font-size: var(--step--1);
+	font-weight: bold;
 }
 
 .cs-list li + li {
@@ -203,17 +204,13 @@
 }
 
 .cs-proficient {
-	color: var(--highlight-color);
+	background-color: var(--turquoise-500);
+	color: var(--black);
 }
 
 .cs-disadvantage {
-	font-style: italic;
-}
-
-.cs-disadvantage .cs-list-label,
-.cs-disadvantage .cs-list-value,
-.cs-disadvantage .cs-ability-mod {
-	color: var(--cs-muted-color);
+	background: var(--coral-500);
+	color: var(--black);
 }
 
 /* Training / Proficiencies */
@@ -324,6 +321,7 @@
 	padding: var(--space-3xs) var(--space-xs);
 	border: var(--cs-border);
 	border-radius: var(--cs-radius);
+	flex: 1;
 }
 
 .cs-physical-item .cs-trait-label {
@@ -332,6 +330,7 @@
 
 .cs-physical-item .cs-trait-value {
 	font-weight: 700;
+	white-space: nowrap;
 }
 
 /* Notes / Content area */
