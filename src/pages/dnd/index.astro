@@ -16,16 +16,64 @@ const characters = (await getCollection('dnd')).sort((a, b) => {
 
 <Page title="My D&D Characters" description="This is an overview of the D&D characters that I played over the years.">
 	<div class="container">
-		<h1>D&D Characters</h1>
+		<h1>All D&D 5e Characters</h1>
 
-		<ul>
+		<div class="teasers">
 			{
-				characters.map(({ data: { name }, id }) => (
-					<li>
-						<a href={`/dnd/${id}`}>{name}</a>
-					</li>
+				characters.map(({ data: { name, level, class: characterClass, subclass }, id }) => (
+					<article class="teaser -highlight">
+						<a class="teaser_link" href={`/dnd/${id}`}>
+							<h2>{name}</h2>
+						</a>
+
+						<p>
+							<small>
+								Level {level} {subclass ? `${subclass} ` : ''}
+								{characterClass}
+							</small>
+						</p>
+					</article>
 				))
 			}
-		</ul>
+		</div>
 	</div>
 </Page>
+
+<style>
+	ul {
+		padding: 0;
+
+		margin-block-start: 1em;
+	}
+
+	.teaser {
+		position: relative;
+		outline: 0.25em solid transparent;
+		outline-offset: -0.25em;
+		transition: outline-color 0.25s cubic-bezier(0, 0, 0.5, 1);
+
+		padding-inline: var(--space-s);
+		padding-block: var(--space-s);
+	}
+
+	.teaser:hover,
+	.teaser:focus-within {
+		outline-color: var(--link-text-color);
+	}
+
+	.teaser_link {
+		color: var(--link-text-color);
+		text-decoration: none;
+	}
+
+	.teaser_link:focus {
+		outline: 0;
+	}
+
+	.teaser_link::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		cursor: pointer;
+	}
+</style>

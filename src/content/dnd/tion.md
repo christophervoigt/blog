@@ -1,5 +1,5 @@
 ---
-name: Tion "Ironmane"
+name: Tion 'Iron Mane'
 class: Fighter
 subclass: Echoknight
 level: 5
