@@ -20,7 +20,7 @@ const posts = (await getCollection('blog'))
 	.slice(0, 4)
 ---
 
-<div class="posts">
+<div class="teasers -posts">
 	{posts.map((post) => <Teaser {...post} />)}
 </div>
 

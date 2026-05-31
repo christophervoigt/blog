@@ -19,6 +19,6 @@ const posts = (await getCollection('blog'))
 	.filter((post) => post.data.status !== 'draft')
 ---
 
-<div class="posts">
+<div class="teasers -posts">
 	{posts.map((post) => <Teaser {...post} headlineLevel="h2" />)}
 </div>

@@ -39,12 +39,14 @@ body {
 	border-block-start: 2px solid var(--border-color);
 }
 
-.posts {
+.teasers {
 	display: grid;
 	gap: var(--grid-gutter);
-	grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
-
 	margin-block-start: 1em;
+
+	&.-posts {
+		grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+	}
 }
 
 /* Highlight elements */
