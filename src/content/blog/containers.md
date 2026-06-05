@@ -2,6 +2,7 @@
 title: 'Containers'
 description: 'How to work with multiple container types.'
 pubDate: 'Jul 8 2023'
+status: 'draft'
 ---
 
 In the [last article](/blog/layout-minis-container-part-one/) we created a container that scales down on smaller screens but has a maximum width on larger screens.
