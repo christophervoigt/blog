@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content'
+
+import CharacterTeaser from '../molecules/CharacterTeaser.astro'
+
+const characters = await getCollection('dnd')
+const favoriteCharacter = characters.find((character) => character.data.favorite)
+---
+
+{
+	favoriteCharacter && (
+		<div class="teasers">
+			<CharacterTeaser {...favoriteCharacter} />
+		</div>
+	)
+}
+
+<a href="/dnd/">View all characters</a>
+
+<style>
+	a {
+		display: inline-block;
+		margin-block-start: 1em;
+	}
+</style>

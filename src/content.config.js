@@ -34,6 +34,7 @@ const dnd = defineCollection({
 		class: z.string(),
 		subclass: z.string().optional(),
 		level: z.number(),
+		favorite: z.boolean().optional(),
 		hit_points: z.number(),
 		armor_class: z.number(),
 		speed: z.string(),

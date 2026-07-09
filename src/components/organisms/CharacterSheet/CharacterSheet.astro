@@ -114,6 +114,9 @@ const skillAbilityMap: Record<string, string> = {
 	stealth: 'dexterity',
 	survival: 'wisdom',
 }
+
+const characterType = [characteristics?.race, subclass, charClass].filter(Boolean).join(' ')
+const characterSubtitle = [`Level ${level}`, characterType].filter(Boolean).join(' ')
 ---
 
 <div class="character-sheet">
@@ -121,12 +124,7 @@ const skillAbilityMap: Record<string, string> = {
 	<div class="cs-header">
 		<div>
 			<h1 class="cs-name">{name}</h1>
-			<p class="cs-subtitle">
-				<span>Level {level} ·</span>
-				{subclass && <span>{subclass}</span>}
-				{charClass}
-				{characteristics?.race && <span>· {characteristics.race}</span>}
-			</p>
+			<p class="cs-subtitle">{characterSubtitle}</p>
 		</div>
 	</div>
 

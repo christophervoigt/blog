@@ -3,6 +3,7 @@ name: Tion 'Iron Mane'
 class: Fighter
 subclass: Echoknight
 level: 5
+favorite: true
 hit_points: 49
 armor_class: 16
 speed: 35 ft.

@@ -1,0 +1,62 @@
+---
+const { id, data, headlineLevel } = Astro.props
+const { name, level, class: characterClass, subclass } = data
+const characterType = [data.characteristics?.race, subclass, characterClass].filter(Boolean).join(' ')
+
+const Heading = headlineLevel || 'h3'
+---
+
+<article class="teaser -highlight">
+	<div class="teaser_content">
+		<a class="teaser_link" href={`/dnd/${id}/`}>
+			<Heading>{name}</Heading>
+		</a>
+
+		<p>
+			<small>Level {level} {characterType}</small>
+		</p>
+	</div>
+</article>
+
+<style>
+	.teaser {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+
+		position: relative;
+		outline: 0.25em solid transparent;
+		outline-offset: -0.25em;
+		transition: outline-color 0.25s cubic-bezier(0, 0, 0.5, 1);
+
+		padding-inline: var(--space-s);
+		padding-block: var(--space-s);
+	}
+
+	.teaser_content {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+	}
+
+	.teaser:hover,
+	.teaser:focus-within {
+		outline-color: var(--link-text-color);
+	}
+
+	.teaser_link {
+		color: var(--link-text-color);
+		text-decoration: none;
+	}
+
+	.teaser_link:focus {
+		outline: 0;
+	}
+
+	.teaser_link::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		cursor: pointer;
+	}
+</style>

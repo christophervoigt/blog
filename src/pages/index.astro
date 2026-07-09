@@ -1,6 +1,7 @@
 ---
 import { SITE_DESCRIPTION } from '../consts'
 
+import FavoriteCharacter from '../components/organisms/FavoriteCharacter.astro'
 import LatestPosts from '../components/organisms/LatestPosts.astro'
 import Page from '../components/templates/Page.astro'
 ---
@@ -14,5 +15,10 @@ import Page from '../components/templates/Page.astro'
 	<div class="container">
 		<h2>Latest blog posts</h2>
 		<LatestPosts />
+	</div>
+
+	<div class="container">
+		<h2>Favorite D&D 5e Character</h2>
+		<FavoriteCharacter />
 	</div>
 </Page>
