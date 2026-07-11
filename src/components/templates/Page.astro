@@ -18,6 +18,7 @@ const {
 	webmentions = [],
 	structuredDataType = 'WebSite',
 	structuredData = {},
+	layout = 'default',
 } = Astro.props
 ---
 
@@ -74,7 +75,7 @@ const {
 		<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 	</head>
 
-	<body>
+	<body class={`layout -${layout}`}>
 		<!-- Background SVG Filter for Grain Effect -->
 		<svg width="0" height="0" aria-hidden="true">
 			<filter id="grain" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">

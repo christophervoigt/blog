@@ -56,18 +56,30 @@ footer {
 	padding-block: var(--space-s);
 }
 
-.content {
-	padding-inline: var(--grid-gutter);
+main:has(> :last-child) ~ footer {
+	margin-block-start: var(--space-xl-2xl);
+}
+
+.layout {
+	&.-default {
+		/* --grid-max-width: no override, use global value */
+		/* --grid-columns: no override, use global value */
+	}
+
+	&.-large {
+		--grid-max-width: 69.38rem;
+		--grid-columns: 12;
+	}
+
+	&.-full {
+		--grid-max-width: 100%;
+	}
 }
 
 .container {
 	max-inline-size: var(--grid-max-width);
 	padding-inline: var(--grid-gutter);
 	margin-inline: auto;
-}
-
-main:has(> :last-child) ~ footer {
-	margin-block-start: var(--space-xl-2xl);
 }
 
 .container + .container {
