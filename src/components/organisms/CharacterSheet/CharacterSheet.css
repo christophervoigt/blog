@@ -1,35 +1,43 @@
-/* Character Sheet Layout */
+/* Character Sheet
+   Restyled to match the "Tion Iron Mane" design (card-based, gradient header,
+   gradient proficiency rows), mapped onto the site's theme tokens so it works
+   in both light and dark modes. */
 .character-sheet {
-	--cs-border: 2px solid var(--border-color);
-	--cs-radius: 0.5rem;
-	--cs-cell-padding: var(--space-2xs) var(--space-xs);
+	--cs-radius: 0.625rem;
+	--cs-surface: light-dark(var(--gray-100), var(--gray-800));
+	--cs-surface-inset: light-dark(var(--gray-200), var(--gray-900));
+	--cs-border-color: light-dark(var(--gray-200), var(--gray-700));
+	--cs-divider-color: light-dark(var(--gray-200), var(--gray-900));
 	--cs-muted-color: light-dark(var(--gray-700), var(--gray-300));
 	--cs-accent-color: light-dark(var(--bronze-700), var(--turquoise-400));
 
 	max-inline-size: var(--grid-max-width);
 	padding-inline: var(--grid-gutter);
 	margin-inline: auto;
+
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-s);
 }
 
-/* Header */
+/* Header — gradient banner via the site's .-highlight utility */
 .cs-header {
-	display: grid;
-	grid-template-columns: 1fr auto;
-	gap: var(--space-xs);
-	align-items: baseline;
-	padding-block-end: var(--space-xs);
-	border-block-end: var(--cs-border);
+	padding: var(--space-s) var(--space-m);
+	border-radius: var(--cs-radius);
 }
 
 .cs-name {
 	font-size: var(--step-4);
 	font-weight: 900;
-	line-height: 1.1;
+	line-height: 1.02;
+	margin-block-end: 0.1em;
 }
 
 .cs-subtitle {
 	font-size: var(--step-0);
-	color: var(--cs-muted-color);
+	line-height: 1.3;
+	opacity: 0.9;
+	margin: 0;
 }
 
 /* Core Stats Bar */
@@ -37,18 +45,19 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--space-2xs);
-	margin-block-start: var(--space-s);
 }
 
 .cs-stat {
+	flex: 1 1 6.5rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: var(--space-2xs) var(--space-2xs);
-	border: var(--cs-border);
+	gap: 0.35em;
+	padding: var(--space-xs) var(--space-2xs);
+	background: var(--cs-surface);
+	border: 1px solid var(--cs-border-color);
 	border-radius: var(--cs-radius);
-	min-inline-size: 5.5rem;
-	flex: 1;
+	text-align: center;
 }
 
 .cs-stat-value {
@@ -56,120 +65,92 @@
 	font-weight: 900;
 	line-height: 1;
 	color: var(--headline-color);
+	font-variant-numeric: tabular-nums;
 }
 
 .cs-stat-label {
 	font-size: var(--step--2);
+	font-weight: 700;
 	text-transform: uppercase;
-	text-align: center;
-	letter-spacing: 0.05em;
+	letter-spacing: 0.1em;
 	color: var(--cs-muted-color);
-	margin-block-start: 0.15em;
 }
 
-/* Main Grid */
+/* Body — three columns of unequal width (narrow / wide / medium), like the
+   design. Stacks to a single column on narrower viewports. */
 .cs-body {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: var(--space-m);
-	margin-block-start: var(--space-m);
-	grid-template-areas:
-		'abilities'
-		'saves'
-		'skills'
-		'senses'
-		'proficiencies'
-		'background'
-		'characteristics';
+	align-items: start;
 }
 
-@media (min-width: 40rem) {
+@media (min-width: 56rem) {
 	.cs-body {
-		grid-template-columns: 1fr 2fr;
-		grid-template-areas:
-			'abilities saves'
-			'abilities skills'
-			'senses proficiencies'
-			'background background'
-			'characteristics characteristics';
+		grid-template-columns: 3fr 5fr 5fr;
 	}
 }
 
-.cs-abilities-section {
-	grid-area: abilities;
+.cs-col {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-m);
+	min-inline-size: 0;
 }
 
-.cs-saves {
-	grid-area: saves;
+.cs-col > * {
+	padding: var(--space-xs);
+	background: var(--cs-surface);
+	border: 1px solid var(--cs-border-color);
+	border-radius: var(--cs-radius);
 }
 
-.cs-skills {
-	grid-area: skills;
-}
-
-.cs-senses-section {
-	grid-area: senses;
-}
-
-.cs-proficiencies {
-	grid-area: proficiencies;
-}
-
-/* Section Headings */
+/* Section Headings — label followed by a hairline rule */
 .cs-section-title {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2xs);
 	font-size: var(--step--1);
 	font-weight: 700;
 	text-transform: uppercase;
-	letter-spacing: 0.08em;
+	letter-spacing: 0.12em;
 	color: var(--headline-color);
-	padding-block-end: var(--space-3xs);
-	border-block-end: var(--cs-border);
-	margin-block-end: var(--space-2xs);
+	margin-block-end: var(--space-xs);
 }
 
-/* Abilities Column */
+/* Abilities */
 .cs-abilities {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
 	gap: var(--space-2xs);
-}
-
-@media (min-width: 40rem) {
-	.cs-abilities {
-		flex-direction: column;
-	}
 }
 
 .cs-ability {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: var(--space-2xs) var(--space-xs);
-	border: var(--cs-border);
+	gap: 0.1em;
+	padding: var(--space-2xs) var(--space-3xs);
+	background: var(--cs-surface-inset);
+	border: 1px solid var(--cs-border-color);
 	border-radius: var(--cs-radius);
 	text-align: center;
-	flex: 1;
-	min-inline-size: 5rem;
 }
 
 .cs-ability-score {
-	font-size: var(--step-2);
+	font-size: var(--step-1);
 	font-weight: 900;
 	line-height: 1;
 	color: var(--headline-color);
-}
-
-.cs-ability-mod {
-	font-size: var(--step--1);
-	font-weight: normal;
+	font-variant-numeric: tabular-nums;
 }
 
 .cs-ability-name {
 	font-size: var(--step--2);
+	font-weight: 700;
 	text-transform: uppercase;
-	letter-spacing: 0.05em;
-	margin-block-start: 0.2em;
+	letter-spacing: 0.08em;
+	color: var(--cs-muted-color);
 }
 
 /* Saving Throws & Skills */
@@ -177,19 +158,33 @@
 	list-style: none;
 	padding: 0;
 	margin: 0;
+	display: flex;
+	flex-direction: column;
 }
 
 .cs-list li {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: var(--space-3xs);
+	gap: var(--space-2xs);
+	padding: var(--space-3xs) var(--space-2xs);
 	font-size: var(--step--1);
-	font-weight: bold;
+	border-radius: 0;
+	clip-path: inset(0 0 0 0);
 }
 
 .cs-list-label {
+	display: flex;
+	align-items: baseline;
+	gap: 0.4em;
 	text-transform: capitalize;
+}
+
+.cs-list-label .cs-ability-mod {
+	font-size: var(--step--2);
+	font-weight: 600;
+	color: currentcolor;
+	opacity: 0.65;
 }
 
 .cs-list-value {
@@ -197,17 +192,60 @@
 	font-variant-numeric: tabular-nums;
 }
 
+/* Proficient / disadvantaged rows reuse the site's gradient highlight.
+   Forcing color-scheme pins each to a fixed gradient regardless of theme:
+   teal/turquoise for proficient, warm bronze/coral for disadvantage. */
 .cs-proficient.-highlight {
 	color-scheme: dark;
+	font-weight: 700;
 }
 
 .cs-disadvantage.-highlight {
 	color-scheme: light;
+	font-weight: 700;
 }
 
-:is(.cs-proficient, .cs-disadvantage).-highlight {
-	border-radius: 0;
-	clip-path: inset(0 0 0 0 round 0);
+:is(.cs-proficient, .cs-disadvantage).-highlight .cs-list-value {
+	color: inherit;
+}
+
+/* Senses */
+.cs-senses {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-2xs);
+}
+
+.cs-senses li {
+	flex: 1 1 6rem;
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: center;
+	gap: 0.25em;
+	padding: var(--space-xs) var(--space-2xs);
+	background: var(--cs-surface-inset);
+	border: 1px solid var(--cs-border-color);
+	border-radius: var(--cs-radius);
+	text-align: center;
+}
+
+.cs-senses li strong {
+	font-size: var(--step-1);
+	font-weight: 900;
+	line-height: 1;
+	color: var(--headline-color);
+	font-variant-numeric: tabular-nums;
+}
+
+.cs-senses li span {
+	font-size: var(--step--2);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--cs-muted-color);
 }
 
 /* Training / Proficiencies */
@@ -219,7 +257,7 @@
 	font-size: var(--step--2);
 	font-weight: 700;
 	text-transform: uppercase;
-	letter-spacing: 0.05em;
+	letter-spacing: 0.1em;
 	color: var(--cs-muted-color);
 	margin-block-end: var(--space-3xs);
 }
@@ -234,103 +272,369 @@
 }
 
 .cs-tags li {
-	font-size: var(--step--2);
-	padding: 0.15em 0.5em;
-	border: 1px solid var(--border-color);
-	border-radius: 0.25rem;
-}
-
-/* Senses */
-.cs-senses {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-.cs-senses li {
-	display: flex;
-	justify-content: space-between;
-	padding: var(--space-3xs) 0;
 	font-size: var(--step--1);
-}
-
-.cs-senses li + li {
-	border-block-start: 1px solid light-dark(var(--gray-100), var(--gray-900));
-}
-
-/* Background */
-.cs-background {
-	grid-area: background;
-}
-
-.cs-background-feature {
-	font-size: var(--step--1);
-	font-weight: 700;
-	color: var(--cs-accent-color);
-	margin-block-end: var(--space-3xs);
-}
-
-.cs-background-desc {
-	font-size: var(--step--1);
-	line-height: 1.5;
+	padding: 0.25em 0.6em;
+	background: var(--cs-surface-inset);
+	border: 1px solid var(--cs-border-color);
+	border-radius: 0.375rem;
 }
 
 /* Characteristics */
-.cs-characteristics {
-	grid-area: characteristics;
-}
-
-.cs-traits-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(min(14rem, 100%), 1fr));
-	gap: var(--space-xs);
-}
-
-.cs-trait {
-	padding: var(--space-2xs) var(--space-xs);
-	border: var(--cs-border);
-	border-radius: var(--cs-radius);
-}
-
-.cs-trait-label {
-	font-size: var(--step--2);
-	text-transform: uppercase;
-	letter-spacing: 0.05em;
-	color: var(--cs-muted-color);
-	margin-block-end: 0.15em;
-}
-
-.cs-trait-value {
-	font-size: var(--step--1);
-}
-
-/* Physical attributes grid */
 .cs-physical {
-	display: flex;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
 	gap: var(--space-2xs);
-	margin-block-end: var(--space-xs);
+	margin-block-end: var(--space-s);
 }
 
 .cs-physical-item {
 	display: flex;
 	flex-direction: column;
-	padding: var(--space-3xs) var(--space-xs);
-	border: var(--cs-border);
-	border-radius: var(--cs-radius);
-	flex: 1;
+	gap: 0.1em;
 }
 
-.cs-physical-item .cs-trait-label {
-	margin-block-end: 0;
+.cs-traits-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+	gap: var(--space-2xs);
+}
+
+.cs-trait {
+	padding: var(--space-2xs) var(--space-xs);
+	background: var(--cs-surface-inset);
+	border: 1px solid var(--cs-border-color);
+	border-radius: 0.5rem;
+}
+
+.cs-trait-label {
+	font-size: var(--step--2);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--cs-muted-color);
+	margin: 0 0 0.2em;
+}
+
+/* Persona traits (personality, ideals, bonds, flaws) get an accent label */
+.cs-traits-grid .cs-trait-label {
+	color: var(--cs-accent-color);
+}
+
+.cs-trait-value {
+	font-size: var(--step--2);
+	line-height: 1.5;
+	margin: 0;
 }
 
 .cs-physical-item .cs-trait-value {
 	font-weight: 700;
+}
+
+/* Shared note */
+.cs-note {
+	font-size: var(--step--2);
+	line-height: 1.5;
+	color: var(--cs-muted-color);
+	margin: 0 0 var(--space-xs);
+}
+
+
+/* Actions / Attacks */
+.cs-attacks {
+	display: grid;
+	grid-template-columns: 1fr auto auto;
+	align-items: center;
+	column-gap: var(--space-2xs);
+	row-gap: var(--space-2xs);
+}
+
+.cs-attacks-head {
+	font-size: var(--step--2);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--cs-muted-color);
+}
+
+.cs-attacks-head.-center {
+	text-align: center;
+}
+
+.cs-attacks-rule {
+	grid-column: 1 / -1;
+	block-size: 1px;
+	background: var(--cs-divider-color);
+}
+
+.cs-attack-name {
+	display: flex;
+	flex-direction: column;
+	gap: 0.1em;
+}
+
+.cs-attack-title {
+	font-weight: 700;
+}
+
+.cs-attack-meta {
+	font-size: var(--step--2);
+	color: var(--cs-muted-color);
+}
+
+.cs-attack-value {
+	justify-self: center;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	padding: 0.3em 0.7em;
+	background: var(--cs-surface-inset);
+	border: 1px solid var(--cs-border-color);
+	border-radius: 0.375rem;
 	white-space: nowrap;
 }
 
-/* Notes / Content area */
+.cs-attack-value.-tohit {
+	color: var(--cs-accent-color);
+}
+
+/* Source / type tag pill (shared by features and bonus actions) */
+.cs-tag {
+	flex: 0 0 auto;
+	font-size: var(--step--2);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--cs-accent-color);
+	border: 1px solid var(--cs-border-color);
+	border-radius: 0.375rem;
+	padding: 0.2em 0.55em;
+}
+
+.cs-tag.-reaction {
+	color: light-dark(var(--sky-700), var(--sky-400));
+}
+
+/* Equipment & Inventory */
+.cs-inv-group + .cs-inv-group {
+	margin-block-start: var(--space-s);
+}
+
+.cs-inv-label {
+	font-size: var(--step--2);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--cs-muted-color);
+	margin: 0 0 var(--space-3xs);
+}
+
+.cs-inv-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.cs-inv-item {
+	display: flex;
+	gap: var(--space-2xs);
+	align-items: baseline;
+	padding: var(--space-3xs) 0;
+	font-size: var(--step--1);
+}
+
+.cs-inv-name {
+	flex: 1;
+}
+
+.cs-inv-note {
+	flex: 0 0 auto;
+	font-size: var(--step--2);
+	color: var(--cs-muted-color);
+	text-align: end;
+}
+
+.cs-coins {
+	display: flex;
+	gap: var(--space-2xs);
+	margin-block-start: var(--space-s);
+}
+
+.cs-coin {
+	flex: 1;
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: center;
+	gap: 0.2em;
+	padding: var(--space-2xs);
+	background: var(--cs-surface-inset);
+	border: 1px solid var(--cs-border-color);
+	border-radius: 0.5rem;
+	text-align: center;
+}
+
+.cs-coin-value {
+	font-size: var(--step-0);
+	font-weight: 900;
+	font-variant-numeric: tabular-nums;
+}
+
+.cs-coin.-gold .cs-coin-value {
+	color: light-dark(var(--yellow-700), var(--yellow-400));
+}
+
+.cs-coin.-silver .cs-coin-value {
+	color: var(--cs-muted-color);
+}
+
+.cs-coin.-copper .cs-coin-value {
+	color: light-dark(var(--bronze-700), var(--bronze-400));
+}
+
+.cs-coin-label {
+	font-size: var(--step--2);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--cs-muted-color);
+}
+
+/* Pip trackers (resources, death saves) */
+.cs-pips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-3xs);
+}
+
+.cs-pip {
+	inline-size: 0.95rem;
+	block-size: 0.95rem;
+	border-radius: 50%;
+	border: 1.5px solid var(--cs-muted-color);
+	background: transparent;
+}
+
+.cs-pip.-filled {
+	background: var(--cs-accent-color);
+	border-color: var(--cs-accent-color);
+}
+
+/* Resources */
+.cs-resource-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xs);
+}
+
+.cs-resource-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: var(--space-2xs);
+	margin-block-end: var(--space-3xs);
+}
+
+.cs-resource-name {
+	font-weight: 700;
+	font-size: var(--step--1);
+}
+
+.cs-resource-reset {
+	font-size: var(--step--2);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--cs-muted-color);
+	white-space: nowrap;
+}
+
+/* Death Saves */
+.cs-deathsave-group + .cs-deathsave-group {
+	margin-block-start: var(--space-xs);
+}
+
+.cs-deathsave-label {
+	font-size: var(--step--2);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--cs-muted-color);
+	margin: 0 0 var(--space-3xs);
+}
+
+.cs-pip.-success {
+	border-color: light-dark(var(--turquoise-700), var(--turquoise-400));
+}
+
+.cs-pip.-failure {
+	border-color: light-dark(var(--coral-700), var(--coral-400));
+}
+
+/* Class & racial features, feats, and bonus actions — all share the same
+   structure: a head row (tag + name, optional meta) with the text below. */
+.cs-feature-list,
+.cs-feat-list,
+.cs-tempo-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xs);
+}
+
+.cs-feature-head,
+.cs-feat-head,
+.cs-tempo-head,
+.cs-background-head {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--space-2xs);
+	margin-block-end: var(--space-3xs);
+}
+
+.cs-feature-name,
+.cs-feat-name,
+.cs-tempo-name,
+.cs-background-name {
+	font-weight: 700;
+}
+
+.cs-feature-meta {
+	margin-inline-start: auto;
+	font-size: var(--step--2);
+	color: var(--cs-muted-color);
+	white-space: nowrap;
+}
+
+.cs-feature-text,
+.cs-feat-text,
+.cs-tempo-text,
+.cs-background-desc {
+	font-size: var(--step--1);
+	line-height: 1.5;
+	color: var(--cs-muted-color);
+	margin: 0;
+}
+
+.cs-feat-level {
+	flex: 0 0 auto;
+	font-size: var(--step--2);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: light-dark(var(--white), var(--gray-1000));
+	background: var(--cs-accent-color);
+	border-radius: 0.375rem;
+	padding: 0.2em 0.55em;
+}
+
+/* Notes / Markdown content */
 .cs-notes {
-	margin-block-start: var(--space-m);
+	margin: 0;
+	padding: var(--space-s);
+	background: var(--cs-surface);
+	border: 1px solid var(--cs-border-color);
+	border-radius: var(--cs-radius);
 }

@@ -37,6 +37,17 @@ interface Props {
 		bonds?: string
 		flaws?: string
 	}
+	actions?: {
+		note?: string
+		attacks: { name: string; meta?: string; to_hit?: string; damage?: string }[]
+		footnote?: string
+	}
+	bonus_actions?: { type?: 'Bonus' | 'Reaction'; name: string; text: string }[]
+	inventory?: { group: string; items: { name: string; qty?: number; note?: string }[] }[]
+	coins?: { gold?: number; silver?: number; copper?: number }
+	resources?: { name: string; reset?: string; max: number; current?: number }[]
+	features?: { source?: string; name: string; meta?: string; text: string }[]
+	feats?: { level?: string; name: string; text: string }[]
 }
 
 const {
@@ -56,6 +67,13 @@ const {
 	skills,
 	background,
 	characteristics,
+	actions,
+	bonus_actions,
+	inventory,
+	coins,
+	resources,
+	features,
+	feats,
 } = Astro.props
 
 function modifier(score: number) {
@@ -115,19 +133,17 @@ const skillAbilityMap: Record<string, string> = {
 	survival: 'wisdom',
 }
 
-const characterType = [characteristics?.race, subclass, charClass].filter(Boolean).join(' ')
-const characterSubtitle = [`Level ${level}`, characterType].filter(Boolean).join(' ')
+const classLine = [subclass, charClass].filter(Boolean).join(' ')
+const characterSubtitle = [`Level ${level}`, characteristics?.race, classLine].filter(Boolean).join(' ')
 
 const hasNotes = Astro.slots.has('notes')
 ---
 
 <div class="character-sheet">
 	<!-- Header -->
-	<div class="cs-header">
-		<div>
-			<h1 class="cs-name">{name}</h1>
-			<p class="cs-subtitle">{characterSubtitle}</p>
-		</div>
+	<div class="cs-header -highlight">
+		<h1 class="cs-name">{name}</h1>
+		<p class="cs-subtitle">{characterSubtitle}</p>
 	</div>
 
 	<!-- Core Stats Bar -->
@@ -154,206 +170,400 @@ const hasNotes = Astro.slots.has('notes')
 		</div>
 	</div>
 
-	<!-- Body: Abilities Sidebar + Details -->
+	<!-- Body: three columns -->
 	<div class="cs-body">
-		<!-- Left: Abilities -->
-		<div class="cs-abilities-section">
-			<h2 class="cs-section-title">Abilities</h2>
-			<div class="cs-abilities">
+		<!-- Left column -->
+		<div class="cs-col -left">
+			<!-- Abilities -->
+			<div class="cs-abilities-section">
+				<h2 class="cs-section-title">Abilities</h2>
+				<div class="cs-abilities">
+					{
+						abilityOrder.map((key) => (
+							<div class="cs-ability">
+								<span class="cs-ability-score">{abilities[key]}</span>
+								<span class="cs-ability-mod">{modifier(abilities[key])}</span>
+								<span class="cs-ability-name">{abilityAbbr[key]}</span>
+							</div>
+						))
+					}
+				</div>
+			</div>
+
+			<!-- Saving Throws -->
+			<section class="cs-saves">
+				<h2 class="cs-section-title">Saving Throws</h2>
+				<ul class="cs-list">
+					{
+						abilityOrder.map((key) => {
+							const save = saving_throws[key]
+							const proficient = save.proficiency
+
+							return (
+								<li class:list={[{ 'cs-proficient -highlight': proficient }]}>
+									<span class="cs-list-label">
+										{proficient && <span class="sr-only">Proficient in </span>}
+										{formatSkillName(key)}
+									</span>
+									<span class="cs-list-value">{formatSavingThrow(save)}</span>
+								</li>
+							)
+						})
+					}
+				</ul>
+			</section>
+
+			<!-- Skills -->
+			<section class="cs-skills">
+				<h2 class="cs-section-title">Skills</h2>
+				<ul class="cs-list">
+					{
+						Object.entries(skills).map(([key, skill]) => {
+							const total = skillModifier(skill)
+							const proficient = skill.proficiency
+							const disadvantaged = skill.disadvantage
+
+							return (
+								<li
+									class:list={[{ 'cs-disadvantage -highlight': disadvantaged, 'cs-proficient -highlight': proficient }]}
+								>
+									<span class="cs-list-label">
+										{proficient && <span class="sr-only">Proficient in </span>}
+										{disadvantaged && <span class="sr-only">Disadvantaged in </span>}
+										{formatSkillName(key)}
+									</span>
+									<span class="cs-list-value">{total}</span>
+								</li>
+							)
+						})
+					}
+				</ul>
+			</section>
+
+			<!-- Senses -->
+			{
+				senses && (
+					<section class="cs-senses-section">
+						<h2 class="cs-section-title">Senses</h2>
+						<ul class="cs-senses">
+							{senses.passive_perception !== undefined && (
+								<li>
+									<span>Passive Perception</span>
+									<strong>{senses.passive_perception}</strong>
+								</li>
+							)}
+							{senses.darkvision && (
+								<li>
+									<span>Darkvision</span>
+									<strong>{senses.darkvision}</strong>
+								</li>
+							)}
+							{senses.blindsight && (
+								<li>
+									<span>Blindsight</span>
+									<strong>{senses.blindsight}</strong>
+								</li>
+							)}
+						</ul>
+					</section>
+				)
+			}
+
+			<!-- Training / Proficiencies -->
+			<section class="cs-proficiencies">
+				<h2 class="cs-section-title">Proficiencies</h2>
 				{
-					abilityOrder.map((key) => (
-						<div class="cs-ability">
-							<span class="cs-ability-score">{abilities[key]}</span>
-							<span class="cs-ability-mod">{modifier(abilities[key])}</span>
-							<span class="cs-ability-name">{abilityAbbr[key]}</span>
+					Object.entries(training).map(([category, items]) => (
+						<div class="cs-training-group">
+							<p class="cs-training-label">{formatSkillName(category)}</p>
+							<ul class="cs-tags">
+								{items.map((item) => (
+									<li>{item}</li>
+								))}
+							</ul>
 						</div>
 					))
 				}
-			</div>
+			</section>
 		</div>
 
-		<!-- Saving Throws -->
-		<section class="cs-saves">
-			<h2 class="cs-section-title">Saving Throws</h2>
-			<ul class="cs-list">
-				{
-					abilityOrder.map((key) => {
-						const save = saving_throws[key]
-						const proficient = save.proficiency
-
-						return (
-							<li class:list={[{ 'cs-proficient -highlight': proficient }]}>
-								<span class="cs-list-label">
-									{proficient && <span class="sr-only">Proficient in </span>}
-									{formatSkillName(key)}
-								</span>
-								<span class="cs-list-value">{formatSavingThrow(save)}</span>
-							</li>
-						)
-					})
-				}
-			</ul>
-		</section>
-
-		<!-- Skills -->
-		<section class="cs-skills">
-			<h2 class="cs-section-title">Skills</h2>
-			<ul class="cs-list">
-				{
-					Object.entries(skills).map(([key, skill]) => {
-						const total = skillModifier(skill)
-						const proficient = skill.proficiency
-						const disadvantaged = skill.disadvantage
-
-						return (
-							<li
-								class:list={[{ 'cs-disadvantage -highlight': disadvantaged, 'cs-proficient -highlight': proficient }]}
-							>
-								<span class="cs-list-label">
-									{proficient && <span class="sr-only">Proficient in </span>}
-									{disadvantaged && <span class="sr-only">Disadvantaged in </span>}
-									{formatSkillName(key)}
-									<span class="cs-ability-mod"> ({abilityAbbr[skillAbilityMap[key]]})</span>
-								</span>
-								<span class="cs-list-value">{total}</span>
-							</li>
-						)
-					})
-				}
-			</ul>
-		</section>
-
-		<!-- Senses -->
-		{
-			senses && (
-				<section class="cs-senses-section">
-					<h2 class="cs-section-title">Senses</h2>
-					<ul class="cs-senses">
-						{senses.passive_perception !== undefined && (
-							<li>
-								<span>Passive Perception</span>
-								<strong>{senses.passive_perception}</strong>
-							</li>
-						)}
-						{senses.darkvision && (
-							<li>
-								<span>Darkvision</span>
-								<strong>{senses.darkvision}</strong>
-							</li>
-						)}
-						{senses.blindsight && (
-							<li>
-								<span>Blindsight</span>
-								<strong>{senses.blindsight}</strong>
-							</li>
-						)}
-					</ul>
-				</section>
-			)
-		}
-
-		<!-- Training / Proficiencies -->
-		<section class="cs-proficiencies">
-			<h2 class="cs-section-title">Proficiencies</h2>
+		<!-- Middle column -->
+		<div class="cs-col -main">
+			<!-- Actions / Attacks -->
 			{
-				Object.entries(training).map(([category, items]) => (
-					<div class="cs-training-group">
-						<p class="cs-training-label">{formatSkillName(category)}</p>
-						<ul class="cs-tags">
-							{items.map((item) => (
-								<li>{item}</li>
+				actions && (
+					<section class="cs-actions">
+						<h2 class="cs-section-title">Actions</h2>
+						{actions.note && <p class="cs-note">{actions.note}</p>}
+						<div class="cs-attacks">
+							<span class="cs-attacks-head">Weapon</span>
+							<span class="cs-attacks-head -center">To Hit</span>
+							<span class="cs-attacks-head -center">Damage</span>
+							{actions.attacks.map(({ name, meta, to_hit, damage }) => (
+								<Fragment>
+									<div class="cs-attack-name">
+										<span class="cs-attack-title">{name}</span>
+										{meta && <span class="cs-attack-meta">{meta}</span>}
+									</div>
+									<span class="cs-attack-value -tohit">{to_hit}</span>
+									<span class="cs-attack-value">{damage}</span>
+								</Fragment>
+							))}
+						</div>
+					</section>
+				)
+			}
+
+			<!-- Bonus Actions & Reactions -->
+			{
+				bonus_actions && bonus_actions.length > 0 && (
+					<section class="cs-tempo">
+						<h2 class="cs-section-title">Bonus Actions & Reactions</h2>
+						<ul class="cs-tempo-list">
+							{bonus_actions.map((action) => (
+								<li class="cs-tempo-item">
+									<div class="cs-tempo-head">
+										<span class:list={['cs-tag', { '-reaction': action.type === 'Reaction' }]}>
+											{action.type ?? 'Bonus'}
+										</span>
+										<span class="cs-tempo-name">{action.name}</span>
+									</div>
+									<p class="cs-tempo-text">{action.text}</p>
+								</li>
 							))}
 						</ul>
-					</div>
-				))
+					</section>
+				)
 			}
-		</section>
+			<!-- Class & Racial Features -->
+			{
+				features && features.length > 0 && (
+					<section class="cs-features">
+						<h2 class="cs-section-title">Class & Racial Features</h2>
+						<ul class="cs-feature-list">
+							{features.map((feature) => (
+								<li class="cs-feature">
+									<div class="cs-feature-head">
+										{feature.source && <span class="cs-tag">{feature.source}</span>}
+										<span class="cs-feature-name">{feature.name}</span>
+									</div>
+									<p class="cs-feature-text">{feature.text}</p>
+								</li>
+							))}
+						</ul>
+					</section>
+				)
+			}
 
-		<!-- Background -->
-		{
-			background && (
-				<section class="cs-background">
-					<h2 class="cs-section-title">Background — {background.title}</h2>
-					<p class="cs-background-feature">{background.feature}</p>
-					<p class="cs-background-desc">{background.description}</p>
-				</section>
-			)
-		}
+			<!-- Ability Score Improvements & Feats -->
+			{
+				feats && feats.length > 0 && (
+					<section class="cs-feats">
+						<h2 class="cs-section-title">Ability Score Improvements & Feats</h2>
+						<ul class="cs-feat-list">
+							{feats.map((feat) => (
+								<li class="cs-feat">
+									<div class="cs-feat-head">
+										{feat.level && <span class="cs-feat-level">{feat.level}</span>}
+										<span class="cs-feat-name">{feat.name}</span>
+									</div>
+									<p class="cs-feat-text">{feat.text}</p>
+								</li>
+							))}
+						</ul>
+					</section>
+				)
+			}
+		</div>
 
-		<!-- Characteristics -->
-		{
-			characteristics && (
-				<section class="cs-characteristics">
-					<h2 class="cs-section-title">Characteristics</h2>
-
-					<div class="cs-physical">
-						{characteristics.alignment && (
-							<div class="cs-physical-item">
-								<span class="cs-trait-label">Alignment</span>
-								<span class="cs-trait-value">{characteristics.alignment}</span>
-							</div>
-						)}
-						{characteristics.race && (
-							<div class="cs-physical-item">
-								<span class="cs-trait-label">Race</span>
-								<span class="cs-trait-value">{characteristics.race}</span>
-							</div>
-						)}
-						{characteristics.gender && (
-							<div class="cs-physical-item">
-								<span class="cs-trait-label">Gender</span>
-								<span class="cs-trait-value">{characteristics.gender}</span>
-							</div>
-						)}
-						{characteristics.size && (
-							<div class="cs-physical-item">
-								<span class="cs-trait-label">Size</span>
-								<span class="cs-trait-value">{characteristics.size}</span>
-							</div>
-						)}
-						{characteristics.eyes && (
-							<div class="cs-physical-item">
-								<span class="cs-trait-label">Eyes</span>
-								<span class="cs-trait-value">{characteristics.eyes}</span>
-							</div>
-						)}
-						{characteristics.hair && (
-							<div class="cs-physical-item">
-								<span class="cs-trait-label">Hair</span>
-								<span class="cs-trait-value">{characteristics.hair}</span>
-							</div>
-						)}
+		<!-- Right column -->
+		<div class="cs-col -right">
+			<!-- Death Saves -->
+			<section class="cs-deathsaves">
+				<h2 class="cs-section-title">Death Saves</h2>
+				<div class="cs-deathsave-group">
+					<p class="cs-deathsave-label">
+						Successes <span class="sr-only">— 0 of 3 marked</span>
+					</p>
+					<div class="cs-pips" aria-hidden="true">
+						{Array.from({ length: 3 }).map(() => <span class="cs-pip -success" />)}
 					</div>
-
-					<div class="cs-traits-grid">
-						{characteristics.personality_traits && (
-							<div class="cs-trait">
-								<p class="cs-trait-label">Personality Traits</p>
-								<p class="cs-trait-value">{characteristics.personality_traits}</p>
-							</div>
-						)}
-						{characteristics.ideals && (
-							<div class="cs-trait">
-								<p class="cs-trait-label">Ideals</p>
-								<p class="cs-trait-value">{characteristics.ideals}</p>
-							</div>
-						)}
-						{characteristics.bonds && (
-							<div class="cs-trait">
-								<p class="cs-trait-label">Bonds</p>
-								<p class="cs-trait-value">{characteristics.bonds}</p>
-							</div>
-						)}
-						{characteristics.flaws && (
-							<div class="cs-trait">
-								<p class="cs-trait-label">Flaws</p>
-								<p class="cs-trait-value">{characteristics.flaws}</p>
-							</div>
-						)}
+				</div>
+				<div class="cs-deathsave-group">
+					<p class="cs-deathsave-label">
+						Failures <span class="sr-only">— 0 of 3 marked</span>
+					</p>
+					<div class="cs-pips" aria-hidden="true">
+						{Array.from({ length: 3 }).map(() => <span class="cs-pip -failure" />)}
 					</div>
-				</section>
-			)
-		}
+				</div>
+			</section>
+
+			<!-- Resources -->
+			{
+				resources && resources.length > 0 && (
+					<section class="cs-resources">
+						<h2 class="cs-section-title">Resources</h2>
+						<ul class="cs-resource-list">
+							{resources.map((resource) => {
+								const filled = resource.current ?? resource.max
+								return (
+									<li class="cs-resource">
+										<div class="cs-resource-head">
+											<span class="cs-resource-name">
+												{resource.name}
+												<span class="sr-only">
+													- {filled} of {resource.max} available
+												</span>
+											</span>
+											{resource.reset && <span class="cs-resource-reset">{resource.reset}</span>}
+										</div>
+										<div class="cs-pips" aria-hidden="true">
+											{Array.from({ length: resource.max }).map((_, i) => (
+												<span class:list={['cs-pip', { '-filled': i < filled }]} />
+											))}
+										</div>
+									</li>
+								)
+							})}
+						</ul>
+					</section>
+				)
+			}
+
+			<!-- Equipment & Inventory -->
+			{
+				(inventory || coins) && (
+					<section class="cs-inventory">
+						<h2 class="cs-section-title">Equipment & Inventory</h2>
+						{inventory?.map((group) => (
+							<div class="cs-inv-group">
+								<p class="cs-inv-label">{group.group}</p>
+								<ul class="cs-inv-list">
+									{group.items.map((item) => (
+										<li class="cs-inv-item">
+											<span class="cs-inv-name">{item.name}</span>
+											{item.note && <span class="cs-inv-note">{item.note}</span>}
+										</li>
+									))}
+								</ul>
+							</div>
+						))}
+						{coins && (
+							<div class="cs-coins">
+								{coins.gold !== undefined && (
+									<div class="cs-coin -gold">
+										<span class="cs-coin-label">Gold</span>
+										<span class="cs-coin-value">{coins.gold}</span>
+									</div>
+								)}
+								{coins.silver !== undefined && (
+									<div class="cs-coin -silver">
+										<span class="cs-coin-label">Silver</span>
+										<span class="cs-coin-value">{coins.silver}</span>
+									</div>
+								)}
+								{coins.copper !== undefined && (
+									<div class="cs-coin -copper">
+										<span class="cs-coin-label">Copper</span>
+										<span class="cs-coin-value">{coins.copper}</span>
+									</div>
+								)}
+							</div>
+						)}
+					</section>
+				)
+			}
+
+			<!-- Background -->
+			{
+				background && (
+					<section class="cs-background">
+						<h2 class="cs-section-title">Background</h2>
+						<div class="cs-background-head">
+							<span class="cs-tag">{background.title}</span>
+							<span class="cs-background-name">{background.feature}</span>
+						</div>
+						<p class="cs-background-desc">{background.description}</p>
+					</section>
+				)
+			}
+
+			<!-- Characteristics -->
+			{
+				characteristics && (
+					<section class="cs-characteristics">
+						<h2 class="cs-section-title">Characteristics</h2>
+
+						<div class="cs-physical">
+							{characteristics.alignment && (
+								<div class="cs-physical-item">
+									<span class="cs-trait-label">Alignment</span>
+									<span class="cs-trait-value">{characteristics.alignment}</span>
+								</div>
+							)}
+							{characteristics.race && (
+								<div class="cs-physical-item">
+									<span class="cs-trait-label">Race</span>
+									<span class="cs-trait-value">{characteristics.race}</span>
+								</div>
+							)}
+							{characteristics.gender && (
+								<div class="cs-physical-item">
+									<span class="cs-trait-label">Gender</span>
+									<span class="cs-trait-value">{characteristics.gender}</span>
+								</div>
+							)}
+							{characteristics.size && (
+								<div class="cs-physical-item">
+									<span class="cs-trait-label">Size</span>
+									<span class="cs-trait-value">{characteristics.size}</span>
+								</div>
+							)}
+							{characteristics.eyes && (
+								<div class="cs-physical-item">
+									<span class="cs-trait-label">Eyes</span>
+									<span class="cs-trait-value">{characteristics.eyes}</span>
+								</div>
+							)}
+							{characteristics.hair && (
+								<div class="cs-physical-item">
+									<span class="cs-trait-label">Hair</span>
+									<span class="cs-trait-value">{characteristics.hair}</span>
+								</div>
+							)}
+						</div>
+
+						<div class="cs-traits-grid">
+							{characteristics.personality_traits && (
+								<div class="cs-trait">
+									<p class="cs-trait-label">Personality Traits</p>
+									<p class="cs-trait-value">{characteristics.personality_traits}</p>
+								</div>
+							)}
+							{characteristics.ideals && (
+								<div class="cs-trait">
+									<p class="cs-trait-label">Ideals</p>
+									<p class="cs-trait-value">{characteristics.ideals}</p>
+								</div>
+							)}
+							{characteristics.bonds && (
+								<div class="cs-trait">
+									<p class="cs-trait-label">Bonds</p>
+									<p class="cs-trait-value">{characteristics.bonds}</p>
+								</div>
+							)}
+							{characteristics.flaws && (
+								<div class="cs-trait">
+									<p class="cs-trait-label">Flaws</p>
+									<p class="cs-trait-value">{characteristics.flaws}</p>
+								</div>
+							)}
+						</div>
+					</section>
+				)
+			}
+		</div>
 	</div>
 
 	<!-- Notes from Markdown Content -->
