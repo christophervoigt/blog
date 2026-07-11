@@ -30,7 +30,6 @@ const { name, level, class: characterClass, subclass, characteristics } = data
 const characterType = [characteristics?.race, subclass, characterClass].filter(Boolean).join(' ')
 
 const hasNotes = Boolean(character.body?.trim())
-console.log('hasNotes', hasNotes)
 const { Content: Notes } = await render(character)
 ---
 
