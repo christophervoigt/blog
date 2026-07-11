@@ -188,10 +188,6 @@
 	font-weight: bold;
 }
 
-.cs-list li:not(.cs-proficient, .cs-disadvantage) + li:not(.cs-proficient, .cs-disadvantage) {
-	border-block-start: 1px solid light-dark(var(--gray-100), var(--gray-900));
-}
-
 .cs-list-label {
 	text-transform: capitalize;
 }
