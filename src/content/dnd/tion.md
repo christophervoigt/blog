@@ -121,19 +121,19 @@ actions:
   note: 'Extra Attack - make 2 attacks whenever you take the Attack action.'
   attacks:
     - name: Longsword
-      meta: 'Melee · 5 ft. · Dueling style'
+      meta: 'Melee 5 ft.'
       to_hit: '+7'
       damage: '1d8+6'
     - name: Claws
-      meta: 'Melee · 5 ft. · natural weapon (Leonin)'
+      meta: 'Melee 5 ft.'
       to_hit: '+7'
       damage: '1d4+4'
     - name: Handaxe
-      meta: 'Thrown · 20/60 ft.'
+      meta: 'Thrown 20/60 ft.'
       to_hit: '+7'
       damage: '1d6+4'
     - name: Javelin
-      meta: 'Thrown · 30/120 ft.'
+      meta: 'Thrown 30/120 ft.'
       to_hit: '+7'
       damage: '1d6+4'
   footnote: 'Spells: none - Tion is a pure martial fighter.'
@@ -150,7 +150,7 @@ bonus_actions:
     text: 'Creatures within 10 ft must succeed on a DC 14 Wisdom save or be frightened until the end of your next turn.'
   - type: Reaction
     name: Opportunity Attack
-    text: 'Attack a creature that leaves your reach - including from your echo''s space.'
+    text: "Attack a creature that leaves your reach - including from your echo's space."
 
 inventory:
   - group: Weapons
@@ -186,7 +186,7 @@ inventory:
         note: Instrument
   - group: Treasure & Keepsakes
     items:
-      - name: 'Gladiator''s Medallion'
+      - name: "Gladiator's Medallion"
         note: Background
       - name: Belt of Trophy Teeth
 
@@ -230,7 +230,7 @@ features:
     text: 'Summon a spectral duplicate (AC 17, 1 HP) within 15 ft. You can move it, make attacks from its space, and once per turn swap places with it for free (up to 15 ft).'
   - source: Echo Knight
     name: Unleash Incarnation
-    text: 'When you take the Attack action, make one additional melee attack from your echo''s space - a number of times equal to your Constitution modifier (3) per long rest.'
+    text: "When you take the Attack action, make one additional melee attack from your echo's space - a number of times equal to your Constitution modifier (3) per long rest."
   - source: Leonin
     name: Darkvision
     text: 'You can see in dim light within 60 ft as if it were bright light, and in darkness as if it were dim light (grayscale only).'

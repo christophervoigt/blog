@@ -181,7 +181,6 @@ const hasNotes = Astro.slots.has('notes')
 					{
 						abilityOrder.map((key) => (
 							<div class="cs-ability">
-								<span class="cs-ability-score">{abilities[key]}</span>
 								<span class="cs-ability-mod">{modifier(abilities[key])}</span>
 								<span class="cs-ability-name">{abilityAbbr[key]}</span>
 							</div>
@@ -296,17 +295,17 @@ const hasNotes = Astro.slots.has('notes')
 						<h2 class="cs-section-title">Actions</h2>
 						{actions.note && <p class="cs-note">{actions.note}</p>}
 						<div class="cs-attacks">
-							<span class="cs-attacks-head">Weapon</span>
-							<span class="cs-attacks-head -center">To Hit</span>
-							<span class="cs-attacks-head -center">Damage</span>
+							<p class="cs-attacks-head">Weapon</p>
+							<p class="cs-attacks-head -center">To Hit</p>
+							<p class="cs-attacks-head -center">Damage</p>
 							{actions.attacks.map(({ name, meta, to_hit, damage }) => (
 								<Fragment>
 									<div class="cs-attack-name">
-										<span class="cs-attack-title">{name}</span>
-										{meta && <span class="cs-attack-meta">{meta}</span>}
+										<p class="cs-attack-title">{name}</p>
+										{meta && <p class="cs-attack-meta">{meta}</p>}
 									</div>
-									<span class="cs-attack-value -tohit">{to_hit}</span>
-									<span class="cs-attack-value">{damage}</span>
+									<p class="cs-attack-value -tohit">{to_hit}</p>
+									<p class="cs-attack-value">{damage}</p>
 								</Fragment>
 							))}
 						</div>
@@ -323,10 +322,8 @@ const hasNotes = Astro.slots.has('notes')
 							{bonus_actions.map((action) => (
 								<li class="cs-tempo-item">
 									<div class="cs-tempo-head">
-										<span class:list={['cs-tag', { '-reaction': action.type === 'Reaction' }]}>
-											{action.type ?? 'Bonus'}
-										</span>
-										<span class="cs-tempo-name">{action.name}</span>
+										<p class:list={['cs-tag', { '-reaction': action.type === 'Reaction' }]}>{action.type ?? 'Bonus'}</p>
+										<p class="cs-tempo-name">{action.name}</p>
 									</div>
 									<p class="cs-tempo-text">{action.text}</p>
 								</li>
@@ -344,8 +341,8 @@ const hasNotes = Astro.slots.has('notes')
 							{features.map((feature) => (
 								<li class="cs-feature">
 									<div class="cs-feature-head">
-										{feature.source && <span class="cs-tag">{feature.source}</span>}
-										<span class="cs-feature-name">{feature.name}</span>
+										{feature.source && <p class="cs-tag">{feature.source}</p>}
+										<p class="cs-feature-name">{feature.name}</p>
 									</div>
 									<p class="cs-feature-text">{feature.text}</p>
 								</li>
@@ -355,17 +352,17 @@ const hasNotes = Astro.slots.has('notes')
 				)
 			}
 
-			<!-- Ability Score Improvements & Feats -->
+			<!-- Feats -->
 			{
 				feats && feats.length > 0 && (
 					<section class="cs-feats">
-						<h2 class="cs-section-title">Ability Score Improvements & Feats</h2>
+						<h2 class="cs-section-title">Feats</h2>
 						<ul class="cs-feat-list">
 							{feats.map((feat) => (
 								<li class="cs-feat">
 									<div class="cs-feat-head">
-										{feat.level && <span class="cs-feat-level">{feat.level}</span>}
-										<span class="cs-feat-name">{feat.name}</span>
+										{feat.level && <p class="cs-feat-level">{feat.level}</p>}
+										<p class="cs-feat-name">{feat.name}</p>
 									</div>
 									<p class="cs-feat-text">{feat.text}</p>
 								</li>
@@ -381,20 +378,24 @@ const hasNotes = Astro.slots.has('notes')
 			<!-- Death Saves -->
 			<section class="cs-deathsaves">
 				<h2 class="cs-section-title">Death Saves</h2>
-				<div class="cs-deathsave-group">
-					<p class="cs-deathsave-label">
-						Successes <span class="sr-only">— 0 of 3 marked</span>
-					</p>
-					<div class="cs-pips" aria-hidden="true">
-						{Array.from({ length: 3 }).map(() => <span class="cs-pip -success" />)}
+
+				<div class="cs-deathsave-wrapper">
+					<div class="cs-deathsave-group">
+						<p class="cs-deathsave-label">
+							Successes <span class="sr-only">0 of 3 marked</span>
+						</p>
+						<div class="cs-pips" aria-hidden="true">
+							{Array.from({ length: 3 }).map(() => <span class="cs-pip -success" />)}
+						</div>
 					</div>
-				</div>
-				<div class="cs-deathsave-group">
-					<p class="cs-deathsave-label">
-						Failures <span class="sr-only">— 0 of 3 marked</span>
-					</p>
-					<div class="cs-pips" aria-hidden="true">
-						{Array.from({ length: 3 }).map(() => <span class="cs-pip -failure" />)}
+
+					<div class="cs-deathsave-group">
+						<p class="cs-deathsave-label">
+							Failures <span class="sr-only">0 of 3 marked</span>
+						</p>
+						<div class="cs-pips -failure" aria-hidden="true">
+							{Array.from({ length: 3 }).map(() => <span class="cs-pip" />)}
+						</div>
 					</div>
 				</div>
 			</section>
@@ -410,13 +411,13 @@ const hasNotes = Astro.slots.has('notes')
 								return (
 									<li class="cs-resource">
 										<div class="cs-resource-head">
-											<span class="cs-resource-name">
+											<p class="cs-resource-name">
 												{resource.name}
 												<span class="sr-only">
 													- {filled} of {resource.max} available
 												</span>
-											</span>
-											{resource.reset && <span class="cs-resource-reset">{resource.reset}</span>}
+											</p>
+											{resource.reset && <p class="cs-resource-reset">{resource.reset}</p>}
 										</div>
 										<div class="cs-pips" aria-hidden="true">
 											{Array.from({ length: resource.max }).map((_, i) => (
@@ -438,12 +439,12 @@ const hasNotes = Astro.slots.has('notes')
 						<h2 class="cs-section-title">Equipment & Inventory</h2>
 						{inventory?.map((group) => (
 							<div class="cs-inv-group">
-								<p class="cs-inv-label">{group.group}</p>
+								<h3 class="cs-inv-label">{group.group}</h3>
 								<ul class="cs-inv-list">
 									{group.items.map((item) => (
 										<li class="cs-inv-item">
-											<span class="cs-inv-name">{item.name}</span>
-											{item.note && <span class="cs-inv-note">{item.note}</span>}
+											<p class="cs-inv-name">{item.name}</p>
+											{item.note && <p class="cs-inv-note">{item.note}</p>}
 										</li>
 									))}
 								</ul>
@@ -453,20 +454,20 @@ const hasNotes = Astro.slots.has('notes')
 							<div class="cs-coins">
 								{coins.gold !== undefined && (
 									<div class="cs-coin -gold">
-										<span class="cs-coin-label">Gold</span>
-										<span class="cs-coin-value">{coins.gold}</span>
+										<p class="cs-coin-label">Gold</p>
+										<p class="cs-coin-value">{coins.gold}</p>
 									</div>
 								)}
 								{coins.silver !== undefined && (
 									<div class="cs-coin -silver">
-										<span class="cs-coin-label">Silver</span>
-										<span class="cs-coin-value">{coins.silver}</span>
+										<p class="cs-coin-label">Silver</p>
+										<p class="cs-coin-value">{coins.silver}</p>
 									</div>
 								)}
 								{coins.copper !== undefined && (
 									<div class="cs-coin -copper">
-										<span class="cs-coin-label">Copper</span>
-										<span class="cs-coin-value">{coins.copper}</span>
+										<p class="cs-coin-label">Copper</p>
+										<p class="cs-coin-value">{coins.copper}</p>
 									</div>
 								)}
 							</div>
@@ -481,8 +482,8 @@ const hasNotes = Astro.slots.has('notes')
 					<section class="cs-background">
 						<h2 class="cs-section-title">Background</h2>
 						<div class="cs-background-head">
-							<span class="cs-tag">{background.title}</span>
-							<span class="cs-background-name">{background.feature}</span>
+							<p class="cs-tag">{background.title}</p>
+							<p class="cs-background-name">{background.feature}</p>
 						</div>
 						<p class="cs-background-desc">{background.description}</p>
 					</section>
@@ -498,38 +499,38 @@ const hasNotes = Astro.slots.has('notes')
 						<div class="cs-physical">
 							{characteristics.alignment && (
 								<div class="cs-physical-item">
-									<span class="cs-trait-label">Alignment</span>
-									<span class="cs-trait-value">{characteristics.alignment}</span>
+									<p class="cs-trait-label">Alignment</p>
+									<p class="cs-physical-item-value">{characteristics.alignment}</p>
 								</div>
 							)}
 							{characteristics.race && (
 								<div class="cs-physical-item">
-									<span class="cs-trait-label">Race</span>
-									<span class="cs-trait-value">{characteristics.race}</span>
+									<p class="cs-trait-label">Race</p>
+									<p class="cs-physical-item-value">{characteristics.race}</p>
 								</div>
 							)}
 							{characteristics.gender && (
 								<div class="cs-physical-item">
-									<span class="cs-trait-label">Gender</span>
-									<span class="cs-trait-value">{characteristics.gender}</span>
+									<p class="cs-trait-label">Gender</p>
+									<p class="cs-physical-item-value">{characteristics.gender}</p>
 								</div>
 							)}
 							{characteristics.size && (
 								<div class="cs-physical-item">
-									<span class="cs-trait-label">Size</span>
-									<span class="cs-trait-value">{characteristics.size}</span>
+									<p class="cs-trait-label">Size</p>
+									<p class="cs-physical-item-value">{characteristics.size}</p>
 								</div>
 							)}
 							{characteristics.eyes && (
 								<div class="cs-physical-item">
-									<span class="cs-trait-label">Eyes</span>
-									<span class="cs-trait-value">{characteristics.eyes}</span>
+									<p class="cs-trait-label">Eyes</p>
+									<p class="cs-physical-item-value">{characteristics.eyes}</p>
 								</div>
 							)}
 							{characteristics.hair && (
 								<div class="cs-physical-item">
-									<span class="cs-trait-label">Hair</span>
-									<span class="cs-trait-value">{characteristics.hair}</span>
+									<p class="cs-trait-label">Hair</p>
+									<p class="cs-physical-item-value">{characteristics.hair}</p>
 								</div>
 							)}
 						</div>
