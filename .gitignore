@@ -30,3 +30,7 @@ pnpm-debug.log*
 
 # deno
 deno.lock
+
+
+.playwright-mcp/
+.opencode/
