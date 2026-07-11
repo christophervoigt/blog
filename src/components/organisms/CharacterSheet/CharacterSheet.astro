@@ -117,6 +117,8 @@ const skillAbilityMap: Record<string, string> = {
 
 const characterType = [characteristics?.race, subclass, charClass].filter(Boolean).join(' ')
 const characterSubtitle = [`Level ${level}`, characterType].filter(Boolean).join(' ')
+
+const hasNotes = Astro.slots.has('notes')
 ---
 
 <div class="character-sheet">
@@ -180,7 +182,7 @@ const characterSubtitle = [`Level ${level}`, characterType].filter(Boolean).join
 						const proficient = save.proficiency
 
 						return (
-							<li class:list={[{ 'cs-proficient': proficient }]}>
+							<li class:list={[{ 'cs-proficient -highlight': proficient }]}>
 								<span class="cs-list-label">
 									{proficient && <span class="sr-only">Proficient in </span>}
 									{formatSkillName(key)}
@@ -204,12 +206,14 @@ const characterSubtitle = [`Level ${level}`, characterType].filter(Boolean).join
 						const disadvantaged = skill.disadvantage
 
 						return (
-							<li class:list={[{ 'cs-disadvantage': disadvantaged, 'cs-proficient': proficient }]}>
+							<li
+								class:list={[{ 'cs-disadvantage -highlight': disadvantaged, 'cs-proficient -highlight': proficient }]}
+							>
 								<span class="cs-list-label">
 									{proficient && <span class="sr-only">Proficient in </span>}
 									{disadvantaged && <span class="sr-only">Disadvantaged in </span>}
 									{formatSkillName(key)}
-									<span class="cs-ability-mod">({abilityAbbr[skillAbilityMap[key]]})</span>
+									<span class="cs-ability-mod"> ({abilityAbbr[skillAbilityMap[key]]})</span>
 								</span>
 								<span class="cs-list-value">{total}</span>
 							</li>
@@ -350,10 +354,14 @@ const characterSubtitle = [`Level ${level}`, characterType].filter(Boolean).join
 				</section>
 			)
 		}
-
-		<!-- Notes from Markdown Content -->
-		<div class="cs-notes content">
-			<slot />
-		</div>
 	</div>
+
+	<!-- Notes from Markdown Content -->
+	{
+		hasNotes && (
+			<div class="cs-notes content">
+				<slot name="notes" />
+			</div>
+		)
+	}
 </div>

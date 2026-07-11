@@ -80,8 +80,7 @@
 		'senses'
 		'proficiencies'
 		'background'
-		'characteristics'
-		'notes';
+		'characteristics';
 }
 
 @media (min-width: 40rem) {
@@ -92,8 +91,7 @@
 			'abilities skills'
 			'senses proficiencies'
 			'background background'
-			'characteristics characteristics'
-			'notes notes';
+			'characteristics characteristics';
 	}
 }
 
@@ -190,7 +188,7 @@
 	font-weight: bold;
 }
 
-.cs-list li + li {
+.cs-list li:not(.cs-proficient, .cs-disadvantage) + li:not(.cs-proficient, .cs-disadvantage) {
 	border-block-start: 1px solid light-dark(var(--gray-100), var(--gray-900));
 }
 
@@ -203,14 +201,17 @@
 	font-variant-numeric: tabular-nums;
 }
 
-.cs-proficient {
-	background-color: var(--turquoise-500);
-	color: var(--black);
+.cs-proficient.-highlight {
+	color-scheme: dark;
 }
 
-.cs-disadvantage {
-	background: var(--coral-500);
-	color: var(--black);
+.cs-disadvantage.-highlight {
+	color-scheme: light;
+}
+
+:is(.cs-proficient, .cs-disadvantage).-highlight {
+	border-radius: 0;
+	clip-path: inset(0 0 0 0 round 0);
 }
 
 /* Training / Proficiencies */
@@ -335,6 +336,5 @@
 
 /* Notes / Content area */
 .cs-notes {
-	grid-area: notes;
-	margin-block-start: var(--space-xs);
+	margin-block-start: var(--space-m);
 }

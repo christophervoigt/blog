@@ -1,7 +1,7 @@
 ---
 const { id, data, headlineLevel } = Astro.props
-const { name, level, class: characterClass, subclass } = data
-const characterType = [data.characteristics?.race, subclass, characterClass].filter(Boolean).join(' ')
+const { name, level, class: characterClass, subclass, characteristics } = data
+const characterType = [characteristics?.race, subclass, characterClass].filter(Boolean).join(' ')
 
 const Heading = headlineLevel || 'h3'
 ---

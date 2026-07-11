@@ -1,4 +1,5 @@
 ---
+import fs from 'fs'
 import { getCollection, render } from 'astro:content'
 
 import Page from '../../components/templates/Page.astro'
@@ -7,25 +8,40 @@ import CharacterSheet from '../../components/organisms/CharacterSheet/CharacterS
 export async function getStaticPaths() {
 	const characters = await getCollection('dnd')
 
-	return characters.map((post) => {
-		const id = post.id
+	return characters.map((character) => {
+		const id = character.id
+
+		const filename = `src/data/webmentions/${id}.json`
+		let webmentions = []
+		if (fs.existsSync(filename)) {
+			webmentions = JSON.parse(fs.readFileSync(filename, 'utf8'))
+		}
 
 		return {
 			params: { id },
-			props: { post },
+			props: { character, webmentions },
 		}
 	})
 }
 
-const { post } = Astro.props
-const { data } = post
-const { name, class: charClass, subclass, level } = data
+const { character, webmentions } = Astro.props
+const { data } = character
+const { name, level, class: characterClass, subclass, characteristics } = data
+const characterType = [characteristics?.race, subclass, characterClass].filter(Boolean).join(' ')
 
-const { Content } = await render(post)
+const hasNotes = Boolean(character.body?.trim())
+console.log('hasNotes', hasNotes)
+const { Content: Notes } = await render(character)
 ---
 
-<Page title={name} description={`${name} — Level ${level} ${subclass ? subclass + ' ' : ''}${charClass}`}>
-	<CharacterSheet {...data}>
-		<Content />
-	</CharacterSheet>
+<Page title={name} description={`${name} - Level ${level} ${characterType}`} webmentions={webmentions} layout="large">
+	{
+		hasNotes ? (
+			<CharacterSheet {...data}>
+				<Notes slot="notes" />
+			</CharacterSheet>
+		) : (
+			<CharacterSheet {...data} />
+		)
+	}
 </Page>
