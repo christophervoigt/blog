@@ -128,7 +128,7 @@ const hasNotes = Astro.slots.has('notes')
 const storageKey = `cs-state:${slugify(name)}`
 ---
 
-<div class="character-sheet" data-cs-key={storageKey}>
+<div class="character-sheet" data-sheet-storage-key={storageKey}>
 	<!-- Header -->
 	<div class="header -highlight">
 		<div class="header-id">
@@ -136,17 +136,19 @@ const storageKey = `cs-state:${slugify(name)}`
 			<p class="subtitle">{characterSubtitle}</p>
 		</div>
 
-		<div class="hp" data-cs-hp-max={hit_points}>
+		<div class="hp" data-sheet-hp-maximum={hit_points}>
 			<span class="hp-label">Hit Points</span>
 			<p class="hp-values">
-				<span class="hp-current" data-cs-hp="cur">{hit_points}</span>
-				<span class="hp-maximum">/ <span data-cs-hp="max">{hit_points}</span></span>
-				<span class="hp-temporary" data-cs-hp="temp" hidden>+<span data-cs-hp="temp-val">0</span> temp</span>
+				<span class="hp-current" data-sheet-hp="current">{hit_points}</span>
+				<span class="hp-maximum">/ <span data-sheet-hp="maximum">{hit_points}</span></span>
+				<span class="hp-temporary" data-sheet-hp="temporary" hidden
+					>+<span data-sheet-hp="temporary-value">0</span> temp</span
+				>
 			</p>
 			<input
 				type="range"
 				class="hp-range"
-				data-cs-hp="range"
+				data-sheet-hp="slider"
 				data-state="healthy"
 				min="0"
 				max={hit_points}
@@ -156,21 +158,35 @@ const storageKey = `cs-state:${slugify(name)}`
 			/>
 			<div class="hp-controls">
 				<div class="hp-group">
-					<button type="button" class="hp-button -damage" data-cs-hp-btn="damage" aria-label="Take 1 damage">−</button>
+					<button type="button" class="hp-button -damage" data-sheet-hp-action="damage" aria-label="Take 1 damage"
+						>−</button
+					>
 					<span class="hp-group-label">HP</span>
-					<button type="button" class="hp-button -heal" data-cs-hp-btn="heal" aria-label="Heal 1 hit point">+</button>
+					<button type="button" class="hp-button -heal" data-sheet-hp-action="heal" aria-label="Heal 1 hit point"
+						>+</button
+					>
 				</div>
 				<div class="hp-group">
-					<button type="button" class="hp-button -temporary" data-cs-hp-btn="temp-down" aria-label="Decrease temporary hit points">−</button>
+					<button
+						type="button"
+						class="hp-button -temporary"
+						data-sheet-hp-action="temporary-down"
+						aria-label="Decrease temporary hit points">−</button
+					>
 					<span class="hp-group-label">Temp</span>
-					<button type="button" class="hp-button -temporary" data-cs-hp-btn="temp-up" aria-label="Increase temporary hit points">+</button>
+					<button
+						type="button"
+						class="hp-button -temporary"
+						data-sheet-hp-action="temporary-up"
+						aria-label="Increase temporary hit points">+</button
+					>
 				</div>
 			</div>
 		</div>
 
 		<div class="rests">
-			<button type="button" class="rest" data-cs-rest="short rest">Short Rest</button>
-			<button type="button" class="rest" data-cs-rest="long rest">Long Rest</button>
+			<button type="button" class="rest" data-sheet-rest="short rest">Short Rest</button>
+			<button type="button" class="rest" data-sheet-rest="long rest">Long Rest</button>
 		</div>
 	</div>
 
@@ -248,7 +264,10 @@ const storageKey = `cs-state:${slugify(name)}`
 
 							return (
 								<li
-									class:list={['list-row', { 'disadvantage -highlight': disadvantaged, 'proficient -highlight': proficient }]}
+									class:list={[
+										'list-row',
+										{ 'disadvantage -highlight': disadvantaged, 'proficient -highlight': proficient },
+									]}
 								>
 									<span class="list-label">
 										{proficient && <span class="sr-only">Proficient in </span>}
@@ -368,7 +387,9 @@ const storageKey = `cs-state:${slugify(name)}`
 							{bonus_actions.map((action) => (
 								<li class="bonus">
 									<div class="bonus-head">
-										<p class:list={['chip -badge', { '-reaction': action.type === 'Reaction' }]}>{action.type ?? 'Bonus'}</p>
+										<p class:list={['chip -badge', { '-reaction': action.type === 'Reaction' }]}>
+											{action.type ?? 'Bonus'}
+										</p>
 										<p class="bonus-name">{action.name}</p>
 									</div>
 									<p class="bonus-text">{action.text}</p>
@@ -438,7 +459,9 @@ const storageKey = `cs-state:${slugify(name)}`
 				<div class="death-saves-wrapper">
 					<div class="death-save">
 						<p class="death-save-label">
-							Successes <span class="sr-only" data-cs-count="deathS" data-cs-count-label="marked">0 of 3 marked</span>
+							Successes <span class="sr-only" data-sheet-count="death-successes" data-sheet-count-label="marked"
+								>0 of 3 marked</span
+							>
 						</p>
 						<div class="pips">
 							{
@@ -446,9 +469,9 @@ const storageKey = `cs-state:${slugify(name)}`
 									<button
 										type="button"
 										class="pip -success"
-										data-cs-pip
-										data-cs-group="deathS"
-										data-cs-index={i}
+										data-sheet-pip
+										data-sheet-group="death-successes"
+										data-sheet-index={i}
 										aria-pressed="false"
 										aria-label={`Death save success ${i + 1}`}
 									/>
@@ -459,7 +482,9 @@ const storageKey = `cs-state:${slugify(name)}`
 
 					<div class="death-save">
 						<p class="death-save-label">
-							Failures <span class="sr-only" data-cs-count="deathF" data-cs-count-label="marked">0 of 3 marked</span>
+							Failures <span class="sr-only" data-sheet-count="death-failures" data-sheet-count-label="marked"
+								>0 of 3 marked</span
+							>
 						</p>
 						<div class="pips -failure">
 							{
@@ -467,9 +492,9 @@ const storageKey = `cs-state:${slugify(name)}`
 									<button
 										type="button"
 										class="pip"
-										data-cs-pip
-										data-cs-group="deathF"
-										data-cs-index={i}
+										data-sheet-pip
+										data-sheet-group="death-failures"
+										data-sheet-index={i}
 										aria-pressed="false"
 										aria-label={`Death save failure ${i + 1}`}
 									/>
@@ -489,13 +514,13 @@ const storageKey = `cs-state:${slugify(name)}`
 							<p class="resource-column-head">Resource</p>
 							<p class="resource-column-head -right">Uses</p>
 							{resources.map((resource) => {
-								const resGroup = `res-${slugify(resource.name)}`
+								const resGroup = `resource-${slugify(resource.name)}`
 								return (
 									<Fragment>
 										<div class="resource">
 											<p class="resource-name">
 												{resource.name}
-												<span class="sr-only" data-cs-count={resGroup} data-cs-count-label="used">
+												<span class="sr-only" data-sheet-count={resGroup} data-sheet-count-label="used">
 													- 0 of {resource.max} used
 												</span>
 											</p>
@@ -507,10 +532,10 @@ const storageKey = `cs-state:${slugify(name)}`
 												<button
 													type="button"
 													class="pip"
-													data-cs-pip
-													data-cs-group={resGroup}
-													data-cs-index={i}
-													data-cs-reset={resource.reset}
+													data-sheet-pip
+													data-sheet-group={resGroup}
+													data-sheet-index={i}
+													data-sheet-reset={resource.reset}
 													aria-pressed="false"
 													aria-label={`${resource.name} use ${i + 1}`}
 												/>
@@ -670,180 +695,212 @@ const storageKey = `cs-state:${slugify(name)}`
 </div>
 
 <script>
-	function initSheet(root) {
-		const key = root.dataset.csKey
-		const hpEl = root.querySelector('.hp')
-		const max = hpEl ? Number(hpEl.dataset.csHpMax) || 0 : 0
+	function initSheet(sheet) {
+		const storageKey = sheet.dataset.sheetStorageKey
+		const hitPointsElement = sheet.querySelector('.hp')
+		const maxHitPoints = hitPointsElement ? Number(hitPointsElement.dataset.sheetHpMaximum) || 0 : 0
 
-		// Discover pip groups (and their sizes) from the server-rendered DOM.
-		const pips = Array.from(root.querySelectorAll('[data-cs-pip]'))
-		const groupMax = {}
-		const groupReset = {}
+		const pips = Array.from(sheet.querySelectorAll('[data-sheet-pip]'))
+		const groupTotals = {}
+		const groupResetType = {}
 		for (const pip of pips) {
-			const g = pip.dataset.csGroup
-			groupMax[g] = (groupMax[g] || 0) + 1
-			// Normalise the reset key so rest matching is case-insensitive.
-			if (pip.dataset.csReset) groupReset[g] = pip.dataset.csReset.trim().toLowerCase()
-		}
-		const isDeath = (g) => g === 'deathS' || g === 'deathF'
-
-		// Default state mirrors the SSR baseline: full HP, whatever pips ship filled.
-		const state = { max, hp: { cur: max, temp: 0 }, groups: {} }
-		for (const g in groupMax) {
-			state.groups[g] = pips.filter((p) => p.dataset.csGroup === g && p.classList.contains('-filled')).length
+			const group = pip.dataset.sheetGroup
+			groupTotals[group] = (groupTotals[group] || 0) + 1
+			if (pip.dataset.sheetReset) groupResetType[group] = pip.dataset.sheetReset.trim().toLowerCase()
 		}
 
-		// Overlay any persisted state, clamped to the current maxima.
-		try {
-			const raw = key && localStorage.getItem(key)
-			if (raw) {
-				const saved = JSON.parse(raw)
-				if (saved && saved.hp) {
-					// If the sheet was saved at full HP and max has since grown
-					// (e.g. a level-up), treat the character as still full rather
-					// than showing phantom damage.
-					const wasFull = typeof saved.max === 'number' && typeof saved.hp.cur === 'number' && saved.hp.cur >= saved.max
-					if (wasFull) state.hp.cur = max
-					else if (typeof saved.hp.cur === 'number') state.hp.cur = Math.max(0, Math.min(max, saved.hp.cur))
-					if (typeof saved.hp.temp === 'number') state.hp.temp = Math.max(0, saved.hp.temp)
+		const state = { maxHitPoints, hitPoints: { current: maxHitPoints, temporary: 0 }, groups: {} }
+		for (const group in groupTotals) {
+			state.groups[group] = pips.filter(
+				(pip) => pip.dataset.sheetGroup === group && pip.classList.contains('-filled')
+			).length
+		}
+
+		function isDeathSaveGroup(group) {
+			return group === 'death-successes' || group === 'death-failures'
+		}
+
+		function clamp(value, min, max) {
+			return Math.max(min, Math.min(max, value))
+		}
+
+		function restoreSavedState() {
+			let savedState
+			try {
+				savedState = storageKey && JSON.parse(localStorage.getItem(storageKey))
+			} catch (error) {
+				return
+			}
+			if (!savedState) return
+
+			if (savedState.hitPoints) {
+				// A character saved at full health stays full when their maximum later
+				// grows (e.g. a level-up), rather than showing phantom damage.
+				const savedAtFullHealth =
+					typeof savedState.maxHitPoints === 'number' &&
+					typeof savedState.hitPoints.current === 'number' &&
+					savedState.hitPoints.current >= savedState.maxHitPoints
+
+				if (savedAtFullHealth) {
+					state.hitPoints.current = maxHitPoints
+				} else if (typeof savedState.hitPoints.current === 'number') {
+					state.hitPoints.current = clamp(savedState.hitPoints.current, 0, maxHitPoints)
 				}
-				if (saved && saved.groups) {
-					for (const g in groupMax) {
-						const v = saved.groups[g]
-						if (typeof v === 'number') state.groups[g] = Math.max(0, Math.min(groupMax[g], v))
+				if (typeof savedState.hitPoints.temporary === 'number') {
+					state.hitPoints.temporary = Math.max(0, savedState.hitPoints.temporary)
+				}
+			}
+
+			if (savedState.groups) {
+				for (const group in groupTotals) {
+					const savedCount = savedState.groups[group]
+					if (typeof savedCount === 'number') {
+						state.groups[group] = clamp(savedCount, 0, groupTotals[group])
 					}
 				}
 			}
-		} catch (e) {}
-
-		function persist() {
-			if (!key) return
-			try {
-				localStorage.setItem(key, JSON.stringify(state))
-			} catch (e) {}
 		}
 
-		function render() {
-			if (hpEl) {
-				const { cur, temp } = state.hp
-				const curEl = hpEl.querySelector('[data-cs-hp="cur"]')
-				if (curEl) curEl.textContent = String(cur)
-				const tempWrap = hpEl.querySelector('[data-cs-hp="temp"]')
-				const tempVal = hpEl.querySelector('[data-cs-hp="temp-val"]')
-				if (tempVal) tempVal.textContent = String(temp)
-				if (tempWrap) tempWrap.hidden = temp <= 0
-				const range = hpEl.querySelector('[data-cs-hp="range"]')
-				if (range) {
-					const pct = max > 0 ? Math.max(0, Math.min(100, Math.round((cur / max) * 100))) : 0
-					range.max = String(max)
-					range.value = String(cur)
-					range.style.setProperty('--hp-pct', pct + '%')
-					range.dataset.state = pct > 50 ? 'healthy' : pct > 25 ? 'wounded' : 'critical'
-					range.setAttribute('aria-valuetext', `${cur} of ${max} hit points`)
-				}
-			}
+		function persist() {
+			if (!storageKey) return
+			try {
+				localStorage.setItem(storageKey, JSON.stringify(state))
+			} catch (error) {}
+		}
 
+		function renderHitPoints() {
+			if (!hitPointsElement) return
+			const { current, temporary } = state.hitPoints
+
+			const currentElement = hitPointsElement.querySelector('[data-sheet-hp="current"]')
+			if (currentElement) currentElement.textContent = String(current)
+
+			const temporaryBadge = hitPointsElement.querySelector('[data-sheet-hp="temporary"]')
+			const temporaryValue = hitPointsElement.querySelector('[data-sheet-hp="temporary-value"]')
+			if (temporaryValue) temporaryValue.textContent = String(temporary)
+			if (temporaryBadge) temporaryBadge.hidden = temporary <= 0
+
+			const slider = hitPointsElement.querySelector('[data-sheet-hp="slider"]')
+			if (!slider) return
+			const percentFilled = maxHitPoints > 0 ? clamp(Math.round((current / maxHitPoints) * 100), 0, 100) : 0
+			slider.max = String(maxHitPoints)
+			slider.value = String(current)
+			slider.style.setProperty('--hp-pct', percentFilled + '%')
+			slider.dataset.state = percentFilled > 50 ? 'healthy' : percentFilled > 25 ? 'wounded' : 'critical'
+			slider.setAttribute('aria-valuetext', `${current} of ${maxHitPoints} hit points`)
+		}
+
+		function renderPips() {
 			for (const pip of pips) {
-				const filled = Number(pip.dataset.csIndex) < state.groups[pip.dataset.csGroup]
+				const filled = Number(pip.dataset.sheetIndex) < state.groups[pip.dataset.sheetGroup]
 				pip.classList.toggle('-filled', filled)
 				pip.setAttribute('aria-pressed', String(filled))
 			}
+		}
 
-			root.querySelectorAll('[data-cs-count]').forEach((el) => {
-				const g = el.dataset.csCount
-				const n = state.groups[g] || 0
-				const m = groupMax[g] || 0
-				el.textContent = el.dataset.csCountLabel === 'used' ? `- ${n} of ${m} used` : `${n} of ${m} marked`
+		function renderCounters() {
+			sheet.querySelectorAll('[data-sheet-count]').forEach((counter) => {
+				const group = counter.dataset.sheetCount
+				const filled = state.groups[group] || 0
+				const total = groupTotals[group] || 0
+				counter.textContent =
+					counter.dataset.sheetCountLabel === 'used' ? `- ${filled} of ${total} used` : `${filled} of ${total} marked`
 			})
 		}
 
-		function setPip(g, i) {
-			const cur = state.groups[g] || 0
-			state.groups[g] = i + 1 === cur ? i : i + 1
+		function render() {
+			renderHitPoints()
+			renderPips()
+			renderCounters()
 		}
 
-		function adjustHp(delta) {
-			let { cur, temp } = state.hp
+		function togglePip(group, index) {
+			const filled = state.groups[group] || 0
+			state.groups[group] = index + 1 === filled ? index : index + 1
+		}
+
+		function adjustHitPoints(delta) {
+			let { current, temporary } = state.hitPoints
 			if (delta < 0) {
-				let d = -delta
-				const absorbed = Math.min(temp, d)
-				temp -= absorbed
-				d -= absorbed
-				cur = Math.max(0, cur - d)
+				let damage = -delta
+				const absorbed = Math.min(temporary, damage)
+				temporary -= absorbed
+				damage -= absorbed
+				current = Math.max(0, current - damage)
 			} else {
-				cur = Math.min(max, cur + delta)
+				current = Math.min(maxHitPoints, current + delta)
 			}
-			state.hp = { cur, temp }
+			state.hitPoints = { current, temporary }
 		}
 
-		// Resource pips track spent uses, so a rest clears them back to empty.
-		function clearResources(resetType) {
-			for (const g in groupMax) {
-				if (isDeath(g)) continue
-				if (resetType === null || groupReset[g] === resetType) state.groups[g] = 0
-			}
-		}
-
-		function rest(kind) {
-			if (kind === 'short rest') {
-				clearResources('short rest')
-			} else {
-				clearResources(null)
-				state.hp = { cur: max, temp: 0 }
-				state.groups.deathS = 0
-				state.groups.deathF = 0
+		function clearResourcePips(resetType) {
+			for (const group in groupTotals) {
+				if (isDeathSaveGroup(group)) continue
+				if (resetType === null || groupResetType[group] === resetType) state.groups[group] = 0
 			}
 		}
 
-		root.addEventListener('click', (event) => {
-			const target = event.target
-			const pip = target.closest('[data-cs-pip]')
-			if (pip && root.contains(pip)) {
-				setPip(pip.dataset.csGroup, Number(pip.dataset.csIndex))
+		function applyRest(restType) {
+			if (restType === 'short rest') {
+				clearResourcePips('short rest')
+				return
+			}
+			clearResourcePips(null)
+			state.hitPoints = { current: maxHitPoints, temporary: 0 }
+			state.groups['death-successes'] = 0
+			state.groups['death-failures'] = 0
+		}
+
+		sheet.addEventListener('click', (event) => {
+			const pip = event.target.closest('[data-sheet-pip]')
+			if (pip && sheet.contains(pip)) {
+				togglePip(pip.dataset.sheetGroup, Number(pip.dataset.sheetIndex))
 				render()
 				persist()
 				return
 			}
-			const hpBtn = target.closest('[data-cs-hp-btn]')
-			if (hpBtn) {
-				const action = hpBtn.dataset.csHpBtn
-				if (action === 'damage') adjustHp(-1)
-				else if (action === 'heal') adjustHp(1)
-				else if (action === 'temp-up') state.hp.temp += 1
-				else if (action === 'temp-down') state.hp.temp = Math.max(0, state.hp.temp - 1)
+
+			const hitPointsButton = event.target.closest('[data-sheet-hp-action]')
+			if (hitPointsButton) {
+				const action = hitPointsButton.dataset.sheetHpAction
+				if (action === 'damage') adjustHitPoints(-1)
+				else if (action === 'heal') adjustHitPoints(1)
+				else if (action === 'temporary-up') state.hitPoints.temporary += 1
+				else if (action === 'temporary-down') state.hitPoints.temporary = Math.max(0, state.hitPoints.temporary - 1)
 				render()
 				persist()
 				return
 			}
-			const restBtn = target.closest('[data-cs-rest]')
-			if (restBtn) {
-				rest((restBtn.dataset.csRest || '').trim().toLowerCase())
+
+			const restButton = event.target.closest('[data-sheet-rest]')
+			if (restButton) {
+				applyRest((restButton.dataset.sheetRest || '').trim().toLowerCase())
 				render()
 				persist()
 			}
 		})
 
-		// Dragging the range sets current HP directly (temp is unaffected).
-		const range = hpEl && hpEl.querySelector('[data-cs-hp="range"]')
-		if (range) {
-			range.addEventListener('input', () => {
-				state.hp.cur = Math.max(0, Math.min(max, parseInt(range.value, 10) || 0))
+		const slider = hitPointsElement && hitPointsElement.querySelector('[data-sheet-hp="slider"]')
+		if (slider) {
+			slider.addEventListener('input', () => {
+				state.hitPoints.current = clamp(parseInt(slider.value, 10) || 0, 0, maxHitPoints)
 				render()
 				persist()
 			})
 		}
 
+		restoreSavedState()
 		render()
 	}
 
-	function boot() {
-		document.querySelectorAll('.character-sheet').forEach((el) => {
-			if (el.dataset.csReady) return
-			el.dataset.csReady = 'true'
-			initSheet(el)
+	function mountSheets() {
+		document.querySelectorAll('.character-sheet').forEach((sheet) => {
+			if (sheet.dataset.sheetReady) return
+			sheet.dataset.sheetReady = 'true'
+			initSheet(sheet)
 		})
 	}
 
-	boot()
-	document.addEventListener('astro:page-load', boot)
+	mountSheets()
+	document.addEventListener('astro:page-load', mountSheets)
 </script>
