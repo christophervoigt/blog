@@ -327,6 +327,7 @@ const hasNotes = Astro.slots.has('notes')
 										<p class="cs-attack-title">{name}</p>
 										{meta && <p class="cs-attack-meta">{meta}</p>}
 									</div>
+
 									<p class="cs-attack-value -tohit">{to_hit}</p>
 									<p class="cs-attack-value">{damage}</p>
 								</Fragment>
@@ -438,13 +439,15 @@ const hasNotes = Astro.slots.has('notes')
 				resources && resources.length > 0 && (
 					<section class="cs-resources">
 						<h2 class="cs-section-title">Resources</h2>
-						<ul class="cs-resource-list">
+						<div class="cs-resource-grid">
+							<p class="cs-resource-head">Resource</p>
+							<p class="cs-resource-head -right">Uses</p>
 							{resources.map((resource) => {
 								const filled = resource.current ?? resource.max
 								return (
-									<li class="cs-resource">
-										<div class="cs-resource-head">
-											<p class="cs-resource-name">
+									<Fragment>
+										<div class="cs-resource-name">
+											<p class="cs-resource-title">
 												{resource.name}
 												<span class="sr-only">
 													- {filled} of {resource.max} available
@@ -452,15 +455,16 @@ const hasNotes = Astro.slots.has('notes')
 											</p>
 											{resource.reset && <p class="cs-resource-reset">{resource.reset}</p>}
 										</div>
-										<div class="cs-pips" aria-hidden="true">
+
+										<div class="cs-pips -resource" aria-hidden="true">
 											{Array.from({ length: resource.max }).map((_, i) => (
 												<span class:list={['cs-pip', { '-filled': i < filled }]} />
 											))}
 										</div>
-									</li>
+									</Fragment>
 								)
 							})}
-						</ul>
+						</div>
 					</section>
 				)
 			}
