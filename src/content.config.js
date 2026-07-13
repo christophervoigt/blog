@@ -65,6 +65,8 @@ const dnd = defineCollection({
 			passive_perception: z.number().optional(),
 		}),
 
+		defenses: z.record(z.string(), z.array(z.string())).optional(),
+
 		training: z.object({
 			armor: z.array(z.string()),
 			weapons: z.array(z.string()),

@@ -2,9 +2,9 @@
 name: Tion 'Iron Mane'
 class: Fighter
 subclass: Echo Knight
-level: 5
+level: 6
 favorite: true
-hit_points: 49
+hit_points: 58
 armor_class: 16
 speed: 35 ft.
 proficiency_bonus: 3
@@ -37,6 +37,10 @@ saving_throws:
 senses:
   passive_perception: 14
   darkvision: 60 ft.
+
+defenses:
+  immunities:
+    - Critical Hits
 
 training:
   armor:
@@ -118,25 +122,27 @@ characteristics:
   flaws: 'I once satirized a noble who still wants my head. It was a mistake that I will likely repeat.'
 
 actions:
-  note: 'Extra Attack - make 2 attacks whenever you take the Attack action.'
   attacks:
-    - name: Longsword
+    - name: Maul, +1
       meta: 'Melee 5 ft.'
-      to_hit: '+7'
-      damage: '1d8+6'
+      to_hit: '+8'
+      damage: '2d6+5'
     - name: Claws
       meta: 'Melee 5 ft.'
       to_hit: '+7'
       damage: '1d4+4'
-    - name: Handaxe
+    - name: Warhammer
+      meta: 'Melee 5 ft.'
+      to_hit: '+7'
+      damage: '1d8+4'
+    - name: Longsword
+      meta: 'Melee 5 ft.'
+      to_hit: '+7'
+      damage: '1d8+4'
+    - name: Dagger
       meta: 'Thrown 20/60 ft.'
       to_hit: '+7'
-      damage: '1d6+4'
-    - name: Javelin
-      meta: 'Thrown 30/120 ft.'
-      to_hit: '+7'
-      damage: '1d6+4'
-  footnote: 'Spells: none - Tion is a pure martial fighter.'
+      damage: '1d4+4'
 
 bonus_actions:
   - type: Bonus
@@ -144,7 +150,10 @@ bonus_actions:
     text: 'Summon a spectral duplicate of yourself within 15 ft; you can make attacks from its space and swap places with it once per turn for free.'
   - type: Bonus
     name: Second Wind
-    text: 'Regain 1d10+5 hit points. Once per short or long rest.'
+    text: 'Regain 1d10+6 hit points. Once per short or long rest.'
+  - type: Bonus
+    name: Great Weapon Master
+    text: 'On a critical hit or when you drop a creature to 0 HP with a melee weapon, make one extra melee weapon attack as a bonus action.'
   - type: Bonus
     name: Daunting Roar
     text: 'Creatures within 10 ft must succeed on a DC 14 Wisdom save or be frightened until the end of your next turn.'
@@ -155,16 +164,18 @@ bonus_actions:
 inventory:
   - group: Weapons
     items:
+      - name: Maul, +1
+        note: '2d6 bludgeoning, +1'
+      - name: Warhammer
+        note: '1d8 bludgeoning, versatile'
       - name: Longsword
-        note: '1d8 slashing'
-      - name: Handaxe
-        note: '1d6, 20/60 ft.'
-      - name: Javelin
-        note: '1d6, 30/120 ft.'
+        note: '1d8 slashing, versatile'
+      - name: Dagger
+        note: '1d4 slashing, 20/60 ft., 2 pcs.'
   - group: Armor
     items:
-      - name: Scale Mail
-        note: 'AC 14'
+      - name: Adamantine Chain Mail
+        note: 'AC 16'
       - name: Shield
         note: '+2 AC'
   - group: Adventuring Gear
@@ -172,26 +183,21 @@ inventory:
       - name: Backpack
       - name: Bedroll
       - name: Mess Kit
+      - name: Rations
+        note: '10 days'
+      - name: Hempen Rope
+        note: '50 ft.'
       - name: Tinderbox
       - name: Torch
         note: 10 pcs.
-      - name: Rations
-        note: '10 days'
       - name: Waterskin
-      - name: Hempen Rope
-        note: '50 ft.'
-      - name: Disguise Kit
-        note: Tool
-      - name: Horn
-        note: Instrument
   - group: Treasure & Keepsakes
     items:
-      - name: "Gladiator's Medallion"
-        note: Background
-      - name: Belt of Trophy Teeth
+      - name: Brooch of Human Disguise
+        note: 'Wondrous item'
 
 coins:
-  gold: 14
+  gold: 514
   silver: 1
   copper: 16
 
@@ -210,15 +216,15 @@ resources:
     max: 3
   - name: Hit Dice (d10)
     reset: long rest
-    max: 5
+    max: 6
 
 features:
   - source: Fighter
-    name: 'Fighting Style: Dueling'
-    text: 'While wielding a one-handed melee weapon and no other weapon, you gain +2 to damage rolls with it.'
+    name: 'Great Weapon Fighting'
+    text: 'While wielding a two-handed melee weapon in both hands, you can reroll a 1 or 2 on a damage die (you must use the new roll).'
   - source: Fighter
     name: Second Wind
-    text: 'As a bonus action, regain 1d10 + fighter level (5) hit points. Recharges on a short or long rest.'
+    text: 'As a bonus action, regain 1d10 + fighter level (6) hit points. Recharges on a short or long rest.'
   - source: Fighter
     name: Action Surge
     text: 'Once per short or long rest, take one additional action on your turn.'
@@ -244,5 +250,8 @@ features:
 feats:
   - level: Level 4
     name: Ability Score Improvement
-    text: '+2 Strength (16 → 18). Boosts the attack and damage of every Strength-based attack, as well as Athletics.'
+    text: '+2 Strength (15 → 17). Boosts the attack and damage of every Strength-based attack, as well as Athletics.'
+  - level: Level 6
+    name: Great Weapon Master
+    text: 'On your turn, when you score a critical hit with a melee weapon or reduce a creature to 0 HP with one, you can make one melee weapon attack as a bonus action. Before a melee attack with a heavy weapon you are proficient with, you can take a -5 penalty to the attack roll to add +10 to the damage. Also grants +1 Strength (17 → 18).'
 ---

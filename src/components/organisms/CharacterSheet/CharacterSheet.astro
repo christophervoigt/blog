@@ -18,6 +18,7 @@ interface Props {
 		darkvision?: string
 		blindsight?: string
 	}
+	defenses?: Record<string, string[]>
 	training: Record<string, string[]>
 	skills: Record<string, { base_value: number; proficiency?: boolean; disadvantage?: boolean }>
 	background?: {
@@ -63,6 +64,7 @@ const {
 	abilities,
 	saving_throws,
 	senses,
+	defenses,
 	training,
 	skills,
 	background,
@@ -268,13 +270,34 @@ const hasNotes = Astro.slots.has('notes')
 				)
 			}
 
+			<!-- Defenses -->
+			{
+				defenses && Object.entries(defenses).some(([, v]) => v.length > 0) && (
+					<section class="cs-defenses-section">
+						<h2 class="cs-section-title">Defenses</h2>
+						{Object.entries(defenses)
+							.filter(([, items]) => items.length > 0)
+							.map(([category, items]) => (
+								<div class="cs-defenses-group">
+									<h3 class="cs-defenses-label">{formatSkillName(category)}</h3>
+									<ul class="cs-tags">
+										{items.map((item) => (
+											<li>{item}</li>
+										))}
+									</ul>
+								</div>
+							))}
+					</section>
+				)
+			}
+
 			<!-- Training / Proficiencies -->
 			<section class="cs-proficiencies">
 				<h2 class="cs-section-title">Proficiencies</h2>
 				{
 					Object.entries(training).map(([category, items]) => (
 						<div class="cs-training-group">
-							<p class="cs-training-label">{formatSkillName(category)}</p>
+							<h3 class="cs-training-label">{formatSkillName(category)}</h3>
 							<ul class="cs-tags">
 								{items.map((item) => (
 									<li>{item}</li>
