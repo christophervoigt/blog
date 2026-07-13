@@ -56,11 +56,21 @@ body {
 	--link-background-color: light-dark(var(--white), var(--black));
 
 	color: var(--headline-color);
-	background: var(--highlight-gradient);
 	border-radius: 0.5rem;
 
+	position: relative;
+	isolation: isolate;
 	clip-path: inset(0 0 0 0 round 0.5rem);
-	filter: url(#grain);
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		border-radius: inherit;
+		background: var(--highlight-gradient);
+		filter: url(#grain);
+	}
 }
 
 /* Inline code */

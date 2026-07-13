@@ -65,6 +65,8 @@ const dnd = defineCollection({
 			passive_perception: z.number().optional(),
 		}),
 
+		defenses: z.record(z.string(), z.array(z.string())).optional(),
+
 		training: z.object({
 			armor: z.array(z.string()),
 			weapons: z.array(z.string()),
@@ -116,6 +118,82 @@ const dnd = defineCollection({
 				bonds: z.string().optional(),
 				flaws: z.string().optional(),
 			})
+			.optional(),
+
+		actions: z
+			.object({
+				note: z.string().optional(),
+				attacks: z.array(
+					z.object({
+						name: z.string(),
+						meta: z.string().optional(),
+						to_hit: z.string().optional(),
+						damage: z.string().optional(),
+					}),
+				),
+			})
+			.optional(),
+
+		bonus_actions: z
+			.array(
+				z.object({
+					type: z.enum(['Bonus', 'Reaction']).optional(),
+					name: z.string(),
+					text: z.string(),
+				}),
+			)
+			.optional(),
+
+		inventory: z
+			.array(
+				z.object({
+					group: z.string(),
+					items: z.array(
+						z.object({
+							name: z.string(),
+							note: z.string().optional(),
+						}),
+					),
+				}),
+			)
+			.optional(),
+
+		coins: z
+			.object({
+				gold: z.number().optional(),
+				silver: z.number().optional(),
+				copper: z.number().optional(),
+			})
+			.optional(),
+
+		resources: z
+			.array(
+				z.object({
+					name: z.string(),
+					reset: z.string().optional(),
+					max: z.number(),
+				}),
+			)
+			.optional(),
+
+		features: z
+			.array(
+				z.object({
+					source: z.string().optional(),
+					name: z.string(),
+					text: z.string(),
+				}),
+			)
+			.optional(),
+
+		feats: z
+			.array(
+				z.object({
+					level: z.string().optional(),
+					name: z.string(),
+					text: z.string(),
+				}),
+			)
 			.optional(),
 	}),
 })

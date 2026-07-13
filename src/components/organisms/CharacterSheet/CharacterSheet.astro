@@ -18,6 +18,7 @@ interface Props {
 		darkvision?: string
 		blindsight?: string
 	}
+	defenses?: Record<string, string[]>
 	training: Record<string, string[]>
 	skills: Record<string, { base_value: number; proficiency?: boolean; disadvantage?: boolean }>
 	background?: {
@@ -37,6 +38,16 @@ interface Props {
 		bonds?: string
 		flaws?: string
 	}
+	actions?: {
+		note?: string
+		attacks: { name: string; meta?: string; to_hit?: string; damage?: string }[]
+	}
+	bonus_actions?: { type?: 'Bonus' | 'Reaction'; name: string; text: string }[]
+	inventory?: { group: string; items: { name: string; note?: string }[] }[]
+	coins?: { gold?: number; silver?: number; copper?: number }
+	resources?: { name: string; reset?: string; max: number }[]
+	features?: { source?: string; name: string; text: string }[]
+	feats?: { level?: string; name: string; text: string }[]
 }
 
 const {
@@ -52,10 +63,18 @@ const {
 	abilities,
 	saving_throws,
 	senses,
+	defenses,
 	training,
 	skills,
 	background,
 	characteristics,
+	actions,
+	bonus_actions,
+	inventory,
+	coins,
+	resources,
+	features,
+	feats,
 } = Astro.props
 
 function modifier(score: number) {
@@ -72,6 +91,13 @@ function formatSkillName(key: string) {
 
 function formatModifier(value: number) {
 	return value >= 0 ? `+${value}` : `${value}`
+}
+
+function slugify(value: string) {
+	return value
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-|-$/g, '')
 }
 
 function formatSavingThrow(save: { base_value: number; proficiency?: boolean }) {
@@ -94,274 +120,787 @@ const abilityAbbr: Record<string, string> = {
 	charisma: 'CHA',
 }
 
-const skillAbilityMap: Record<string, string> = {
-	acrobatics: 'dexterity',
-	animal_handling: 'wisdom',
-	arcana: 'intelligence',
-	athletics: 'strength',
-	deception: 'charisma',
-	history: 'intelligence',
-	insight: 'wisdom',
-	intimidation: 'charisma',
-	investigation: 'intelligence',
-	medicine: 'wisdom',
-	nature: 'intelligence',
-	perception: 'wisdom',
-	performance: 'charisma',
-	persuasion: 'charisma',
-	religion: 'intelligence',
-	sleight_of_hand: 'dexterity',
-	stealth: 'dexterity',
-	survival: 'wisdom',
-}
-
-const characterType = [characteristics?.race, subclass, charClass].filter(Boolean).join(' ')
-const characterSubtitle = [`Level ${level}`, characterType].filter(Boolean).join(' ')
+const classLine = [subclass, charClass].filter(Boolean).join(' ')
+const characterSubtitle = [`Level ${level}`, characteristics?.race, classLine].filter(Boolean).join(' ')
 
 const hasNotes = Astro.slots.has('notes')
+
+const storageKey = `cs-state:${slugify(name)}`
 ---
 
-<div class="character-sheet">
+<div class="character-sheet" data-sheet-storage-key={storageKey}>
 	<!-- Header -->
-	<div class="cs-header">
-		<div>
-			<h1 class="cs-name">{name}</h1>
-			<p class="cs-subtitle">{characterSubtitle}</p>
+	<div class="header -highlight">
+		<div class="header-id">
+			<h1 class="name">{name}</h1>
+			<p class="subtitle">{characterSubtitle}</p>
+		</div>
+
+		<div class="hp" data-sheet-hp-maximum={hit_points}>
+			<span class="hp-label">Hit Points</span>
+			<p class="hp-values">
+				<span class="hp-current" data-sheet-hp="current">{hit_points}</span>
+				<span class="hp-maximum">/ <span data-sheet-hp="maximum">{hit_points}</span></span>
+				<span class="hp-temporary" data-sheet-hp="temporary" hidden
+					>+<span data-sheet-hp="temporary-value">0</span> temp</span
+				>
+			</p>
+			<input
+				type="range"
+				class="hp-range"
+				data-sheet-hp="slider"
+				data-state="healthy"
+				min="0"
+				max={hit_points}
+				value={hit_points}
+				style="--hp-pct: 100%;"
+				aria-label="Current hit points"
+			/>
+			<div class="hp-controls">
+				<div class="hp-group">
+					<button type="button" class="hp-button -damage" data-sheet-hp-action="damage" aria-label="Take 1 damage"
+						>−</button
+					>
+					<span class="hp-group-label">HP</span>
+					<button type="button" class="hp-button -heal" data-sheet-hp-action="heal" aria-label="Heal 1 hit point"
+						>+</button
+					>
+				</div>
+				<div class="hp-group">
+					<button
+						type="button"
+						class="hp-button -temporary"
+						data-sheet-hp-action="temporary-down"
+						aria-label="Decrease temporary hit points">−</button
+					>
+					<span class="hp-group-label">Temp</span>
+					<button
+						type="button"
+						class="hp-button -temporary"
+						data-sheet-hp-action="temporary-up"
+						aria-label="Increase temporary hit points">+</button
+					>
+				</div>
+			</div>
+		</div>
+
+		<div class="rests">
+			<button type="button" class="rest" data-sheet-rest="short rest">Short Rest</button>
+			<button type="button" class="rest" data-sheet-rest="long rest">Long Rest</button>
 		</div>
 	</div>
 
 	<!-- Core Stats Bar -->
-	<div class="cs-core-stats">
-		<div class="cs-stat">
-			<span class="cs-stat-value">{armor_class}</span>
-			<span class="cs-stat-label">Armor Class</span>
+	<div class="stats">
+		<div class="stat">
+			<span class="stat-value">{armor_class}</span>
+			<span class="stat-label">Armor Class</span>
 		</div>
-		<div class="cs-stat">
-			<span class="cs-stat-value">{hit_points}</span>
-			<span class="cs-stat-label">Hit Points</span>
+		<div class="stat">
+			<span class="stat-value">{speed}</span>
+			<span class="stat-label">Speed</span>
 		</div>
-		<div class="cs-stat">
-			<span class="cs-stat-value">{speed}</span>
-			<span class="cs-stat-label">Speed</span>
+		<div class="stat">
+			<span class="stat-value">{formatModifier(initiative)}</span>
+			<span class="stat-label">Initiative</span>
 		</div>
-		<div class="cs-stat">
-			<span class="cs-stat-value">{formatModifier(initiative)}</span>
-			<span class="cs-stat-label">Initiative</span>
-		</div>
-		<div class="cs-stat">
-			<span class="cs-stat-value">+{proficiency_bonus}</span>
-			<span class="cs-stat-label">Proficiency</span>
+		<div class="stat">
+			<span class="stat-value">+{proficiency_bonus}</span>
+			<span class="stat-label">Proficiency</span>
 		</div>
 	</div>
 
-	<!-- Body: Abilities Sidebar + Details -->
-	<div class="cs-body">
-		<!-- Left: Abilities -->
-		<div class="cs-abilities-section">
-			<h2 class="cs-section-title">Abilities</h2>
-			<div class="cs-abilities">
+	<!-- Body -->
+	<div class="body">
+		<!-- Left column -->
+		<div class="column -left">
+			<!-- Abilities -->
+			<div class="abilities-section">
+				<h2 class="section-title">Abilities</h2>
+				<div class="abilities">
+					{
+						abilityOrder.map((key) => (
+							<div class="ability">
+								<span class="ability-modifier">{modifier(abilities[key])}</span>
+								<span class="ability-name">{abilityAbbr[key]}</span>
+							</div>
+						))
+					}
+				</div>
+			</div>
+
+			<!-- Saving Throws -->
+			<section class="saves">
+				<h2 class="section-title">Saving Throws</h2>
+				<ul class="list">
+					{
+						abilityOrder.map((key) => {
+							const save = saving_throws[key]
+							const proficient = save.proficiency
+
+							return (
+								<li class:list={['list-row', { 'proficient -highlight': proficient }]}>
+									<span class="list-label">
+										{proficient && <span class="sr-only">Proficient in </span>}
+										{formatSkillName(key)}
+									</span>
+									<span class="list-value">{formatSavingThrow(save)}</span>
+								</li>
+							)
+						})
+					}
+				</ul>
+			</section>
+
+			<!-- Skills -->
+			<section class="skills">
+				<h2 class="section-title">Skills</h2>
+				<ul class="list">
+					{
+						Object.entries(skills).map(([key, skill]) => {
+							const total = skillModifier(skill)
+							const proficient = skill.proficiency
+							const disadvantaged = skill.disadvantage
+
+							return (
+								<li
+									class:list={[
+										'list-row',
+										{ 'disadvantage -highlight': disadvantaged, 'proficient -highlight': proficient },
+									]}
+								>
+									<span class="list-label">
+										{proficient && <span class="sr-only">Proficient in </span>}
+										{disadvantaged && <span class="sr-only">Disadvantaged in </span>}
+										{formatSkillName(key)}
+									</span>
+									<span class="list-value">{total}</span>
+								</li>
+							)
+						})
+					}
+				</ul>
+			</section>
+
+			<!-- Senses -->
+			{
+				senses && (
+					<section class="senses-section">
+						<h2 class="section-title">Senses</h2>
+						<ul class="senses">
+							{senses.passive_perception !== undefined && (
+								<li class="sense">
+									<p class="sense-value">{senses.passive_perception}</p>
+									<p class="sense-label">Passive Perception</p>
+								</li>
+							)}
+							{senses.darkvision && (
+								<li class="sense">
+									<p class="sense-value">{senses.darkvision}</p>
+									<p class="sense-label">Darkvision</p>
+								</li>
+							)}
+							{senses.blindsight && (
+								<li class="sense">
+									<p class="sense-value">{senses.blindsight}</p>
+									<p class="sense-label">Blindsight</p>
+								</li>
+							)}
+						</ul>
+					</section>
+				)
+			}
+
+			<!-- Defenses -->
+			{
+				defenses && Object.entries(defenses).some(([, v]) => v.length > 0) && (
+					<section class="defenses-section">
+						<h2 class="section-title">Defenses</h2>
+						{Object.entries(defenses)
+							.filter(([, items]) => items.length > 0)
+							.map(([category, items]) => (
+								<div class="defenses-group">
+									<h3 class="defenses-label">{formatSkillName(category)}</h3>
+									<ul class="tags">
+										{items.map((item) => (
+											<li class="chip">{item}</li>
+										))}
+									</ul>
+								</div>
+							))}
+					</section>
+				)
+			}
+
+			<!-- Training / Proficiencies -->
+			<section class="proficiencies">
+				<h2 class="section-title">Proficiencies</h2>
 				{
-					abilityOrder.map((key) => (
-						<div class="cs-ability">
-							<span class="cs-ability-score">{abilities[key]}</span>
-							<span class="cs-ability-mod">{modifier(abilities[key])}</span>
-							<span class="cs-ability-name">{abilityAbbr[key]}</span>
+					Object.entries(training).map(([category, items]) => (
+						<div class="training-group">
+							<h3 class="training-label">{formatSkillName(category)}</h3>
+							<ul class="tags">
+								{items.map((item) => (
+									<li class="chip">{item}</li>
+								))}
+							</ul>
 						</div>
 					))
 				}
-			</div>
+			</section>
 		</div>
 
-		<!-- Saving Throws -->
-		<section class="cs-saves">
-			<h2 class="cs-section-title">Saving Throws</h2>
-			<ul class="cs-list">
-				{
-					abilityOrder.map((key) => {
-						const save = saving_throws[key]
-						const proficient = save.proficiency
-
-						return (
-							<li class:list={[{ 'cs-proficient -highlight': proficient }]}>
-								<span class="cs-list-label">
-									{proficient && <span class="sr-only">Proficient in </span>}
-									{formatSkillName(key)}
-								</span>
-								<span class="cs-list-value">{formatSavingThrow(save)}</span>
-							</li>
-						)
-					})
-				}
-			</ul>
-		</section>
-
-		<!-- Skills -->
-		<section class="cs-skills">
-			<h2 class="cs-section-title">Skills</h2>
-			<ul class="cs-list">
-				{
-					Object.entries(skills).map(([key, skill]) => {
-						const total = skillModifier(skill)
-						const proficient = skill.proficiency
-						const disadvantaged = skill.disadvantage
-
-						return (
-							<li
-								class:list={[{ 'cs-disadvantage -highlight': disadvantaged, 'cs-proficient -highlight': proficient }]}
-							>
-								<span class="cs-list-label">
-									{proficient && <span class="sr-only">Proficient in </span>}
-									{disadvantaged && <span class="sr-only">Disadvantaged in </span>}
-									{formatSkillName(key)}
-									<span class="cs-ability-mod"> ({abilityAbbr[skillAbilityMap[key]]})</span>
-								</span>
-								<span class="cs-list-value">{total}</span>
-							</li>
-						)
-					})
-				}
-			</ul>
-		</section>
-
-		<!-- Senses -->
-		{
-			senses && (
-				<section class="cs-senses-section">
-					<h2 class="cs-section-title">Senses</h2>
-					<ul class="cs-senses">
-						{senses.passive_perception !== undefined && (
-							<li>
-								<span>Passive Perception</span>
-								<strong>{senses.passive_perception}</strong>
-							</li>
-						)}
-						{senses.darkvision && (
-							<li>
-								<span>Darkvision</span>
-								<strong>{senses.darkvision}</strong>
-							</li>
-						)}
-						{senses.blindsight && (
-							<li>
-								<span>Blindsight</span>
-								<strong>{senses.blindsight}</strong>
-							</li>
-						)}
-					</ul>
-				</section>
-			)
-		}
-
-		<!-- Training / Proficiencies -->
-		<section class="cs-proficiencies">
-			<h2 class="cs-section-title">Proficiencies</h2>
+		<!-- Middle column -->
+		<div class="column -main">
+			<!-- Actions / Attacks -->
 			{
-				Object.entries(training).map(([category, items]) => (
-					<div class="cs-training-group">
-						<p class="cs-training-label">{formatSkillName(category)}</p>
-						<ul class="cs-tags">
-							{items.map((item) => (
-								<li>{item}</li>
+				actions && (
+					<section class="actions">
+						<h2 class="section-title">Actions</h2>
+						{actions.note && <p class="note">{actions.note}</p>}
+						<div class="attacks">
+							<p class="attacks-column-head">Weapon</p>
+							<p class="attacks-column-head -center">To Hit</p>
+							<p class="attacks-column-head -center">Damage</p>
+							{actions.attacks.map(({ name, meta, to_hit, damage }) => (
+								<Fragment>
+									<div class="attack">
+										<p class="attack-name">{name}</p>
+										{meta && <p class="attack-meta">{meta}</p>}
+									</div>
+
+									<p class="chip -stat -to-hit">{to_hit}</p>
+									<p class="chip -stat">{damage}</p>
+								</Fragment>
+							))}
+						</div>
+					</section>
+				)
+			}
+
+			<!-- Bonus Actions & Reactions -->
+			{
+				bonus_actions && bonus_actions.length > 0 && (
+					<section class="bonus-actions">
+						<h2 class="section-title">Bonus Actions & Reactions</h2>
+						<ul class="bonus-list">
+							{bonus_actions.map((action) => (
+								<li class="bonus">
+									<div class="bonus-head">
+										<p class:list={['chip -badge', { '-reaction': action.type === 'Reaction' }]}>
+											{action.type ?? 'Bonus'}
+										</p>
+										<p class="bonus-name">{action.name}</p>
+									</div>
+									<p class="bonus-text">{action.text}</p>
+								</li>
 							))}
 						</ul>
-					</div>
-				))
+					</section>
+				)
 			}
-		</section>
+			<!-- Class & Racial Features -->
+			{
+				features && features.length > 0 && (
+					<section class="features">
+						<h2 class="section-title">Class & Racial Features</h2>
+						<ul class="feature-list">
+							{features.map((feature) => (
+								<li class="feature">
+									<div class="feature-head">
+										{feature.source && (
+											<p
+												class:list={[
+													'chip -badge',
+													{ '-subclass': feature.source === subclass },
+													{ '-race': feature.source === characteristics?.race },
+												]}
+											>
+												{feature.source}
+											</p>
+										)}
+										<p class="feature-name">{feature.name}</p>
+									</div>
+									<p class="feature-text">{feature.text}</p>
+								</li>
+							))}
+						</ul>
+					</section>
+				)
+			}
 
-		<!-- Background -->
-		{
-			background && (
-				<section class="cs-background">
-					<h2 class="cs-section-title">Background — {background.title}</h2>
-					<p class="cs-background-feature">{background.feature}</p>
-					<p class="cs-background-desc">{background.description}</p>
-				</section>
-			)
-		}
+			<!-- Feats -->
+			{
+				feats && feats.length > 0 && (
+					<section class="feats">
+						<h2 class="section-title">Feats</h2>
+						<ul class="feat-list">
+							{feats.map((feat) => (
+								<li class="feat">
+									<div class="feat-head">
+										{feat.level && <p class="chip -badge -solid">{feat.level}</p>}
+										<p class="feat-name">{feat.name}</p>
+									</div>
+									<p class="feat-text">{feat.text}</p>
+								</li>
+							))}
+						</ul>
+					</section>
+				)
+			}
+		</div>
 
-		<!-- Characteristics -->
-		{
-			characteristics && (
-				<section class="cs-characteristics">
-					<h2 class="cs-section-title">Characteristics</h2>
+		<!-- Right column -->
+		<div class="column -right">
+			<!-- Death Saves -->
+			<section class="death-saves">
+				<h2 class="section-title">Death Saves</h2>
 
-					<div class="cs-physical">
-						{characteristics.alignment && (
-							<div class="cs-physical-item">
-								<span class="cs-trait-label">Alignment</span>
-								<span class="cs-trait-value">{characteristics.alignment}</span>
-							</div>
-						)}
-						{characteristics.race && (
-							<div class="cs-physical-item">
-								<span class="cs-trait-label">Race</span>
-								<span class="cs-trait-value">{characteristics.race}</span>
-							</div>
-						)}
-						{characteristics.gender && (
-							<div class="cs-physical-item">
-								<span class="cs-trait-label">Gender</span>
-								<span class="cs-trait-value">{characteristics.gender}</span>
-							</div>
-						)}
-						{characteristics.size && (
-							<div class="cs-physical-item">
-								<span class="cs-trait-label">Size</span>
-								<span class="cs-trait-value">{characteristics.size}</span>
-							</div>
-						)}
-						{characteristics.eyes && (
-							<div class="cs-physical-item">
-								<span class="cs-trait-label">Eyes</span>
-								<span class="cs-trait-value">{characteristics.eyes}</span>
-							</div>
-						)}
-						{characteristics.hair && (
-							<div class="cs-physical-item">
-								<span class="cs-trait-label">Hair</span>
-								<span class="cs-trait-value">{characteristics.hair}</span>
-							</div>
-						)}
+				<div class="death-saves-wrapper">
+					<div class="death-save">
+						<p class="death-save-label">
+							Successes <span class="sr-only" data-sheet-count="death-successes" data-sheet-count-label="marked"
+								>0 of 3 marked</span
+							>
+						</p>
+						<div class="pips">
+							{
+								Array.from({ length: 3 }).map((_, i) => (
+									<button
+										type="button"
+										class="pip -success"
+										data-sheet-pip
+										data-sheet-group="death-successes"
+										data-sheet-index={i}
+										aria-pressed="false"
+										aria-label={`Death save success ${i + 1}`}
+									/>
+								))
+							}
+						</div>
 					</div>
 
-					<div class="cs-traits-grid">
-						{characteristics.personality_traits && (
-							<div class="cs-trait">
-								<p class="cs-trait-label">Personality Traits</p>
-								<p class="cs-trait-value">{characteristics.personality_traits}</p>
-							</div>
-						)}
-						{characteristics.ideals && (
-							<div class="cs-trait">
-								<p class="cs-trait-label">Ideals</p>
-								<p class="cs-trait-value">{characteristics.ideals}</p>
-							</div>
-						)}
-						{characteristics.bonds && (
-							<div class="cs-trait">
-								<p class="cs-trait-label">Bonds</p>
-								<p class="cs-trait-value">{characteristics.bonds}</p>
-							</div>
-						)}
-						{characteristics.flaws && (
-							<div class="cs-trait">
-								<p class="cs-trait-label">Flaws</p>
-								<p class="cs-trait-value">{characteristics.flaws}</p>
-							</div>
-						)}
+					<div class="death-save">
+						<p class="death-save-label">
+							Failures <span class="sr-only" data-sheet-count="death-failures" data-sheet-count-label="marked"
+								>0 of 3 marked</span
+							>
+						</p>
+						<div class="pips -failure">
+							{
+								Array.from({ length: 3 }).map((_, i) => (
+									<button
+										type="button"
+										class="pip"
+										data-sheet-pip
+										data-sheet-group="death-failures"
+										data-sheet-index={i}
+										aria-pressed="false"
+										aria-label={`Death save failure ${i + 1}`}
+									/>
+								))
+							}
+						</div>
 					</div>
-				</section>
-			)
-		}
+				</div>
+			</section>
+
+			<!-- Resources -->
+			{
+				resources && resources.length > 0 && (
+					<section class="resources">
+						<h2 class="section-title">Resources</h2>
+						<div class="resource-grid">
+							<p class="resource-column-head">Resource</p>
+							<p class="resource-column-head -right">Uses</p>
+							{resources.map((resource) => {
+								const resGroup = `resource-${slugify(resource.name)}`
+								return (
+									<Fragment>
+										<div class="resource">
+											<p class="resource-name">
+												{resource.name}
+												<span class="sr-only" data-sheet-count={resGroup} data-sheet-count-label="used">
+													- 0 of {resource.max} used
+												</span>
+											</p>
+											{resource.reset && <p class="resource-reset">{resource.reset}</p>}
+										</div>
+
+										<div class="pips -resource">
+											{Array.from({ length: resource.max }).map((_, i) => (
+												<button
+													type="button"
+													class="pip"
+													data-sheet-pip
+													data-sheet-group={resGroup}
+													data-sheet-index={i}
+													data-sheet-reset={resource.reset}
+													aria-pressed="false"
+													aria-label={`${resource.name} use ${i + 1}`}
+												/>
+											))}
+										</div>
+									</Fragment>
+								)
+							})}
+						</div>
+					</section>
+				)
+			}
+
+			<!-- Inventory -->
+			{
+				(inventory || coins) && (
+					<section class="inventory">
+						<h2 class="section-title">Inventory</h2>
+						{inventory?.map((group) => (
+							<div class="inventory-group">
+								<h3 class="inventory-label">{group.group}</h3>
+								<ul class="inventory-list">
+									{group.items.map((item) => (
+										<li class="inventory-entry">
+											<p class="inventory-name">{item.name}</p>
+											{item.note && <p class="inventory-note">{item.note}</p>}
+										</li>
+									))}
+								</ul>
+							</div>
+						))}
+						{coins && (
+							<div class="coins">
+								{coins.gold !== undefined && (
+									<div class="coin -gold">
+										<p class="coin-value">{coins.gold}</p>
+										<p class="coin-label">Gold</p>
+									</div>
+								)}
+								{coins.silver !== undefined && (
+									<div class="coin -silver">
+										<p class="coin-value">{coins.silver}</p>
+										<p class="coin-label">Silver</p>
+									</div>
+								)}
+								{coins.copper !== undefined && (
+									<div class="coin -copper">
+										<p class="coin-value">{coins.copper}</p>
+										<p class="coin-label">Copper</p>
+									</div>
+								)}
+							</div>
+						)}
+					</section>
+				)
+			}
+
+			<!-- Background -->
+			{
+				background && (
+					<section class="background">
+						<h2 class="section-title">Background</h2>
+						<div class="background-head">
+							<p class="chip -badge">{background.title}</p>
+							<p class="background-name">{background.feature}</p>
+						</div>
+						<p class="background-text">{background.description}</p>
+					</section>
+				)
+			}
+
+			<!-- Characteristics -->
+			{
+				characteristics && (
+					<section class="characteristics">
+						<h2 class="section-title">Characteristics</h2>
+
+						<div class="attributes">
+							{characteristics.alignment && (
+								<div class="attribute">
+									<p class="attribute-label">Alignment</p>
+									<p class="chip">{characteristics.alignment}</p>
+								</div>
+							)}
+							{characteristics.race && (
+								<div class="attribute">
+									<p class="attribute-label">Race</p>
+									<p class="chip">{characteristics.race}</p>
+								</div>
+							)}
+							{characteristics.gender && (
+								<div class="attribute">
+									<p class="attribute-label">Gender</p>
+									<p class="chip">{characteristics.gender}</p>
+								</div>
+							)}
+							{characteristics.size && (
+								<div class="attribute">
+									<p class="attribute-label">Size</p>
+									<p class="chip">{characteristics.size}</p>
+								</div>
+							)}
+							{characteristics.eyes && (
+								<div class="attribute">
+									<p class="attribute-label">Eyes</p>
+									<p class="chip">{characteristics.eyes}</p>
+								</div>
+							)}
+							{characteristics.hair && (
+								<div class="attribute">
+									<p class="attribute-label">Hair</p>
+									<p class="chip">{characteristics.hair}</p>
+								</div>
+							)}
+						</div>
+
+						<div class="traits-grid">
+							{characteristics.personality_traits && (
+								<div class="trait">
+									<p class="trait-label">Personality Traits</p>
+									<p class="trait-value">{characteristics.personality_traits}</p>
+								</div>
+							)}
+							{characteristics.ideals && (
+								<div class="trait">
+									<p class="trait-label">Ideals</p>
+									<p class="trait-value">{characteristics.ideals}</p>
+								</div>
+							)}
+							{characteristics.bonds && (
+								<div class="trait">
+									<p class="trait-label">Bonds</p>
+									<p class="trait-value">{characteristics.bonds}</p>
+								</div>
+							)}
+							{characteristics.flaws && (
+								<div class="trait">
+									<p class="trait-label">Flaws</p>
+									<p class="trait-value">{characteristics.flaws}</p>
+								</div>
+							)}
+						</div>
+					</section>
+				)
+			}
+		</div>
 	</div>
 
 	<!-- Notes from Markdown Content -->
 	{
 		hasNotes && (
-			<div class="cs-notes content">
+			<div class="notes content">
 				<slot name="notes" />
 			</div>
 		)
 	}
 </div>
+
+<script>
+	function initSheet(sheet) {
+		const storageKey = sheet.dataset.sheetStorageKey
+		const hitPointsElement = sheet.querySelector('.hp')
+		const maxHitPoints = hitPointsElement ? Number(hitPointsElement.dataset.sheetHpMaximum) || 0 : 0
+
+		const pips = Array.from(sheet.querySelectorAll('[data-sheet-pip]'))
+		const groupTotals = {}
+		const groupResetType = {}
+		for (const pip of pips) {
+			const group = pip.dataset.sheetGroup
+			groupTotals[group] = (groupTotals[group] || 0) + 1
+			if (pip.dataset.sheetReset) groupResetType[group] = pip.dataset.sheetReset.trim().toLowerCase()
+		}
+
+		const state = { maxHitPoints, hitPoints: { current: maxHitPoints, temporary: 0 }, groups: {} }
+		for (const group in groupTotals) {
+			state.groups[group] = pips.filter(
+				(pip) => pip.dataset.sheetGroup === group && pip.classList.contains('-filled')
+			).length
+		}
+
+		function isDeathSaveGroup(group) {
+			return group === 'death-successes' || group === 'death-failures'
+		}
+
+		function clamp(value, min, max) {
+			return Math.max(min, Math.min(max, value))
+		}
+
+		function restoreSavedState() {
+			let savedState
+			try {
+				savedState = storageKey && JSON.parse(localStorage.getItem(storageKey))
+			} catch (error) {
+				return
+			}
+			if (!savedState) return
+
+			if (savedState.hitPoints) {
+				// A character saved at full health stays full when their maximum later
+				// grows (e.g. a level-up), rather than showing phantom damage.
+				const savedAtFullHealth =
+					typeof savedState.maxHitPoints === 'number' &&
+					typeof savedState.hitPoints.current === 'number' &&
+					savedState.hitPoints.current >= savedState.maxHitPoints
+
+				if (savedAtFullHealth) {
+					state.hitPoints.current = maxHitPoints
+				} else if (typeof savedState.hitPoints.current === 'number') {
+					state.hitPoints.current = clamp(savedState.hitPoints.current, 0, maxHitPoints)
+				}
+				if (typeof savedState.hitPoints.temporary === 'number') {
+					state.hitPoints.temporary = Math.max(0, savedState.hitPoints.temporary)
+				}
+			}
+
+			if (savedState.groups) {
+				for (const group in groupTotals) {
+					const savedCount = savedState.groups[group]
+					if (typeof savedCount === 'number') {
+						state.groups[group] = clamp(savedCount, 0, groupTotals[group])
+					}
+				}
+			}
+		}
+
+		function persist() {
+			if (!storageKey) return
+			try {
+				localStorage.setItem(storageKey, JSON.stringify(state))
+			} catch (error) {}
+		}
+
+		function renderHitPoints() {
+			if (!hitPointsElement) return
+			const { current, temporary } = state.hitPoints
+
+			const currentElement = hitPointsElement.querySelector('[data-sheet-hp="current"]')
+			if (currentElement) currentElement.textContent = String(current)
+
+			const temporaryBadge = hitPointsElement.querySelector('[data-sheet-hp="temporary"]')
+			const temporaryValue = hitPointsElement.querySelector('[data-sheet-hp="temporary-value"]')
+			if (temporaryValue) temporaryValue.textContent = String(temporary)
+			if (temporaryBadge) temporaryBadge.hidden = temporary <= 0
+
+			const slider = hitPointsElement.querySelector('[data-sheet-hp="slider"]')
+			if (!slider) return
+			const percentFilled = maxHitPoints > 0 ? clamp(Math.round((current / maxHitPoints) * 100), 0, 100) : 0
+			slider.max = String(maxHitPoints)
+			slider.value = String(current)
+			slider.style.setProperty('--hp-pct', percentFilled + '%')
+			slider.dataset.state = percentFilled > 50 ? 'healthy' : percentFilled > 25 ? 'wounded' : 'critical'
+			slider.setAttribute('aria-valuetext', `${current} of ${maxHitPoints} hit points`)
+		}
+
+		function renderPips() {
+			for (const pip of pips) {
+				const filled = Number(pip.dataset.sheetIndex) < state.groups[pip.dataset.sheetGroup]
+				pip.classList.toggle('-filled', filled)
+				pip.setAttribute('aria-pressed', String(filled))
+			}
+		}
+
+		function renderCounters() {
+			sheet.querySelectorAll('[data-sheet-count]').forEach((counter) => {
+				const group = counter.dataset.sheetCount
+				const filled = state.groups[group] || 0
+				const total = groupTotals[group] || 0
+				counter.textContent =
+					counter.dataset.sheetCountLabel === 'used' ? `- ${filled} of ${total} used` : `${filled} of ${total} marked`
+			})
+		}
+
+		function render() {
+			renderHitPoints()
+			renderPips()
+			renderCounters()
+		}
+
+		function togglePip(group, index) {
+			const filled = state.groups[group] || 0
+			state.groups[group] = index + 1 === filled ? index : index + 1
+		}
+
+		function adjustHitPoints(delta) {
+			let { current, temporary } = state.hitPoints
+			if (delta < 0) {
+				let damage = -delta
+				const absorbed = Math.min(temporary, damage)
+				temporary -= absorbed
+				damage -= absorbed
+				current = Math.max(0, current - damage)
+			} else {
+				current = Math.min(maxHitPoints, current + delta)
+			}
+			state.hitPoints = { current, temporary }
+		}
+
+		function clearResourcePips(resetType) {
+			for (const group in groupTotals) {
+				if (isDeathSaveGroup(group)) continue
+				if (resetType === null || groupResetType[group] === resetType) state.groups[group] = 0
+			}
+		}
+
+		function applyRest(restType) {
+			if (restType === 'short rest') {
+				clearResourcePips('short rest')
+				return
+			}
+			clearResourcePips(null)
+			state.hitPoints = { current: maxHitPoints, temporary: 0 }
+			state.groups['death-successes'] = 0
+			state.groups['death-failures'] = 0
+		}
+
+		sheet.addEventListener('click', (event) => {
+			const pip = event.target.closest('[data-sheet-pip]')
+			if (pip && sheet.contains(pip)) {
+				togglePip(pip.dataset.sheetGroup, Number(pip.dataset.sheetIndex))
+				render()
+				persist()
+				return
+			}
+
+			const hitPointsButton = event.target.closest('[data-sheet-hp-action]')
+			if (hitPointsButton) {
+				const action = hitPointsButton.dataset.sheetHpAction
+				if (action === 'damage') adjustHitPoints(-1)
+				else if (action === 'heal') adjustHitPoints(1)
+				else if (action === 'temporary-up') state.hitPoints.temporary += 1
+				else if (action === 'temporary-down') state.hitPoints.temporary = Math.max(0, state.hitPoints.temporary - 1)
+				render()
+				persist()
+				return
+			}
+
+			const restButton = event.target.closest('[data-sheet-rest]')
+			if (restButton) {
+				applyRest((restButton.dataset.sheetRest || '').trim().toLowerCase())
+				render()
+				persist()
+			}
+		})
+
+		const slider = hitPointsElement && hitPointsElement.querySelector('[data-sheet-hp="slider"]')
+		if (slider) {
+			slider.addEventListener('input', () => {
+				state.hitPoints.current = clamp(parseInt(slider.value, 10) || 0, 0, maxHitPoints)
+				render()
+				persist()
+			})
+		}
+
+		restoreSavedState()
+		render()
+	}
+
+	function mountSheets() {
+		document.querySelectorAll('.character-sheet').forEach((sheet) => {
+			if (sheet.dataset.sheetReady) return
+			sheet.dataset.sheetReady = 'true'
+			initSheet(sheet)
+		})
+	}
+
+	mountSheets()
+	document.addEventListener('astro:page-load', mountSheets)
+</script>

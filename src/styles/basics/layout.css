@@ -25,6 +25,7 @@
 	--space-3xs-m: clamp(0.25rem, -0.3967rem + 3.2746vw, 1.875rem);
 	--space-2xs-m: clamp(0.5rem, -0.0472rem + 2.7708vw, 1.875rem);
 	--space-xs-m: clamp(0.75rem, 0.3023rem + 2.267vw, 1.875rem);
+	--space-xs-l: clamp(0.75rem, 0.0535rem + 3.5264vw, 2.5rem);
 
 	/* grid */
 	/* @link https://utopia.fyi/grid/calculator?c=316,16,1.125,1110,20,1.25,4,2,&s=0.75%7C0.5%7C0.25,1.5%7C2%7C3%7C4%7C6,&g=s,m,xl,8 */
