@@ -41,13 +41,12 @@ interface Props {
 	actions?: {
 		note?: string
 		attacks: { name: string; meta?: string; to_hit?: string; damage?: string }[]
-		footnote?: string
 	}
 	bonus_actions?: { type?: 'Bonus' | 'Reaction'; name: string; text: string }[]
-	inventory?: { group: string; items: { name: string; qty?: number; note?: string }[] }[]
+	inventory?: { group: string; items: { name: string; note?: string }[] }[]
 	coins?: { gold?: number; silver?: number; copper?: number }
-	resources?: { name: string; reset?: string; max: number; current?: number }[]
-	features?: { source?: string; name: string; meta?: string; text: string }[]
+	resources?: { name: string; reset?: string; max: number }[]
+	features?: { source?: string; name: string; text: string }[]
 	feats?: { level?: string; name: string; text: string }[]
 }
 
@@ -119,27 +118,6 @@ const abilityAbbr: Record<string, string> = {
 	intelligence: 'INT',
 	wisdom: 'WIS',
 	charisma: 'CHA',
-}
-
-const skillAbilityMap: Record<string, string> = {
-	acrobatics: 'dexterity',
-	animal_handling: 'wisdom',
-	arcana: 'intelligence',
-	athletics: 'strength',
-	deception: 'charisma',
-	history: 'intelligence',
-	insight: 'wisdom',
-	intimidation: 'charisma',
-	investigation: 'intelligence',
-	medicine: 'wisdom',
-	nature: 'intelligence',
-	perception: 'wisdom',
-	performance: 'charisma',
-	persuasion: 'charisma',
-	religion: 'intelligence',
-	sleight_of_hand: 'dexterity',
-	stealth: 'dexterity',
-	survival: 'wisdom',
 }
 
 const classLine = [subclass, charClass].filter(Boolean).join(' ')
@@ -704,12 +682,13 @@ const storageKey = `cs-state:${slugify(name)}`
 		for (const pip of pips) {
 			const g = pip.dataset.csGroup
 			groupMax[g] = (groupMax[g] || 0) + 1
-			if (pip.dataset.csReset) groupReset[g] = pip.dataset.csReset
+			// Normalise the reset key so rest matching is case-insensitive.
+			if (pip.dataset.csReset) groupReset[g] = pip.dataset.csReset.trim().toLowerCase()
 		}
 		const isDeath = (g) => g === 'deathS' || g === 'deathF'
 
 		// Default state mirrors the SSR baseline: full HP, whatever pips ship filled.
-		const state = { hp: { cur: max, temp: 0 }, groups: {} }
+		const state = { max, hp: { cur: max, temp: 0 }, groups: {} }
 		for (const g in groupMax) {
 			state.groups[g] = pips.filter((p) => p.dataset.csGroup === g && p.classList.contains('-filled')).length
 		}
@@ -720,7 +699,12 @@ const storageKey = `cs-state:${slugify(name)}`
 			if (raw) {
 				const saved = JSON.parse(raw)
 				if (saved && saved.hp) {
-					if (typeof saved.hp.cur === 'number') state.hp.cur = Math.max(0, Math.min(max, saved.hp.cur))
+					// If the sheet was saved at full HP and max has since grown
+					// (e.g. a level-up), treat the character as still full rather
+					// than showing phantom damage.
+					const wasFull = typeof saved.max === 'number' && typeof saved.hp.cur === 'number' && saved.hp.cur >= saved.max
+					if (wasFull) state.hp.cur = max
+					else if (typeof saved.hp.cur === 'number') state.hp.cur = Math.max(0, Math.min(max, saved.hp.cur))
 					if (typeof saved.hp.temp === 'number') state.hp.temp = Math.max(0, saved.hp.temp)
 				}
 				if (saved && saved.groups) {
@@ -751,6 +735,7 @@ const storageKey = `cs-state:${slugify(name)}`
 				const range = hpEl.querySelector('[data-cs-hp="range"]')
 				if (range) {
 					const pct = max > 0 ? Math.max(0, Math.min(100, Math.round((cur / max) * 100))) : 0
+					range.max = String(max)
 					range.value = String(cur)
 					range.style.setProperty('--hp-pct', pct + '%')
 					range.dataset.state = pct > 50 ? 'healthy' : pct > 25 ? 'wounded' : 'critical'
@@ -832,7 +817,7 @@ const storageKey = `cs-state:${slugify(name)}`
 			}
 			const restBtn = target.closest('[data-cs-rest]')
 			if (restBtn) {
-				rest(restBtn.dataset.csRest)
+				rest((restBtn.dataset.csRest || '').trim().toLowerCase())
 				render()
 				persist()
 			}

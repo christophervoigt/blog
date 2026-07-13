@@ -131,7 +131,6 @@ const dnd = defineCollection({
 						damage: z.string().optional(),
 					}),
 				),
-				footnote: z.string().optional(),
 			})
 			.optional(),
 
@@ -152,7 +151,6 @@ const dnd = defineCollection({
 					items: z.array(
 						z.object({
 							name: z.string(),
-							qty: z.number().optional(),
 							note: z.string().optional(),
 						}),
 					),
@@ -174,7 +172,6 @@ const dnd = defineCollection({
 					name: z.string(),
 					reset: z.string().optional(),
 					max: z.number(),
-					current: z.number().optional(),
 				}),
 			)
 			.optional(),
@@ -184,7 +181,6 @@ const dnd = defineCollection({
 				z.object({
 					source: z.string().optional(),
 					name: z.string(),
-					meta: z.string().optional(),
 					text: z.string(),
 				}),
 			)
