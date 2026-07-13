@@ -1,7 +1,7 @@
 ---
 name: Tion 'Iron Mane'
 class: Fighter
-subclass: Echoknight
+subclass: Echo Knight
 level: 5
 favorite: true
 hit_points: 49

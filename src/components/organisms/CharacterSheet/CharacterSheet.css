@@ -30,7 +30,7 @@
 
 .cs-name {
 	font-size: var(--step-4);
-	font-weight: 900;
+	font-weight: 700;
 	line-height: 1.02;
 	margin-block-end: 0.1em;
 }
@@ -55,7 +55,7 @@
 	flex-direction: column;
 	align-items: center;
 	gap: var(--space-3xs);
-	padding: var(--space-xs) var(--space-2xs);
+	padding: var(--space-2xs);
 	background: var(--cs-surface);
 	border-radius: var(--cs-radius);
 	text-align: center;
@@ -63,15 +63,13 @@
 
 .cs-stat-value {
 	font-size: var(--step-2);
-	font-weight: 900;
+	font-weight: 700;
 	line-height: 1;
 	color: var(--headline-color);
-	font-variant-numeric: tabular-nums;
 }
 
 .cs-stat-label {
 	font-size: var(--step--2);
-	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	color: var(--cs-muted-color);
@@ -111,7 +109,6 @@
 	align-items: center;
 	gap: var(--space-2xs);
 	font-size: var(--step--1);
-	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	color: var(--headline-color);
@@ -130,7 +127,7 @@
 	flex-direction: column;
 	align-items: center;
 	gap: var(--space-3xs);
-	padding: var(--space-2xs) var(--space-3xs);
+	padding: var(--space-xs) var(--space-2xs);
 	background: var(--cs-surface-inset);
 	border-radius: 0.375rem;
 	text-align: center;
@@ -138,20 +135,13 @@
 
 .cs-ability-mod {
 	font-size: var(--step-1);
-	font-weight: 900;
+	font-weight: 700;
 	line-height: 1;
 	color: var(--headline-color);
-	font-variant-numeric: tabular-nums;
 }
 
 .cs-ability-name {
 	font-size: var(--step--2);
-	font-weight: 700;
-}
-
-.cs-ability-name {
-	font-size: var(--step--2);
-	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 }
@@ -190,22 +180,15 @@
 	opacity: 0.65;
 }
 
-.cs-list-value {
-	font-weight: 700;
-	font-variant-numeric: tabular-nums;
-}
-
 /* Proficient / disadvantaged rows reuse the site's gradient highlight.
    Forcing color-scheme pins each to a fixed gradient regardless of theme:
    teal/turquoise for proficient, warm bronze/coral for disadvantage. */
 .cs-proficient.-highlight {
 	color-scheme: dark;
-	font-weight: 700;
 }
 
 .cs-disadvantage.-highlight {
 	color-scheme: light;
-	font-weight: 700;
 }
 
 :is(.cs-proficient, .cs-disadvantage).-highlight .cs-list-value {
@@ -225,26 +208,24 @@
 .cs-senses li {
 	flex: 1 1 6rem;
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	align-items: center;
 	gap: var(--space-3xs);
-	padding: var(--space-xs) var(--space-2xs);
+	padding: var(--space-2xs);
 	background: var(--cs-surface-inset);
 	border-radius: 0.375rem;
 	text-align: center;
 }
 
-.cs-senses li strong {
+.cs-senses li :first-child {
 	font-size: var(--step-1);
-	font-weight: 900;
+	font-weight: 700;
 	line-height: 1;
 	color: var(--headline-color);
-	font-variant-numeric: tabular-nums;
 }
 
-.cs-senses li span {
+.cs-senses li :last-child {
 	font-size: var(--step--2);
-	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	color: var(--cs-muted-color);
@@ -257,7 +238,6 @@
 
 .cs-training-label {
 	font-size: var(--step--2);
-	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	color: var(--cs-muted-color);
@@ -274,8 +254,8 @@
 }
 
 .cs-tags li {
-	font-size: var(--step--1);
-	padding: 0.25em 0.6em;
+	font-size: var(--step--2);
+	padding: 0.3em 0.6em;
 	background: var(--cs-surface-inset);
 	border-radius: 0.375rem;
 }
@@ -292,11 +272,12 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.1em;
+	align-items: flex-start;
 }
 
 .cs-physical-item-value {
-	font-size: var(--step--1);
-	padding: 0.25em 0.6em;
+	font-size: var(--step--2);
+	padding: 0.3em 0.6em;
 	background: var(--cs-surface-inset);
 	border-radius: 0.375rem;
 }
@@ -308,14 +289,13 @@
 }
 
 .cs-trait {
-	padding: var(--space-2xs) var(--space-xs);
+	padding: var(--space-2xs);
 	background: var(--cs-surface-inset);
 	border-radius: 0.375rem;
 }
 
 .cs-trait-label {
 	font-size: var(--step--2);
-	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	color: var(--cs-muted-color);
@@ -352,7 +332,6 @@
 
 .cs-attacks-head {
 	font-size: var(--step--2);
-	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	color: var(--cs-muted-color);
@@ -385,9 +364,9 @@
 
 .cs-attack-value {
 	justify-self: center;
-	font-weight: 700;
-	font-variant-numeric: tabular-nums;
-	padding: 0.3em 0.7em;
+	/* font-weight: 700; */
+	font-size: var(--step--1);
+	padding: 0.3em 0.6em 0.2em;
 	background: var(--cs-surface-inset);
 	border-radius: 0.375rem;
 	white-space: nowrap;
@@ -401,17 +380,21 @@
 .cs-tag {
 	flex: 0 0 auto;
 	font-size: var(--step--2);
-	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	color: var(--cs-accent-color);
 	background: var(--cs-surface-inset);
 	border-radius: 0.375rem;
-	padding: 0.2em 0.55em;
+	padding: 0.3em 0.6em;
 }
 
-.cs-tag.-reaction {
+.cs-tag.-reaction,
+.cs-tag.-subclass {
 	color: light-dark(var(--sky-700), var(--sky-400));
+}
+
+.cs-tag.-race {
+	color: light-dark(var(--bronze-700), var(--bronze-400));
 }
 
 /* Equipment & Inventory */
@@ -421,7 +404,7 @@
 
 .cs-inv-label {
 	font-size: var(--step--2);
-	font-weight: 700;
+	font-weight: 400;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	color: var(--cs-muted-color);
@@ -462,7 +445,7 @@
 .cs-coin {
 	flex: 1;
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	align-items: center;
 	gap: var(--space-3xs);
 	padding: var(--space-2xs);
@@ -472,9 +455,9 @@
 }
 
 .cs-coin-value {
-	font-size: var(--step-0);
-	font-weight: 900;
-	font-variant-numeric: tabular-nums;
+	font-size: var(--step-1);
+	font-weight: 700;
+	line-height: 1;
 }
 
 .cs-coin.-gold .cs-coin-value {
@@ -491,7 +474,6 @@
 
 .cs-coin-label {
 	font-size: var(--step--2);
-	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	color: var(--cs-muted-color);
@@ -554,7 +536,6 @@
 
 .cs-deathsave-label {
 	font-size: var(--step--2);
-	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	color: var(--cs-muted-color);
@@ -624,13 +605,12 @@
 .cs-feat-level {
 	flex: 0 0 auto;
 	font-size: var(--step--2);
-	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	color: light-dark(var(--white), var(--gray-1000));
 	background: var(--cs-accent-color);
 	border-radius: 0.375rem;
-	padding: 0.2em 0.55em;
+	padding: 0.3em 0.6em;
 }
 
 /* Notes / Markdown content */

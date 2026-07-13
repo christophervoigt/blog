@@ -247,20 +247,20 @@ const hasNotes = Astro.slots.has('notes')
 						<ul class="cs-senses">
 							{senses.passive_perception !== undefined && (
 								<li>
-									<span>Passive Perception</span>
-									<strong>{senses.passive_perception}</strong>
+									<p>{senses.passive_perception}</p>
+									<p>Passive Perception</p>
 								</li>
 							)}
 							{senses.darkvision && (
 								<li>
-									<span>Darkvision</span>
-									<strong>{senses.darkvision}</strong>
+									<p>{senses.darkvision}</p>
+									<p>Darkvision</p>
 								</li>
 							)}
 							{senses.blindsight && (
 								<li>
-									<span>Blindsight</span>
-									<strong>{senses.blindsight}</strong>
+									<p>{senses.blindsight}</p>
+									<p>Blindsight</p>
 								</li>
 							)}
 						</ul>
@@ -341,7 +341,17 @@ const hasNotes = Astro.slots.has('notes')
 							{features.map((feature) => (
 								<li class="cs-feature">
 									<div class="cs-feature-head">
-										{feature.source && <p class="cs-tag">{feature.source}</p>}
+										{feature.source && (
+											<p
+												class:list={[
+													'cs-tag',
+													{ '-subclass': feature.source === subclass },
+													{ '-race': feature.source === characteristics?.race },
+												]}
+											>
+												{feature.source}
+											</p>
+										)}
 										<p class="cs-feature-name">{feature.name}</p>
 									</div>
 									<p class="cs-feature-text">{feature.text}</p>
@@ -432,11 +442,11 @@ const hasNotes = Astro.slots.has('notes')
 				)
 			}
 
-			<!-- Equipment & Inventory -->
+			<!-- Inventory -->
 			{
 				(inventory || coins) && (
 					<section class="cs-inventory">
-						<h2 class="cs-section-title">Equipment & Inventory</h2>
+						<h2 class="cs-section-title">Inventory</h2>
 						{inventory?.map((group) => (
 							<div class="cs-inv-group">
 								<h3 class="cs-inv-label">{group.group}</h3>
@@ -454,20 +464,20 @@ const hasNotes = Astro.slots.has('notes')
 							<div class="cs-coins">
 								{coins.gold !== undefined && (
 									<div class="cs-coin -gold">
-										<p class="cs-coin-label">Gold</p>
 										<p class="cs-coin-value">{coins.gold}</p>
+										<p class="cs-coin-label">Gold</p>
 									</div>
 								)}
 								{coins.silver !== undefined && (
 									<div class="cs-coin -silver">
-										<p class="cs-coin-label">Silver</p>
 										<p class="cs-coin-value">{coins.silver}</p>
+										<p class="cs-coin-label">Silver</p>
 									</div>
 								)}
 								{coins.copper !== undefined && (
 									<div class="cs-coin -copper">
-										<p class="cs-coin-label">Copper</p>
 										<p class="cs-coin-value">{coins.copper}</p>
+										<p class="cs-coin-label">Copper</p>
 									</div>
 								)}
 							</div>
