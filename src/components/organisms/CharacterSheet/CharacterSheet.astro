@@ -94,6 +94,13 @@ function formatModifier(value: number) {
 	return value >= 0 ? `+${value}` : `${value}`
 }
 
+function slugify(value: string) {
+	return value
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-|-$/g, '')
+}
+
 function formatSavingThrow(save: { base_value: number; proficiency?: boolean }) {
 	const total = save.base_value + (save.proficiency ? proficiency_bonus : 0)
 	return formatModifier(total)
@@ -139,13 +146,54 @@ const classLine = [subclass, charClass].filter(Boolean).join(' ')
 const characterSubtitle = [`Level ${level}`, characteristics?.race, classLine].filter(Boolean).join(' ')
 
 const hasNotes = Astro.slots.has('notes')
+
+const storageKey = `cs-state:${slugify(name)}`
 ---
 
-<div class="character-sheet">
+<div class="character-sheet" data-cs-key={storageKey}>
 	<!-- Header -->
 	<div class="cs-header -highlight">
-		<h1 class="cs-name">{name}</h1>
-		<p class="cs-subtitle">{characterSubtitle}</p>
+		<div class="cs-header-id">
+			<h1 class="cs-name">{name}</h1>
+			<p class="cs-subtitle">{characterSubtitle}</p>
+		</div>
+
+		<div class="cs-hp" data-cs-hp-max={hit_points}>
+			<span class="cs-hp-title">Hit Points</span>
+			<p class="cs-hp-values">
+				<span class="cs-hp-cur" data-cs-hp="cur">{hit_points}</span>
+				<span class="cs-hp-max">/ <span data-cs-hp="max">{hit_points}</span></span>
+				<span class="cs-hp-temp" data-cs-hp="temp" hidden>+<span data-cs-hp="temp-val">0</span> temp</span>
+			</p>
+			<input
+				type="range"
+				class="cs-hp-range"
+				data-cs-hp="range"
+				data-state="healthy"
+				min="0"
+				max={hit_points}
+				value={hit_points}
+				style="--hp-pct: 100%;"
+				aria-label="Current hit points"
+			/>
+			<div class="cs-hp-controls">
+				<div class="cs-hp-group">
+					<button type="button" class="cs-hp-btn -dmg" data-cs-hp-btn="damage" aria-label="Take 1 damage">−</button>
+					<span class="cs-hp-group-label">HP</span>
+					<button type="button" class="cs-hp-btn -heal" data-cs-hp-btn="heal" aria-label="Heal 1 hit point">+</button>
+				</div>
+				<div class="cs-hp-group">
+					<button type="button" class="cs-hp-btn -temp" data-cs-hp-btn="temp-down" aria-label="Decrease temporary hit points">−</button>
+					<span class="cs-hp-group-label">Temp</span>
+					<button type="button" class="cs-hp-btn -temp" data-cs-hp-btn="temp-up" aria-label="Increase temporary hit points">+</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="cs-rests">
+			<button type="button" class="cs-rest" data-cs-rest="short rest">Short Rest</button>
+			<button type="button" class="cs-rest" data-cs-rest="long rest">Long Rest</button>
+		</div>
 	</div>
 
 	<!-- Core Stats Bar -->
@@ -153,10 +201,6 @@ const hasNotes = Astro.slots.has('notes')
 		<div class="cs-stat">
 			<span class="cs-stat-value">{armor_class}</span>
 			<span class="cs-stat-label">Armor Class</span>
-		</div>
-		<div class="cs-stat">
-			<span class="cs-stat-value">{hit_points}</span>
-			<span class="cs-stat-label">Hit Points</span>
 		</div>
 		<div class="cs-stat">
 			<span class="cs-stat-value">{speed}</span>
@@ -416,19 +460,43 @@ const hasNotes = Astro.slots.has('notes')
 				<div class="cs-deathsave-wrapper">
 					<div class="cs-deathsave-group">
 						<p class="cs-deathsave-label">
-							Successes <span class="sr-only">0 of 3 marked</span>
+							Successes <span class="sr-only" data-cs-count="deathS" data-cs-count-label="marked">0 of 3 marked</span>
 						</p>
-						<div class="cs-pips" aria-hidden="true">
-							{Array.from({ length: 3 }).map(() => <span class="cs-pip -success" />)}
+						<div class="cs-pips">
+							{
+								Array.from({ length: 3 }).map((_, i) => (
+									<button
+										type="button"
+										class="cs-pip -success"
+										data-cs-pip
+										data-cs-group="deathS"
+										data-cs-index={i}
+										aria-pressed="false"
+										aria-label={`Death save success ${i + 1}`}
+									/>
+								))
+							}
 						</div>
 					</div>
 
 					<div class="cs-deathsave-group">
 						<p class="cs-deathsave-label">
-							Failures <span class="sr-only">0 of 3 marked</span>
+							Failures <span class="sr-only" data-cs-count="deathF" data-cs-count-label="marked">0 of 3 marked</span>
 						</p>
-						<div class="cs-pips -failure" aria-hidden="true">
-							{Array.from({ length: 3 }).map(() => <span class="cs-pip" />)}
+						<div class="cs-pips -failure">
+							{
+								Array.from({ length: 3 }).map((_, i) => (
+									<button
+										type="button"
+										class="cs-pip"
+										data-cs-pip
+										data-cs-group="deathF"
+										data-cs-index={i}
+										aria-pressed="false"
+										aria-label={`Death save failure ${i + 1}`}
+									/>
+								))
+							}
 						</div>
 					</div>
 				</div>
@@ -443,22 +511,31 @@ const hasNotes = Astro.slots.has('notes')
 							<p class="cs-resource-head">Resource</p>
 							<p class="cs-resource-head -right">Uses</p>
 							{resources.map((resource) => {
-								const filled = resource.current ?? resource.max
+								const resGroup = `res-${slugify(resource.name)}`
 								return (
 									<Fragment>
 										<div class="cs-resource-name">
 											<p class="cs-resource-title">
 												{resource.name}
-												<span class="sr-only">
-													- {filled} of {resource.max} available
+												<span class="sr-only" data-cs-count={resGroup} data-cs-count-label="used">
+													- 0 of {resource.max} used
 												</span>
 											</p>
 											{resource.reset && <p class="cs-resource-reset">{resource.reset}</p>}
 										</div>
 
-										<div class="cs-pips -resource" aria-hidden="true">
+										<div class="cs-pips -resource">
 											{Array.from({ length: resource.max }).map((_, i) => (
-												<span class:list={['cs-pip', { '-filled': i < filled }]} />
+												<button
+													type="button"
+													class="cs-pip"
+													data-cs-pip
+													data-cs-group={resGroup}
+													data-cs-index={i}
+													data-cs-reset={resource.reset}
+													aria-pressed="false"
+													aria-label={`${resource.name} use ${i + 1}`}
+												/>
 											))}
 										</div>
 									</Fragment>
@@ -613,3 +690,175 @@ const hasNotes = Astro.slots.has('notes')
 		)
 	}
 </div>
+
+<script>
+	function initSheet(root) {
+		const key = root.dataset.csKey
+		const hpEl = root.querySelector('.cs-hp')
+		const max = hpEl ? Number(hpEl.dataset.csHpMax) || 0 : 0
+
+		// Discover pip groups (and their sizes) from the server-rendered DOM.
+		const pips = Array.from(root.querySelectorAll('[data-cs-pip]'))
+		const groupMax = {}
+		const groupReset = {}
+		for (const pip of pips) {
+			const g = pip.dataset.csGroup
+			groupMax[g] = (groupMax[g] || 0) + 1
+			if (pip.dataset.csReset) groupReset[g] = pip.dataset.csReset
+		}
+		const isDeath = (g) => g === 'deathS' || g === 'deathF'
+
+		// Default state mirrors the SSR baseline: full HP, whatever pips ship filled.
+		const state = { hp: { cur: max, temp: 0 }, groups: {} }
+		for (const g in groupMax) {
+			state.groups[g] = pips.filter((p) => p.dataset.csGroup === g && p.classList.contains('-filled')).length
+		}
+
+		// Overlay any persisted state, clamped to the current maxima.
+		try {
+			const raw = key && localStorage.getItem(key)
+			if (raw) {
+				const saved = JSON.parse(raw)
+				if (saved && saved.hp) {
+					if (typeof saved.hp.cur === 'number') state.hp.cur = Math.max(0, Math.min(max, saved.hp.cur))
+					if (typeof saved.hp.temp === 'number') state.hp.temp = Math.max(0, saved.hp.temp)
+				}
+				if (saved && saved.groups) {
+					for (const g in groupMax) {
+						const v = saved.groups[g]
+						if (typeof v === 'number') state.groups[g] = Math.max(0, Math.min(groupMax[g], v))
+					}
+				}
+			}
+		} catch (e) {}
+
+		function persist() {
+			if (!key) return
+			try {
+				localStorage.setItem(key, JSON.stringify(state))
+			} catch (e) {}
+		}
+
+		function render() {
+			if (hpEl) {
+				const { cur, temp } = state.hp
+				const curEl = hpEl.querySelector('[data-cs-hp="cur"]')
+				if (curEl) curEl.textContent = String(cur)
+				const tempWrap = hpEl.querySelector('[data-cs-hp="temp"]')
+				const tempVal = hpEl.querySelector('[data-cs-hp="temp-val"]')
+				if (tempVal) tempVal.textContent = String(temp)
+				if (tempWrap) tempWrap.hidden = temp <= 0
+				const range = hpEl.querySelector('[data-cs-hp="range"]')
+				if (range) {
+					const pct = max > 0 ? Math.max(0, Math.min(100, Math.round((cur / max) * 100))) : 0
+					range.value = String(cur)
+					range.style.setProperty('--hp-pct', pct + '%')
+					range.dataset.state = pct > 50 ? 'healthy' : pct > 25 ? 'wounded' : 'critical'
+					range.setAttribute('aria-valuetext', `${cur} of ${max} hit points`)
+				}
+			}
+
+			for (const pip of pips) {
+				const filled = Number(pip.dataset.csIndex) < state.groups[pip.dataset.csGroup]
+				pip.classList.toggle('-filled', filled)
+				pip.setAttribute('aria-pressed', String(filled))
+			}
+
+			root.querySelectorAll('[data-cs-count]').forEach((el) => {
+				const g = el.dataset.csCount
+				const n = state.groups[g] || 0
+				const m = groupMax[g] || 0
+				el.textContent = el.dataset.csCountLabel === 'used' ? `- ${n} of ${m} used` : `${n} of ${m} marked`
+			})
+		}
+
+		function setPip(g, i) {
+			const cur = state.groups[g] || 0
+			state.groups[g] = i + 1 === cur ? i : i + 1
+		}
+
+		function adjustHp(delta) {
+			let { cur, temp } = state.hp
+			if (delta < 0) {
+				let d = -delta
+				const absorbed = Math.min(temp, d)
+				temp -= absorbed
+				d -= absorbed
+				cur = Math.max(0, cur - d)
+			} else {
+				cur = Math.min(max, cur + delta)
+			}
+			state.hp = { cur, temp }
+		}
+
+		// Resource pips track spent uses, so a rest clears them back to empty.
+		function clearResources(resetType) {
+			for (const g in groupMax) {
+				if (isDeath(g)) continue
+				if (resetType === null || groupReset[g] === resetType) state.groups[g] = 0
+			}
+		}
+
+		function rest(kind) {
+			if (kind === 'short rest') {
+				clearResources('short rest')
+			} else {
+				clearResources(null)
+				state.hp = { cur: max, temp: 0 }
+				state.groups.deathS = 0
+				state.groups.deathF = 0
+			}
+		}
+
+		root.addEventListener('click', (event) => {
+			const target = event.target
+			const pip = target.closest('[data-cs-pip]')
+			if (pip && root.contains(pip)) {
+				setPip(pip.dataset.csGroup, Number(pip.dataset.csIndex))
+				render()
+				persist()
+				return
+			}
+			const hpBtn = target.closest('[data-cs-hp-btn]')
+			if (hpBtn) {
+				const action = hpBtn.dataset.csHpBtn
+				if (action === 'damage') adjustHp(-1)
+				else if (action === 'heal') adjustHp(1)
+				else if (action === 'temp-up') state.hp.temp += 1
+				else if (action === 'temp-down') state.hp.temp = Math.max(0, state.hp.temp - 1)
+				render()
+				persist()
+				return
+			}
+			const restBtn = target.closest('[data-cs-rest]')
+			if (restBtn) {
+				rest(restBtn.dataset.csRest)
+				render()
+				persist()
+			}
+		})
+
+		// Dragging the range sets current HP directly (temp is unaffected).
+		const range = hpEl && hpEl.querySelector('[data-cs-hp="range"]')
+		if (range) {
+			range.addEventListener('input', () => {
+				state.hp.cur = Math.max(0, Math.min(max, parseInt(range.value, 10) || 0))
+				render()
+				persist()
+			})
+		}
+
+		render()
+	}
+
+	function boot() {
+		document.querySelectorAll('.character-sheet').forEach((el) => {
+			if (el.dataset.csReady) return
+			el.dataset.csReady = 'true'
+			initSheet(el)
+		})
+	}
+
+	boot()
+	document.addEventListener('astro:page-load', boot)
+</script>
