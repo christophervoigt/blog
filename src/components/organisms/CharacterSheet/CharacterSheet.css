@@ -1,13 +1,9 @@
-/* Character Sheet
-   Restyled to match the "Tion Iron Mane" design (card-based, gradient header,
-   gradient proficiency rows), mapped onto the site's theme tokens so it works
-   in both light and dark modes. */
 .character-sheet {
-	--cs-radius: 0.5rem;
-	--cs-surface: light-dark(var(--gray-100), var(--gray-800));
-	--cs-surface-inset: light-dark(var(--gray-50), var(--gray-900));
-	--cs-muted-color: light-dark(var(--gray-900), var(--gray-200));
-	--cs-accent-color: light-dark(var(--bronze-700), var(--turquoise-400));
+	--radius: 0.5rem;
+	--surface: light-dark(var(--gray-100), var(--gray-800));
+	--surface-inset: light-dark(var(--gray-50), var(--gray-900));
+	--muted-color: light-dark(var(--gray-900), var(--gray-200));
+	--accent-color: light-dark(var(--bronze-700), var(--turquoise-400));
 
 	max-inline-size: var(--grid-max-width);
 	padding-inline: var(--grid-gutter);
@@ -18,27 +14,22 @@
 	gap: var(--space-s);
 }
 
-/* Header — gradient banner via the site's .-highlight utility */
-.cs-header {
-	border-radius: var(--cs-radius);
+/* Header */
+.character-sheet .header {
+	border-radius: var(--radius);
 
 	padding-block: var(--space-l-xl);
 	padding-inline: var(--space-xs-l);
 	margin-inline: calc(-1 * var(--space-xs-l));
 
-	/* Mobile: stack name, HP box, then the rest buttons. */
 	display: grid;
 	gap: var(--space-s);
 	grid-template-areas:
 		'id'
 		'hp'
 		'rests';
-}
 
-/* From ~40rem: name (top-left) and rest buttons (bottom-left) share the left
-   column; the HP box spans both rows on the right and sets the header height. */
-@media (min-width: 40rem) {
-	.cs-header {
+	@media (min-width: 40rem) {
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: auto 1fr;
 		grid-template-areas:
@@ -47,19 +38,19 @@
 	}
 }
 
-.cs-header-id {
+.character-sheet .header-id {
 	grid-area: id;
 	min-inline-size: 0;
 }
 
-.cs-name {
+.character-sheet .name {
 	font-size: var(--step-4);
 	font-weight: 700;
 	line-height: 1.02;
 	margin-block-end: 0.1em;
 }
 
-.cs-subtitle {
+.character-sheet .subtitle {
 	font-size: var(--step-0);
 	line-height: 1.3;
 	opacity: 0.9;
@@ -67,7 +58,7 @@
 }
 
 /* Rest buttons */
-.cs-rests {
+.character-sheet .rests {
 	grid-area: rests;
 	align-self: end;
 	display: flex;
@@ -75,43 +66,48 @@
 	gap: var(--space-2xs);
 }
 
-.cs-rest {
+.character-sheet .rest {
 	font-size: var(--step--2);
 
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	color: var(--headline-color);
-	background: var(--cs-surface-inset);
+	background: var(--surface-inset);
 	border: 0;
 	padding: 0.55em 1.1em;
 	cursor: pointer;
 	transition: filter 0.12s;
+
+	&:hover {
+		filter: brightness(1.08);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--headline-color);
+		outline-offset: 2px;
+	}
 }
 
-.cs-rest:hover {
-	filter: brightness(1.08);
-}
-
-/* HP tracker card */
-.cs-hp {
+/* HP */
+.character-sheet .hp {
 	grid-area: hp;
 	min-inline-size: 0;
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-2xs);
 	padding: var(--space-xs);
-	background: var(--cs-surface-inset);
-	border-radius: var(--cs-radius);
+	background: var(--surface-inset);
+	border-radius: var(--radius);
 }
 
-.cs-hp-title {
+.character-sheet .hp-label {
 	font-size: var(--step--1);
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	font-weight: 700;
 }
 
-.cs-hp-values {
+.character-sheet .hp-values {
 	display: flex;
 	align-items: baseline;
 	flex-wrap: wrap;
@@ -119,19 +115,19 @@
 	margin: 0;
 }
 
-.cs-hp-cur {
+.character-sheet .hp-current {
 	font-size: var(--step-3);
 	font-weight: 700;
 	line-height: 1;
 	color: var(--headline-color);
 }
 
-.cs-hp-max {
+.character-sheet .hp-maximum {
 	font-size: var(--step-0);
-	color: var(--cs-muted-color);
+	color: var(--muted-color);
 }
 
-.cs-hp-temp {
+.character-sheet .hp-temporary {
 	margin-inline-start: 0.3em;
 	font-size: var(--step--2);
 	text-transform: uppercase;
@@ -141,10 +137,9 @@
 	padding: 0.3em 0.6em;
 }
 
-/* HP slider — drag to set current HP directly. The track is filled up to
-   --hp-pct (set by JS) in the health-state colour; the rest shows the track. */
-.cs-hp-range {
-	--track: var(--cs-surface);
+/* HP slider */
+.character-sheet .hp-range {
+	--track: var(--surface);
 	--fill: light-dark(var(--turquoise-700), var(--turquoise-400));
 
 	appearance: none;
@@ -154,67 +149,67 @@
 	margin: 0;
 	background: transparent;
 	cursor: pointer;
+
+	&[data-state='wounded'] {
+		--fill: light-dark(var(--yellow-700), var(--yellow-400));
+	}
+
+	&[data-state='critical'] {
+		--fill: light-dark(var(--coral-700), var(--coral-400));
+	}
+
+	&::-webkit-slider-runnable-track {
+		block-size: 0.55rem;
+		border-radius: 999px;
+		background: linear-gradient(to right, var(--fill) 0 var(--hp-pct, 100%), var(--track) var(--hp-pct, 100%) 100%);
+	}
+
+	&::-moz-range-track {
+		block-size: 0.55rem;
+		border-radius: 999px;
+		background: linear-gradient(to right, var(--fill) 0 var(--hp-pct, 100%), var(--track) var(--hp-pct, 100%) 100%);
+	}
+
+	&::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		inline-size: 1.1rem;
+		block-size: 1.1rem;
+		margin-top: calc((0.55rem - 1.1rem) / 2);
+		border-radius: 50%;
+		background: var(--headline-color);
+		border: 2px solid var(--surface-inset);
+		cursor: grab;
+	}
+
+	&::-moz-range-thumb {
+		inline-size: 1.1rem;
+		block-size: 1.1rem;
+		border: 2px solid var(--surface-inset);
+		border-radius: 50%;
+		background: var(--headline-color);
+		cursor: grab;
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--headline-color);
+		outline-offset: 2px;
+	}
 }
 
-.cs-hp-range[data-state='wounded'] {
-	--fill: light-dark(var(--yellow-700), var(--yellow-400));
-}
-
-.cs-hp-range[data-state='critical'] {
-	--fill: light-dark(var(--coral-700), var(--coral-400));
-}
-
-.cs-hp-range::-webkit-slider-runnable-track {
-	block-size: 0.55rem;
-	border-radius: 999px;
-	background: linear-gradient(to right, var(--fill) 0 var(--hp-pct, 100%), var(--track) var(--hp-pct, 100%) 100%);
-}
-
-.cs-hp-range::-moz-range-track {
-	block-size: 0.55rem;
-	border-radius: 999px;
-	background: linear-gradient(to right, var(--fill) 0 var(--hp-pct, 100%), var(--track) var(--hp-pct, 100%) 100%);
-}
-
-.cs-hp-range::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	inline-size: 1.1rem;
-	block-size: 1.1rem;
-	margin-top: calc((0.55rem - 1.1rem) / 2);
-	border-radius: 50%;
-	background: var(--headline-color);
-	border: 2px solid var(--cs-surface-inset);
-	cursor: grab;
-}
-
-.cs-hp-range::-moz-range-thumb {
-	inline-size: 1.1rem;
-	block-size: 1.1rem;
-	border: 2px solid var(--cs-surface-inset);
-	border-radius: 50%;
-	background: var(--headline-color);
-	cursor: grab;
-}
-
-.cs-hp-range:focus-visible {
-	outline: 2px solid var(--headline-color);
-	outline-offset: 2px;
-}
-
-.cs-hp-controls {
+.character-sheet .hp-controls {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--space-s);
 }
 
-.cs-hp-group {
+.character-sheet .hp-group {
 	display: flex;
 	align-items: center;
 	gap: var(--space-2xs);
 }
 
-.cs-hp-btn {
+.character-sheet .hp-button {
 	inline-size: 2rem;
 	block-size: 2rem;
 	display: inline-flex;
@@ -223,121 +218,123 @@
 	font-size: var(--step-0);
 	line-height: 1;
 	color: var(--headline-color);
-	background: var(--cs-surface);
+	background: var(--surface);
 	border: 0;
 	cursor: pointer;
 	transition: filter 0.12s;
+
+	&:hover {
+		filter: brightness(1.1);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--headline-color);
+		outline-offset: 2px;
+	}
+
+	&.-damage {
+		color: light-dark(var(--coral-700), var(--coral-400));
+	}
+
+	&.-heal {
+		color: light-dark(var(--turquoise-700), var(--turquoise-400));
+	}
 }
 
-.cs-hp-btn:hover {
-	filter: brightness(1.1);
-}
-
-.cs-hp-btn.-dmg {
-	color: light-dark(var(--coral-700), var(--coral-400));
-}
-
-.cs-hp-btn.-heal {
-	color: light-dark(var(--turquoise-700), var(--turquoise-400));
-}
-
-:is(.cs-rest, .cs-hp-btn):focus-visible {
-	outline: 2px solid var(--headline-color);
-	outline-offset: 2px;
-}
-
-/* Core Stats Bar */
-.cs-core-stats {
+/* Core stats */
+.character-sheet .stats {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--space-s);
 }
 
-.cs-stat {
-	flex: 1 1 6.5rem;
+.character-sheet .stat,
+.character-sheet .ability,
+.character-sheet .sense,
+.character-sheet .coin {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	gap: var(--space-3xs);
 	padding: var(--space-2xs);
-	background: var(--cs-surface);
-	border-radius: var(--cs-radius);
+	background: var(--surface-inset);
 	text-align: center;
 }
 
-.cs-stat-value {
+.character-sheet .stat {
+	flex: 1 1 6.5rem;
+	background: var(--surface);
+	border-radius: var(--radius);
+}
+
+.character-sheet .stat-value {
 	font-size: var(--step-2);
 	font-weight: 700;
 	line-height: 1;
 	color: var(--headline-color);
 }
 
-/* Uppercase micro-labels — the small muted caption used under stats, coins,
-   table headers and trait/training/inventory groups throughout the sheet. */
-.cs-stat-label,
-.cs-hp-group-label,
-.cs-coin-label,
-.cs-attacks-head,
-.cs-resource-head,
-.cs-deathsave-label,
-.cs-trait-label,
-.cs-training-label,
-.cs-defenses-label,
-.cs-inv-label,
-.cs-senses li :last-child {
+.character-sheet .stat-label,
+.character-sheet .hp-group-label,
+.character-sheet .coin-label,
+.character-sheet .attacks-column-head,
+.character-sheet .resource-column-head,
+.character-sheet .death-save-label,
+.character-sheet .trait-label,
+.character-sheet .attribute-label,
+.character-sheet .training-label,
+.character-sheet .defenses-label,
+.character-sheet .inventory-label,
+.character-sheet .sense-label {
 	font-size: var(--step--2);
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
-	color: var(--cs-muted-color);
+	color: var(--muted-color);
 }
 
-/* Labels that stack above their content get a little breathing room. */
-.cs-deathsave-label,
-.cs-trait-label,
-.cs-training-label,
-.cs-defenses-label,
-.cs-inv-label {
+.character-sheet .death-save-label,
+.character-sheet .trait-label,
+.character-sheet .attribute-label,
+.character-sheet .training-label,
+.character-sheet .defenses-label,
+.character-sheet .inventory-label {
 	margin-block-end: var(--space-3xs);
 }
 
-/* The <h3> group labels also reset the heading's bold weight. */
-.cs-training-label,
-.cs-defenses-label,
-.cs-inv-label {
+.character-sheet .training-label,
+.character-sheet .defenses-label,
+.character-sheet .inventory-label {
 	font-weight: 400;
 }
 
-/* Three columns of unequal width (narrow / wide / medium), like the
-   design. Stacks to a single column on narrower viewports. */
-.cs-body {
+/* Body */
+.character-sheet .body {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: var(--space-s);
 	align-items: start;
-}
 
-@media (min-width: 56rem) {
-	.cs-body {
+	@media (min-width: 56rem) {
 		grid-template-columns: 3fr 5fr 5fr;
 	}
 }
 
-.cs-col {
+.character-sheet .column {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-s);
 	min-inline-size: 0;
 }
 
-.cs-col > * {
+.character-sheet .column > * {
 	padding: var(--space-xs);
-	background: var(--cs-surface);
-	border-radius: var(--cs-radius);
+	background: var(--surface);
+	border-radius: var(--radius);
 }
 
 /* Section headings */
-.cs-section-title {
+.character-sheet .section-title {
 	display: flex;
 	align-items: center;
 	gap: var(--space-2xs);
@@ -349,37 +346,31 @@
 }
 
 /* Abilities */
-.cs-abilities {
+.character-sheet .abilities {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: var(--space-2xs);
 }
 
-.cs-ability {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: var(--space-3xs);
+.character-sheet .ability {
 	padding: var(--space-xs) var(--space-2xs);
-	background: var(--cs-surface-inset);
-	text-align: center;
 }
 
-.cs-ability-mod {
+.character-sheet .ability-modifier {
 	font-size: var(--step-1);
 	font-weight: 700;
 	line-height: 1;
 	color: var(--headline-color);
 }
 
-.cs-ability-name {
+.character-sheet .ability-name {
 	font-size: var(--step--2);
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 }
 
-/* Saving Throws & Skills */
-.cs-list {
+/* Saving throws & skills */
+.character-sheet .list {
 	list-style: none;
 	padding: 0;
 	margin: 0;
@@ -387,7 +378,7 @@
 	flex-direction: column;
 }
 
-.cs-list li {
+.character-sheet .list-row {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -398,30 +389,27 @@
 	clip-path: inset(0 0 0 0);
 }
 
-.cs-list-label {
+.character-sheet .list-label {
 	display: flex;
 	align-items: baseline;
 	gap: 0.4em;
 	text-transform: capitalize;
 }
 
-/* Proficient / disadvantaged rows reuse the site's gradient highlight.
-   Forcing color-scheme pins each to a fixed gradient regardless of theme:
-   teal/turquoise for proficient, warm bronze/coral for disadvantage. */
-.cs-proficient.-highlight {
+.character-sheet .proficient.-highlight {
 	color-scheme: dark;
 }
 
-.cs-disadvantage.-highlight {
+.character-sheet .disadvantage.-highlight {
 	color-scheme: light;
 }
 
-:is(.cs-proficient, .cs-disadvantage).-highlight .cs-list-value {
+.character-sheet :is(.proficient, .disadvantage).-highlight .list-value {
 	color: inherit;
 }
 
 /* Senses */
-.cs-senses {
+.character-sheet .senses {
 	list-style: none;
 	padding: 0;
 	margin: 0;
@@ -430,32 +418,24 @@
 	gap: var(--space-2xs);
 }
 
-.cs-senses li {
-	flex: 1 1 6rem;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: var(--space-3xs);
-	padding: var(--space-2xs);
-	background: var(--cs-surface-inset);
-	text-align: center;
+.character-sheet .sense {
+	flex: 1;
 }
 
-.cs-senses li :first-child {
+.character-sheet .sense-value {
 	font-size: var(--step-1);
 	font-weight: 700;
 	line-height: 1;
 	color: var(--headline-color);
 }
 
-/* Training / Proficiencies */
-.cs-training-group + .cs-training-group,
-.cs-defenses-group + .cs-defenses-group {
+/* Tags */
+.character-sheet .training-group + .training-group,
+.character-sheet .defenses-group + .defenses-group {
 	margin-block-start: var(--space-xs);
 }
 
-.cs-tags {
+.character-sheet .tags {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--space-3xs);
@@ -464,207 +444,203 @@
 	margin: 0;
 }
 
-/* Inset "pill" — a small padded chip on the inset surface, shared by tag
-   pills, attack values, physical-trait values and equipment tags. */
-.cs-tags li,
-.cs-physical-item-value,
-.cs-attack-value,
-.cs-tag {
+/* Chips */
+.character-sheet .chip {
 	padding: 0.3em 0.6em;
-	background: var(--cs-surface-inset);
-}
-
-.cs-tags li {
+	background: var(--surface-inset);
 	font-size: var(--step--2);
+
+	&.-badge {
+		flex: 0 0 auto;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--accent-color);
+	}
+
+	&.-badge.-reaction,
+	&.-badge.-subclass {
+		color: light-dark(var(--sky-700), var(--sky-400));
+	}
+
+	&.-badge.-race {
+		color: light-dark(var(--bronze-700), var(--bronze-400));
+	}
+
+	&.-badge.-solid {
+		color: light-dark(var(--white), var(--gray-1000));
+		background: var(--accent-color);
+	}
+
+	&.-stat {
+		justify-self: center;
+		font-size: var(--step--1);
+		white-space: nowrap;
+	}
+
+	&.-stat.-to-hit {
+		color: var(--accent-color);
+	}
 }
 
 /* Characteristics */
-.cs-physical {
+.character-sheet .attributes {
 	display: grid;
 	grid-template-columns: repeat(3, auto);
 	gap: var(--space-2xs);
 	margin-block-end: var(--space-s);
 }
 
-.cs-physical-item {
+.character-sheet .attribute {
 	display: flex;
 	flex-direction: column;
 	gap: 0.1em;
 	align-items: flex-start;
 }
 
-.cs-physical-item-value {
-	font-size: var(--step--2);
-}
-
-.cs-traits-grid {
+.character-sheet .traits-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
 	gap: var(--space-2xs);
 }
 
-.cs-trait {
+.character-sheet .trait {
 	padding: var(--space-2xs);
-	background: var(--cs-surface-inset);
+	background: var(--surface-inset);
 }
 
-/* Persona traits (personality, ideals, bonds, flaws) get an accent label */
-.cs-traits-grid .cs-trait-label {
-	color: var(--cs-accent-color);
+.character-sheet .traits-grid .trait-label {
+	color: var(--accent-color);
 }
 
-.cs-trait-value {
+.character-sheet .trait-value {
 	font-size: var(--step--2);
 	line-height: 1.5;
 	margin: 0;
 }
 
-/* Shared note */
-.cs-note {
+.character-sheet .note {
 	font-size: var(--step--2);
 	line-height: 1.5;
-	color: var(--cs-muted-color);
+	color: var(--muted-color);
 	margin-block-end: var(--space-xs);
 }
 
-/* Actions / Attacks */
-.cs-attacks {
+/* Actions */
+.character-sheet .attacks {
 	display: grid;
 	grid-template-columns: 1fr auto auto;
 	align-items: center;
 	gap: var(--space-2xs);
 }
 
-.cs-attacks-head.-center {
+.character-sheet .attacks-column-head.-center {
 	text-align: center;
 }
 
-.cs-attack-name {
+.character-sheet .attack {
 	display: flex;
 	flex-direction: column;
 }
 
-.cs-attack-title {
+.character-sheet .attack-name {
 	font-weight: 700;
 	font-size: var(--step--1);
 }
 
-.cs-attack-meta {
+.character-sheet .attack-meta {
 	font-size: var(--step--2);
-	color: var(--cs-muted-color);
+	color: var(--muted-color);
 }
 
-.cs-attack-value {
-	justify-self: center;
-	font-size: var(--step--1);
-	white-space: nowrap;
-}
-
-.cs-attack-value.-tohit {
-	color: var(--cs-accent-color);
-}
-
-/* Source / type tag pill (shared by features and bonus actions) */
-.cs-tag {
-	flex: 0 0 auto;
-	font-size: var(--step--2);
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
-	color: var(--cs-accent-color);
-}
-
-.cs-tag.-reaction,
-.cs-tag.-subclass {
-	color: light-dark(var(--sky-700), var(--sky-400));
-}
-
-.cs-tag.-race {
-	color: light-dark(var(--bronze-700), var(--bronze-400));
-}
-
-/* Equipment & Inventory */
-.cs-inv-group + .cs-inv-group {
+/* Inventory */
+.character-sheet .inventory-group + .inventory-group {
 	margin-block-start: var(--space-s);
 }
 
-.cs-inv-list {
+.character-sheet .inventory-list {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
 
-.cs-inv-item {
+.character-sheet .inventory-entry {
 	display: flex;
 	gap: var(--space-2xs);
 	align-items: baseline;
 	font-size: var(--step--2);
 }
 
-.cs-inv-item + .cs-inv-item {
+.character-sheet .inventory-entry + .inventory-entry {
 	margin-block-start: var(--space-3xs);
 }
 
-.cs-inv-name {
+.character-sheet .inventory-name {
 	flex: 1;
 }
 
-.cs-inv-note {
+.character-sheet .inventory-note {
 	flex: 0 0 auto;
 }
 
-.cs-coins {
+/* Coins */
+.character-sheet .coins {
 	display: flex;
 	gap: var(--space-2xs);
 	margin-block-start: var(--space-s);
 }
 
-.cs-coin {
+.character-sheet .coin {
 	flex: 1;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: var(--space-3xs);
-	padding: var(--space-2xs);
-	background: var(--cs-surface-inset);
-	text-align: center;
+
+	&.-gold .coin-value {
+		color: light-dark(var(--yellow-700), var(--yellow-400));
+	}
+
+	&.-silver .coin-value {
+		color: var(--muted-color);
+	}
+
+	&.-copper .coin-value {
+		color: light-dark(var(--bronze-700), var(--bronze-400));
+	}
 }
 
-.cs-coin-value {
+.character-sheet .coin-value {
 	font-size: var(--step-1);
 	font-weight: 700;
 	line-height: 1;
 }
 
-.cs-coin.-gold .cs-coin-value {
-	color: light-dark(var(--yellow-700), var(--yellow-400));
-}
-
-.cs-coin.-silver .cs-coin-value {
-	color: var(--cs-muted-color);
-}
-
-.cs-coin.-copper .cs-coin-value {
-	color: light-dark(var(--bronze-700), var(--bronze-400));
-}
-
-/* Pip trackers (resources, death saves) */
-.cs-pips {
+/* Pips */
+.character-sheet .pips {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--space-3xs);
 }
 
-.cs-pip {
+.character-sheet .pip {
 	inline-size: 0.95rem;
 	block-size: 0.95rem;
 	border-radius: 50%;
-	border: 2px solid var(--cs-muted-color);
+	border: 2px solid var(--muted-color);
 	background: transparent;
+
+	&.-filled {
+		background: var(--accent-color);
+		border-color: var(--accent-color);
+	}
+
+	&.-success {
+		border-color: light-dark(var(--turquoise-700), var(--turquoise-400));
+	}
+
+	&.-success.-filled {
+		background: light-dark(var(--turquoise-700), var(--turquoise-400));
+		border-color: light-dark(var(--turquoise-700), var(--turquoise-400));
+	}
 }
 
-/* Interactive pips (death saves, resources) are <button>s */
-button.cs-pip {
+.character-sheet button.pip {
 	padding: 0;
 	appearance: none;
 	cursor: pointer;
@@ -672,95 +648,76 @@ button.cs-pip {
 		transform 0.1s,
 		background 0.12s,
 		border-color 0.12s;
-}
 
-button.cs-pip:hover {
-	transform: scale(1.15);
-}
+	&:hover {
+		transform: scale(1.15);
+	}
 
-button.cs-pip:focus-visible {
-	outline: 2px solid var(--cs-accent-color);
-	outline-offset: 2px;
-}
-
-.cs-pip.-filled {
-	background: var(--cs-accent-color);
-	border-color: var(--cs-accent-color);
+	&:focus-visible {
+		outline: 2px solid var(--accent-color);
+		outline-offset: 2px;
+	}
 }
 
 /* Resources */
-.cs-resource-grid {
+.character-sheet .resource-grid {
 	display: grid;
 	grid-template-columns: 1fr auto;
 	align-items: center;
 	gap: var(--space-2xs);
 }
 
-.cs-resource-head.-right {
+.character-sheet .resource-column-head.-right {
 	text-align: right;
 }
 
-.cs-resource-name {
+.character-sheet .resource {
 	display: flex;
 	flex-direction: column;
 }
 
-.cs-resource-title {
+.character-sheet .resource-name {
 	font-weight: 700;
 	font-size: var(--step--1);
 }
 
-.cs-pips.-resource {
-	/* Right-aligned and reversed so filled uses anchor to the right edge,
-	   matching the death-save failures. */
+.character-sheet .pips.-resource {
 	flex-direction: row-reverse;
 	justify-content: flex-start;
 	align-self: flex-start;
 	padding-block: 0.2em;
 }
 
-.cs-resource-reset,
-.cs-inv-note {
+.character-sheet .resource-reset,
+.character-sheet .inventory-note {
 	font-size: var(--step--2);
-	color: var(--cs-muted-color);
+	color: var(--muted-color);
 }
 
-/* Death Saves */
-.cs-deathsave-wrapper {
+/* Death saves */
+.character-sheet .death-saves-wrapper {
 	display: flex;
 	justify-content: space-between;
 }
 
-.cs-pip.-success {
-	border-color: light-dark(var(--turquoise-700), var(--turquoise-400));
-}
-
-.cs-pip.-success.-filled {
-	background: light-dark(var(--turquoise-700), var(--turquoise-400));
-	border-color: light-dark(var(--turquoise-700), var(--turquoise-400));
-}
-
-.cs-pips.-failure {
-	/* Right-aligned and reversed so failures fill from the right edge inward,
-	   mirroring the left-aligned successes. */
+.character-sheet .pips.-failure {
 	flex-direction: row-reverse;
 	justify-content: flex-start;
 
-	& .cs-pip {
+	& .pip {
 		border-color: light-dark(var(--coral-700), var(--coral-400));
 	}
 
-	& .cs-pip.-filled {
+	& .pip.-filled {
 		background: light-dark(var(--coral-700), var(--coral-400));
 		border-color: light-dark(var(--coral-700), var(--coral-400));
 	}
 }
 
-/* Class & racial features, feats, and bonus actions — all share the same
-   structure: a head row (tag + name, optional meta) with the text below. */
-.cs-feature-list,
-.cs-feat-list,
-.cs-tempo-list {
+/* Features, feats & bonus actions */
+.character-sheet .feature-list,
+.character-sheet .feat-list,
+.character-sheet .bonus-list {
 	list-style: none;
 	padding: 0;
 	margin: 0;
@@ -769,10 +726,10 @@ button.cs-pip:focus-visible {
 	gap: var(--space-xs);
 }
 
-.cs-feature-head,
-.cs-feat-head,
-.cs-tempo-head,
-.cs-background-head {
+.character-sheet .feature-head,
+.character-sheet .feat-head,
+.character-sheet .bonus-head,
+.character-sheet .background-head {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
@@ -780,37 +737,27 @@ button.cs-pip:focus-visible {
 	margin-block-end: var(--space-3xs);
 }
 
-.cs-feature-name,
-.cs-feat-name,
-.cs-tempo-name,
-.cs-background-name {
+.character-sheet .feature-name,
+.character-sheet .feat-name,
+.character-sheet .bonus-name,
+.character-sheet .background-name {
 	font-weight: 700;
 	font-size: var(--step--1);
 }
 
-.cs-feature-text,
-.cs-feat-text,
-.cs-tempo-text,
-.cs-background-desc {
+.character-sheet .feature-text,
+.character-sheet .feat-text,
+.character-sheet .bonus-text,
+.character-sheet .background-text {
 	font-size: var(--step--2);
 	line-height: 1.5;
-	color: var(--cs-muted-color);
+	color: var(--muted-color);
 }
 
-.cs-feat-level {
-	flex: 0 0 auto;
-	font-size: var(--step--2);
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
-	color: light-dark(var(--white), var(--gray-1000));
-	background: var(--cs-accent-color);
-	padding: 0.3em 0.6em;
-}
-
-/* Notes / Markdown content */
-.cs-notes {
+/* Notes */
+.character-sheet .notes {
 	margin: 0;
 	padding: var(--space-s);
-	background: var(--cs-surface);
-	border-radius: var(--cs-radius);
+	background: var(--surface);
+	border-radius: var(--radius);
 }

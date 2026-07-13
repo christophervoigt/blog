@@ -130,22 +130,22 @@ const storageKey = `cs-state:${slugify(name)}`
 
 <div class="character-sheet" data-cs-key={storageKey}>
 	<!-- Header -->
-	<div class="cs-header -highlight">
-		<div class="cs-header-id">
-			<h1 class="cs-name">{name}</h1>
-			<p class="cs-subtitle">{characterSubtitle}</p>
+	<div class="header -highlight">
+		<div class="header-id">
+			<h1 class="name">{name}</h1>
+			<p class="subtitle">{characterSubtitle}</p>
 		</div>
 
-		<div class="cs-hp" data-cs-hp-max={hit_points}>
-			<span class="cs-hp-title">Hit Points</span>
-			<p class="cs-hp-values">
-				<span class="cs-hp-cur" data-cs-hp="cur">{hit_points}</span>
-				<span class="cs-hp-max">/ <span data-cs-hp="max">{hit_points}</span></span>
-				<span class="cs-hp-temp" data-cs-hp="temp" hidden>+<span data-cs-hp="temp-val">0</span> temp</span>
+		<div class="hp" data-cs-hp-max={hit_points}>
+			<span class="hp-label">Hit Points</span>
+			<p class="hp-values">
+				<span class="hp-current" data-cs-hp="cur">{hit_points}</span>
+				<span class="hp-maximum">/ <span data-cs-hp="max">{hit_points}</span></span>
+				<span class="hp-temporary" data-cs-hp="temp" hidden>+<span data-cs-hp="temp-val">0</span> temp</span>
 			</p>
 			<input
 				type="range"
-				class="cs-hp-range"
+				class="hp-range"
 				data-cs-hp="range"
 				data-state="healthy"
 				min="0"
@@ -154,59 +154,59 @@ const storageKey = `cs-state:${slugify(name)}`
 				style="--hp-pct: 100%;"
 				aria-label="Current hit points"
 			/>
-			<div class="cs-hp-controls">
-				<div class="cs-hp-group">
-					<button type="button" class="cs-hp-btn -dmg" data-cs-hp-btn="damage" aria-label="Take 1 damage">−</button>
-					<span class="cs-hp-group-label">HP</span>
-					<button type="button" class="cs-hp-btn -heal" data-cs-hp-btn="heal" aria-label="Heal 1 hit point">+</button>
+			<div class="hp-controls">
+				<div class="hp-group">
+					<button type="button" class="hp-button -damage" data-cs-hp-btn="damage" aria-label="Take 1 damage">−</button>
+					<span class="hp-group-label">HP</span>
+					<button type="button" class="hp-button -heal" data-cs-hp-btn="heal" aria-label="Heal 1 hit point">+</button>
 				</div>
-				<div class="cs-hp-group">
-					<button type="button" class="cs-hp-btn -temp" data-cs-hp-btn="temp-down" aria-label="Decrease temporary hit points">−</button>
-					<span class="cs-hp-group-label">Temp</span>
-					<button type="button" class="cs-hp-btn -temp" data-cs-hp-btn="temp-up" aria-label="Increase temporary hit points">+</button>
+				<div class="hp-group">
+					<button type="button" class="hp-button -temporary" data-cs-hp-btn="temp-down" aria-label="Decrease temporary hit points">−</button>
+					<span class="hp-group-label">Temp</span>
+					<button type="button" class="hp-button -temporary" data-cs-hp-btn="temp-up" aria-label="Increase temporary hit points">+</button>
 				</div>
 			</div>
 		</div>
 
-		<div class="cs-rests">
-			<button type="button" class="cs-rest" data-cs-rest="short rest">Short Rest</button>
-			<button type="button" class="cs-rest" data-cs-rest="long rest">Long Rest</button>
+		<div class="rests">
+			<button type="button" class="rest" data-cs-rest="short rest">Short Rest</button>
+			<button type="button" class="rest" data-cs-rest="long rest">Long Rest</button>
 		</div>
 	</div>
 
 	<!-- Core Stats Bar -->
-	<div class="cs-core-stats">
-		<div class="cs-stat">
-			<span class="cs-stat-value">{armor_class}</span>
-			<span class="cs-stat-label">Armor Class</span>
+	<div class="stats">
+		<div class="stat">
+			<span class="stat-value">{armor_class}</span>
+			<span class="stat-label">Armor Class</span>
 		</div>
-		<div class="cs-stat">
-			<span class="cs-stat-value">{speed}</span>
-			<span class="cs-stat-label">Speed</span>
+		<div class="stat">
+			<span class="stat-value">{speed}</span>
+			<span class="stat-label">Speed</span>
 		</div>
-		<div class="cs-stat">
-			<span class="cs-stat-value">{formatModifier(initiative)}</span>
-			<span class="cs-stat-label">Initiative</span>
+		<div class="stat">
+			<span class="stat-value">{formatModifier(initiative)}</span>
+			<span class="stat-label">Initiative</span>
 		</div>
-		<div class="cs-stat">
-			<span class="cs-stat-value">+{proficiency_bonus}</span>
-			<span class="cs-stat-label">Proficiency</span>
+		<div class="stat">
+			<span class="stat-value">+{proficiency_bonus}</span>
+			<span class="stat-label">Proficiency</span>
 		</div>
 	</div>
 
-	<!-- Body: three columns -->
-	<div class="cs-body">
+	<!-- Body -->
+	<div class="body">
 		<!-- Left column -->
-		<div class="cs-col -left">
+		<div class="column -left">
 			<!-- Abilities -->
-			<div class="cs-abilities-section">
-				<h2 class="cs-section-title">Abilities</h2>
-				<div class="cs-abilities">
+			<div class="abilities-section">
+				<h2 class="section-title">Abilities</h2>
+				<div class="abilities">
 					{
 						abilityOrder.map((key) => (
-							<div class="cs-ability">
-								<span class="cs-ability-mod">{modifier(abilities[key])}</span>
-								<span class="cs-ability-name">{abilityAbbr[key]}</span>
+							<div class="ability">
+								<span class="ability-modifier">{modifier(abilities[key])}</span>
+								<span class="ability-name">{abilityAbbr[key]}</span>
 							</div>
 						))
 					}
@@ -214,21 +214,21 @@ const storageKey = `cs-state:${slugify(name)}`
 			</div>
 
 			<!-- Saving Throws -->
-			<section class="cs-saves">
-				<h2 class="cs-section-title">Saving Throws</h2>
-				<ul class="cs-list">
+			<section class="saves">
+				<h2 class="section-title">Saving Throws</h2>
+				<ul class="list">
 					{
 						abilityOrder.map((key) => {
 							const save = saving_throws[key]
 							const proficient = save.proficiency
 
 							return (
-								<li class:list={[{ 'cs-proficient -highlight': proficient }]}>
-									<span class="cs-list-label">
+								<li class:list={['list-row', { 'proficient -highlight': proficient }]}>
+									<span class="list-label">
 										{proficient && <span class="sr-only">Proficient in </span>}
 										{formatSkillName(key)}
 									</span>
-									<span class="cs-list-value">{formatSavingThrow(save)}</span>
+									<span class="list-value">{formatSavingThrow(save)}</span>
 								</li>
 							)
 						})
@@ -237,9 +237,9 @@ const storageKey = `cs-state:${slugify(name)}`
 			</section>
 
 			<!-- Skills -->
-			<section class="cs-skills">
-				<h2 class="cs-section-title">Skills</h2>
-				<ul class="cs-list">
+			<section class="skills">
+				<h2 class="section-title">Skills</h2>
+				<ul class="list">
 					{
 						Object.entries(skills).map(([key, skill]) => {
 							const total = skillModifier(skill)
@@ -248,14 +248,14 @@ const storageKey = `cs-state:${slugify(name)}`
 
 							return (
 								<li
-									class:list={[{ 'cs-disadvantage -highlight': disadvantaged, 'cs-proficient -highlight': proficient }]}
+									class:list={['list-row', { 'disadvantage -highlight': disadvantaged, 'proficient -highlight': proficient }]}
 								>
-									<span class="cs-list-label">
+									<span class="list-label">
 										{proficient && <span class="sr-only">Proficient in </span>}
 										{disadvantaged && <span class="sr-only">Disadvantaged in </span>}
 										{formatSkillName(key)}
 									</span>
-									<span class="cs-list-value">{total}</span>
+									<span class="list-value">{total}</span>
 								</li>
 							)
 						})
@@ -266,25 +266,25 @@ const storageKey = `cs-state:${slugify(name)}`
 			<!-- Senses -->
 			{
 				senses && (
-					<section class="cs-senses-section">
-						<h2 class="cs-section-title">Senses</h2>
-						<ul class="cs-senses">
+					<section class="senses-section">
+						<h2 class="section-title">Senses</h2>
+						<ul class="senses">
 							{senses.passive_perception !== undefined && (
-								<li>
-									<p>{senses.passive_perception}</p>
-									<p>Passive Perception</p>
+								<li class="sense">
+									<p class="sense-value">{senses.passive_perception}</p>
+									<p class="sense-label">Passive Perception</p>
 								</li>
 							)}
 							{senses.darkvision && (
-								<li>
-									<p>{senses.darkvision}</p>
-									<p>Darkvision</p>
+								<li class="sense">
+									<p class="sense-value">{senses.darkvision}</p>
+									<p class="sense-label">Darkvision</p>
 								</li>
 							)}
 							{senses.blindsight && (
-								<li>
-									<p>{senses.blindsight}</p>
-									<p>Blindsight</p>
+								<li class="sense">
+									<p class="sense-value">{senses.blindsight}</p>
+									<p class="sense-label">Blindsight</p>
 								</li>
 							)}
 						</ul>
@@ -295,16 +295,16 @@ const storageKey = `cs-state:${slugify(name)}`
 			<!-- Defenses -->
 			{
 				defenses && Object.entries(defenses).some(([, v]) => v.length > 0) && (
-					<section class="cs-defenses-section">
-						<h2 class="cs-section-title">Defenses</h2>
+					<section class="defenses-section">
+						<h2 class="section-title">Defenses</h2>
 						{Object.entries(defenses)
 							.filter(([, items]) => items.length > 0)
 							.map(([category, items]) => (
-								<div class="cs-defenses-group">
-									<h3 class="cs-defenses-label">{formatSkillName(category)}</h3>
-									<ul class="cs-tags">
+								<div class="defenses-group">
+									<h3 class="defenses-label">{formatSkillName(category)}</h3>
+									<ul class="tags">
 										{items.map((item) => (
-											<li>{item}</li>
+											<li class="chip">{item}</li>
 										))}
 									</ul>
 								</div>
@@ -314,15 +314,15 @@ const storageKey = `cs-state:${slugify(name)}`
 			}
 
 			<!-- Training / Proficiencies -->
-			<section class="cs-proficiencies">
-				<h2 class="cs-section-title">Proficiencies</h2>
+			<section class="proficiencies">
+				<h2 class="section-title">Proficiencies</h2>
 				{
 					Object.entries(training).map(([category, items]) => (
-						<div class="cs-training-group">
-							<h3 class="cs-training-label">{formatSkillName(category)}</h3>
-							<ul class="cs-tags">
+						<div class="training-group">
+							<h3 class="training-label">{formatSkillName(category)}</h3>
+							<ul class="tags">
 								{items.map((item) => (
-									<li>{item}</li>
+									<li class="chip">{item}</li>
 								))}
 							</ul>
 						</div>
@@ -332,26 +332,26 @@ const storageKey = `cs-state:${slugify(name)}`
 		</div>
 
 		<!-- Middle column -->
-		<div class="cs-col -main">
+		<div class="column -main">
 			<!-- Actions / Attacks -->
 			{
 				actions && (
-					<section class="cs-actions">
-						<h2 class="cs-section-title">Actions</h2>
-						{actions.note && <p class="cs-note">{actions.note}</p>}
-						<div class="cs-attacks">
-							<p class="cs-attacks-head">Weapon</p>
-							<p class="cs-attacks-head -center">To Hit</p>
-							<p class="cs-attacks-head -center">Damage</p>
+					<section class="actions">
+						<h2 class="section-title">Actions</h2>
+						{actions.note && <p class="note">{actions.note}</p>}
+						<div class="attacks">
+							<p class="attacks-column-head">Weapon</p>
+							<p class="attacks-column-head -center">To Hit</p>
+							<p class="attacks-column-head -center">Damage</p>
 							{actions.attacks.map(({ name, meta, to_hit, damage }) => (
 								<Fragment>
-									<div class="cs-attack-name">
-										<p class="cs-attack-title">{name}</p>
-										{meta && <p class="cs-attack-meta">{meta}</p>}
+									<div class="attack">
+										<p class="attack-name">{name}</p>
+										{meta && <p class="attack-meta">{meta}</p>}
 									</div>
 
-									<p class="cs-attack-value -tohit">{to_hit}</p>
-									<p class="cs-attack-value">{damage}</p>
+									<p class="chip -stat -to-hit">{to_hit}</p>
+									<p class="chip -stat">{damage}</p>
 								</Fragment>
 							))}
 						</div>
@@ -362,16 +362,16 @@ const storageKey = `cs-state:${slugify(name)}`
 			<!-- Bonus Actions & Reactions -->
 			{
 				bonus_actions && bonus_actions.length > 0 && (
-					<section class="cs-tempo">
-						<h2 class="cs-section-title">Bonus Actions & Reactions</h2>
-						<ul class="cs-tempo-list">
+					<section class="bonus-actions">
+						<h2 class="section-title">Bonus Actions & Reactions</h2>
+						<ul class="bonus-list">
 							{bonus_actions.map((action) => (
-								<li class="cs-tempo-item">
-									<div class="cs-tempo-head">
-										<p class:list={['cs-tag', { '-reaction': action.type === 'Reaction' }]}>{action.type ?? 'Bonus'}</p>
-										<p class="cs-tempo-name">{action.name}</p>
+								<li class="bonus">
+									<div class="bonus-head">
+										<p class:list={['chip -badge', { '-reaction': action.type === 'Reaction' }]}>{action.type ?? 'Bonus'}</p>
+										<p class="bonus-name">{action.name}</p>
 									</div>
-									<p class="cs-tempo-text">{action.text}</p>
+									<p class="bonus-text">{action.text}</p>
 								</li>
 							))}
 						</ul>
@@ -381,16 +381,16 @@ const storageKey = `cs-state:${slugify(name)}`
 			<!-- Class & Racial Features -->
 			{
 				features && features.length > 0 && (
-					<section class="cs-features">
-						<h2 class="cs-section-title">Class & Racial Features</h2>
-						<ul class="cs-feature-list">
+					<section class="features">
+						<h2 class="section-title">Class & Racial Features</h2>
+						<ul class="feature-list">
 							{features.map((feature) => (
-								<li class="cs-feature">
-									<div class="cs-feature-head">
+								<li class="feature">
+									<div class="feature-head">
 										{feature.source && (
 											<p
 												class:list={[
-													'cs-tag',
+													'chip -badge',
 													{ '-subclass': feature.source === subclass },
 													{ '-race': feature.source === characteristics?.race },
 												]}
@@ -398,9 +398,9 @@ const storageKey = `cs-state:${slugify(name)}`
 												{feature.source}
 											</p>
 										)}
-										<p class="cs-feature-name">{feature.name}</p>
+										<p class="feature-name">{feature.name}</p>
 									</div>
-									<p class="cs-feature-text">{feature.text}</p>
+									<p class="feature-text">{feature.text}</p>
 								</li>
 							))}
 						</ul>
@@ -411,16 +411,16 @@ const storageKey = `cs-state:${slugify(name)}`
 			<!-- Feats -->
 			{
 				feats && feats.length > 0 && (
-					<section class="cs-feats">
-						<h2 class="cs-section-title">Feats</h2>
-						<ul class="cs-feat-list">
+					<section class="feats">
+						<h2 class="section-title">Feats</h2>
+						<ul class="feat-list">
 							{feats.map((feat) => (
-								<li class="cs-feat">
-									<div class="cs-feat-head">
-										{feat.level && <p class="cs-feat-level">{feat.level}</p>}
-										<p class="cs-feat-name">{feat.name}</p>
+								<li class="feat">
+									<div class="feat-head">
+										{feat.level && <p class="chip -badge -solid">{feat.level}</p>}
+										<p class="feat-name">{feat.name}</p>
 									</div>
-									<p class="cs-feat-text">{feat.text}</p>
+									<p class="feat-text">{feat.text}</p>
 								</li>
 							))}
 						</ul>
@@ -430,22 +430,22 @@ const storageKey = `cs-state:${slugify(name)}`
 		</div>
 
 		<!-- Right column -->
-		<div class="cs-col -right">
+		<div class="column -right">
 			<!-- Death Saves -->
-			<section class="cs-deathsaves">
-				<h2 class="cs-section-title">Death Saves</h2>
+			<section class="death-saves">
+				<h2 class="section-title">Death Saves</h2>
 
-				<div class="cs-deathsave-wrapper">
-					<div class="cs-deathsave-group">
-						<p class="cs-deathsave-label">
+				<div class="death-saves-wrapper">
+					<div class="death-save">
+						<p class="death-save-label">
 							Successes <span class="sr-only" data-cs-count="deathS" data-cs-count-label="marked">0 of 3 marked</span>
 						</p>
-						<div class="cs-pips">
+						<div class="pips">
 							{
 								Array.from({ length: 3 }).map((_, i) => (
 									<button
 										type="button"
-										class="cs-pip -success"
+										class="pip -success"
 										data-cs-pip
 										data-cs-group="deathS"
 										data-cs-index={i}
@@ -457,16 +457,16 @@ const storageKey = `cs-state:${slugify(name)}`
 						</div>
 					</div>
 
-					<div class="cs-deathsave-group">
-						<p class="cs-deathsave-label">
+					<div class="death-save">
+						<p class="death-save-label">
 							Failures <span class="sr-only" data-cs-count="deathF" data-cs-count-label="marked">0 of 3 marked</span>
 						</p>
-						<div class="cs-pips -failure">
+						<div class="pips -failure">
 							{
 								Array.from({ length: 3 }).map((_, i) => (
 									<button
 										type="button"
-										class="cs-pip"
+										class="pip"
 										data-cs-pip
 										data-cs-group="deathF"
 										data-cs-index={i}
@@ -483,30 +483,30 @@ const storageKey = `cs-state:${slugify(name)}`
 			<!-- Resources -->
 			{
 				resources && resources.length > 0 && (
-					<section class="cs-resources">
-						<h2 class="cs-section-title">Resources</h2>
-						<div class="cs-resource-grid">
-							<p class="cs-resource-head">Resource</p>
-							<p class="cs-resource-head -right">Uses</p>
+					<section class="resources">
+						<h2 class="section-title">Resources</h2>
+						<div class="resource-grid">
+							<p class="resource-column-head">Resource</p>
+							<p class="resource-column-head -right">Uses</p>
 							{resources.map((resource) => {
 								const resGroup = `res-${slugify(resource.name)}`
 								return (
 									<Fragment>
-										<div class="cs-resource-name">
-											<p class="cs-resource-title">
+										<div class="resource">
+											<p class="resource-name">
 												{resource.name}
 												<span class="sr-only" data-cs-count={resGroup} data-cs-count-label="used">
 													- 0 of {resource.max} used
 												</span>
 											</p>
-											{resource.reset && <p class="cs-resource-reset">{resource.reset}</p>}
+											{resource.reset && <p class="resource-reset">{resource.reset}</p>}
 										</div>
 
-										<div class="cs-pips -resource">
+										<div class="pips -resource">
 											{Array.from({ length: resource.max }).map((_, i) => (
 												<button
 													type="button"
-													class="cs-pip"
+													class="pip"
 													data-cs-pip
 													data-cs-group={resGroup}
 													data-cs-index={i}
@@ -527,39 +527,39 @@ const storageKey = `cs-state:${slugify(name)}`
 			<!-- Inventory -->
 			{
 				(inventory || coins) && (
-					<section class="cs-inventory">
-						<h2 class="cs-section-title">Inventory</h2>
+					<section class="inventory">
+						<h2 class="section-title">Inventory</h2>
 						{inventory?.map((group) => (
-							<div class="cs-inv-group">
-								<h3 class="cs-inv-label">{group.group}</h3>
-								<ul class="cs-inv-list">
+							<div class="inventory-group">
+								<h3 class="inventory-label">{group.group}</h3>
+								<ul class="inventory-list">
 									{group.items.map((item) => (
-										<li class="cs-inv-item">
-											<p class="cs-inv-name">{item.name}</p>
-											{item.note && <p class="cs-inv-note">{item.note}</p>}
+										<li class="inventory-entry">
+											<p class="inventory-name">{item.name}</p>
+											{item.note && <p class="inventory-note">{item.note}</p>}
 										</li>
 									))}
 								</ul>
 							</div>
 						))}
 						{coins && (
-							<div class="cs-coins">
+							<div class="coins">
 								{coins.gold !== undefined && (
-									<div class="cs-coin -gold">
-										<p class="cs-coin-value">{coins.gold}</p>
-										<p class="cs-coin-label">Gold</p>
+									<div class="coin -gold">
+										<p class="coin-value">{coins.gold}</p>
+										<p class="coin-label">Gold</p>
 									</div>
 								)}
 								{coins.silver !== undefined && (
-									<div class="cs-coin -silver">
-										<p class="cs-coin-value">{coins.silver}</p>
-										<p class="cs-coin-label">Silver</p>
+									<div class="coin -silver">
+										<p class="coin-value">{coins.silver}</p>
+										<p class="coin-label">Silver</p>
 									</div>
 								)}
 								{coins.copper !== undefined && (
-									<div class="cs-coin -copper">
-										<p class="cs-coin-value">{coins.copper}</p>
-										<p class="cs-coin-label">Copper</p>
+									<div class="coin -copper">
+										<p class="coin-value">{coins.copper}</p>
+										<p class="coin-label">Copper</p>
 									</div>
 								)}
 							</div>
@@ -571,13 +571,13 @@ const storageKey = `cs-state:${slugify(name)}`
 			<!-- Background -->
 			{
 				background && (
-					<section class="cs-background">
-						<h2 class="cs-section-title">Background</h2>
-						<div class="cs-background-head">
-							<p class="cs-tag">{background.title}</p>
-							<p class="cs-background-name">{background.feature}</p>
+					<section class="background">
+						<h2 class="section-title">Background</h2>
+						<div class="background-head">
+							<p class="chip -badge">{background.title}</p>
+							<p class="background-name">{background.feature}</p>
 						</div>
-						<p class="cs-background-desc">{background.description}</p>
+						<p class="background-text">{background.description}</p>
 					</section>
 				)
 			}
@@ -585,71 +585,71 @@ const storageKey = `cs-state:${slugify(name)}`
 			<!-- Characteristics -->
 			{
 				characteristics && (
-					<section class="cs-characteristics">
-						<h2 class="cs-section-title">Characteristics</h2>
+					<section class="characteristics">
+						<h2 class="section-title">Characteristics</h2>
 
-						<div class="cs-physical">
+						<div class="attributes">
 							{characteristics.alignment && (
-								<div class="cs-physical-item">
-									<p class="cs-trait-label">Alignment</p>
-									<p class="cs-physical-item-value">{characteristics.alignment}</p>
+								<div class="attribute">
+									<p class="attribute-label">Alignment</p>
+									<p class="chip">{characteristics.alignment}</p>
 								</div>
 							)}
 							{characteristics.race && (
-								<div class="cs-physical-item">
-									<p class="cs-trait-label">Race</p>
-									<p class="cs-physical-item-value">{characteristics.race}</p>
+								<div class="attribute">
+									<p class="attribute-label">Race</p>
+									<p class="chip">{characteristics.race}</p>
 								</div>
 							)}
 							{characteristics.gender && (
-								<div class="cs-physical-item">
-									<p class="cs-trait-label">Gender</p>
-									<p class="cs-physical-item-value">{characteristics.gender}</p>
+								<div class="attribute">
+									<p class="attribute-label">Gender</p>
+									<p class="chip">{characteristics.gender}</p>
 								</div>
 							)}
 							{characteristics.size && (
-								<div class="cs-physical-item">
-									<p class="cs-trait-label">Size</p>
-									<p class="cs-physical-item-value">{characteristics.size}</p>
+								<div class="attribute">
+									<p class="attribute-label">Size</p>
+									<p class="chip">{characteristics.size}</p>
 								</div>
 							)}
 							{characteristics.eyes && (
-								<div class="cs-physical-item">
-									<p class="cs-trait-label">Eyes</p>
-									<p class="cs-physical-item-value">{characteristics.eyes}</p>
+								<div class="attribute">
+									<p class="attribute-label">Eyes</p>
+									<p class="chip">{characteristics.eyes}</p>
 								</div>
 							)}
 							{characteristics.hair && (
-								<div class="cs-physical-item">
-									<p class="cs-trait-label">Hair</p>
-									<p class="cs-physical-item-value">{characteristics.hair}</p>
+								<div class="attribute">
+									<p class="attribute-label">Hair</p>
+									<p class="chip">{characteristics.hair}</p>
 								</div>
 							)}
 						</div>
 
-						<div class="cs-traits-grid">
+						<div class="traits-grid">
 							{characteristics.personality_traits && (
-								<div class="cs-trait">
-									<p class="cs-trait-label">Personality Traits</p>
-									<p class="cs-trait-value">{characteristics.personality_traits}</p>
+								<div class="trait">
+									<p class="trait-label">Personality Traits</p>
+									<p class="trait-value">{characteristics.personality_traits}</p>
 								</div>
 							)}
 							{characteristics.ideals && (
-								<div class="cs-trait">
-									<p class="cs-trait-label">Ideals</p>
-									<p class="cs-trait-value">{characteristics.ideals}</p>
+								<div class="trait">
+									<p class="trait-label">Ideals</p>
+									<p class="trait-value">{characteristics.ideals}</p>
 								</div>
 							)}
 							{characteristics.bonds && (
-								<div class="cs-trait">
-									<p class="cs-trait-label">Bonds</p>
-									<p class="cs-trait-value">{characteristics.bonds}</p>
+								<div class="trait">
+									<p class="trait-label">Bonds</p>
+									<p class="trait-value">{characteristics.bonds}</p>
 								</div>
 							)}
 							{characteristics.flaws && (
-								<div class="cs-trait">
-									<p class="cs-trait-label">Flaws</p>
-									<p class="cs-trait-value">{characteristics.flaws}</p>
+								<div class="trait">
+									<p class="trait-label">Flaws</p>
+									<p class="trait-value">{characteristics.flaws}</p>
 								</div>
 							)}
 						</div>
@@ -662,7 +662,7 @@ const storageKey = `cs-state:${slugify(name)}`
 	<!-- Notes from Markdown Content -->
 	{
 		hasNotes && (
-			<div class="cs-notes content">
+			<div class="notes content">
 				<slot name="notes" />
 			</div>
 		)
@@ -672,7 +672,7 @@ const storageKey = `cs-state:${slugify(name)}`
 <script>
 	function initSheet(root) {
 		const key = root.dataset.csKey
-		const hpEl = root.querySelector('.cs-hp')
+		const hpEl = root.querySelector('.hp')
 		const max = hpEl ? Number(hpEl.dataset.csHpMax) || 0 : 0
 
 		// Discover pip groups (and their sizes) from the server-rendered DOM.
