@@ -139,7 +139,7 @@ actions:
       meta: 'Melee 5 ft.'
       to_hit: '+7'
       damage: '1d8+4'
-    - name: Dagger
+    - name: Karambit (Dagger)
       meta: 'Thrown 20/60 ft.'
       to_hit: '+7'
       damage: '1d4+4'
@@ -170,7 +170,7 @@ inventory:
         note: '1d8 bludgeoning, versatile'
       - name: Longsword
         note: '1d8 slashing, versatile'
-      - name: Dagger
+      - name: Karambit (Dagger)
         note: '1d4 slashing, 20/60 ft., 2 pcs.'
   - group: Armor
     items:
