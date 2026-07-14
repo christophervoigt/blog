@@ -109,10 +109,9 @@
 
 .character-sheet .hp-values {
 	display: flex;
-	align-items: baseline;
+	align-items: flex-end;
 	flex-wrap: wrap;
 	gap: 0.3em;
-	margin: 0;
 }
 
 .character-sheet .hp-current {
@@ -125,16 +124,11 @@
 .character-sheet .hp-maximum {
 	font-size: var(--step-0);
 	color: var(--muted-color);
+	line-height: 1.275;
 }
 
 .character-sheet .hp-temporary {
-	margin-inline-start: 0.3em;
-	font-size: var(--step--2);
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
-	color: light-dark(var(--white), var(--gray-1000));
-	background: light-dark(var(--turquoise-700), var(--turquoise-400));
-	padding: 0.3em 0.6em;
+	--solid-fill: light-dark(var(--turquoise-700), var(--turquoise-400));
 }
 
 /* HP slider */
@@ -468,7 +462,7 @@
 
 	&.-badge.-solid {
 		color: light-dark(var(--white), var(--gray-1000));
-		background: var(--accent-color);
+		background: var(--solid-fill, var(--accent-color));
 	}
 
 	&.-stat {
