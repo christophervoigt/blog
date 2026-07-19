@@ -480,13 +480,13 @@ const storageKey = `cs-state:${slugify(name)}`
 						</div>
 					</div>
 
-					<div class="death-save">
+					<div class="death-save -failure">
 						<p class="death-save-label">
 							Failures <span class="sr-only" data-sheet-count="death-failures" data-sheet-count-label="marked"
 								>0 of 3 marked</span
 							>
 						</p>
-						<div class="pips -failure">
+						<div class="pips">
 							{
 								Array.from({ length: 3 }).map((_, i) => (
 									<button

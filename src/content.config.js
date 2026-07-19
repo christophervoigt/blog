@@ -129,7 +129,7 @@ const dnd = defineCollection({
 						meta: z.string().optional(),
 						to_hit: z.string().optional(),
 						damage: z.string().optional(),
-					}),
+					})
 				),
 			})
 			.optional(),
@@ -140,7 +140,7 @@ const dnd = defineCollection({
 					type: z.enum(['Bonus', 'Reaction']).optional(),
 					name: z.string(),
 					text: z.string(),
-				}),
+				})
 			)
 			.optional(),
 
@@ -152,9 +152,9 @@ const dnd = defineCollection({
 						z.object({
 							name: z.string(),
 							note: z.string().optional(),
-						}),
+						})
 					),
-				}),
+				})
 			)
 			.optional(),
 
@@ -172,7 +172,7 @@ const dnd = defineCollection({
 					name: z.string(),
 					reset: z.string().optional(),
 					max: z.number(),
-				}),
+				})
 			)
 			.optional(),
 
@@ -182,7 +182,7 @@ const dnd = defineCollection({
 					source: z.string().optional(),
 					name: z.string(),
 					text: z.string(),
-				}),
+				})
 			)
 			.optional(),
 
@@ -192,7 +192,7 @@ const dnd = defineCollection({
 					level: z.string().optional(),
 					name: z.string(),
 					text: z.string(),
-				}),
+				})
 			)
 			.optional(),
 	}),

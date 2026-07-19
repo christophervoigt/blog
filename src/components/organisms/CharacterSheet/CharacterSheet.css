@@ -607,30 +607,45 @@
 
 /* Pips */
 .character-sheet .pips {
+	--pip-size: 1.5rem;
+
 	display: flex;
 	flex-wrap: wrap;
-	gap: var(--space-3xs);
 }
 
 .character-sheet .pip {
-	inline-size: 0.95rem;
-	block-size: 0.95rem;
+	display: grid;
+	inline-size: var(--pip-size);
+	block-size: var(--pip-size);
+	place-items: center;
 	border-radius: 50%;
-	border: 2px solid var(--muted-color);
+	border: 0;
 	background: transparent;
 
+	&::before {
+		content: '';
+		inline-size: 0.95rem;
+		block-size: 0.95rem;
+		border-radius: 50%;
+		border: 2px solid var(--pip-color, var(--muted-color));
+		background: transparent;
+		transition:
+			transform 0.1s,
+			background 0.12s,
+			border-color 0.12s;
+	}
+
 	&.-filled {
-		background: var(--accent-color);
-		border-color: var(--accent-color);
+		--pip-color: var(--accent-color);
+	}
+
+	&.-filled::before {
+		background: var(--pip-color, var(--accent-color));
+		border-color: var(--pip-color, var(--accent-color));
 	}
 
 	&.-success {
-		border-color: light-dark(var(--turquoise-700), var(--turquoise-400));
-	}
-
-	&.-success.-filled {
-		background: light-dark(var(--turquoise-700), var(--turquoise-400));
-		border-color: light-dark(var(--turquoise-700), var(--turquoise-400));
+		--pip-color: light-dark(var(--turquoise-700), var(--turquoise-400));
 	}
 }
 
@@ -638,12 +653,8 @@
 	padding: 0;
 	appearance: none;
 	cursor: pointer;
-	transition:
-		transform 0.1s,
-		background 0.12s,
-		border-color 0.12s;
 
-	&:hover {
+	&:hover::before {
 		transform: scale(1.15);
 	}
 
@@ -676,10 +687,12 @@
 }
 
 .character-sheet .pips.-resource {
+	--pips-per-row: 4;
+
 	flex-direction: row-reverse;
 	justify-content: flex-start;
 	align-self: flex-start;
-	padding-block: 0.2em;
+	max-inline-size: calc(var(--pip-size) * var(--pips-per-row));
 }
 
 .character-sheet .resource-reset,
@@ -694,17 +707,18 @@
 	justify-content: space-between;
 }
 
-.character-sheet .pips.-failure {
-	flex-direction: row-reverse;
-	justify-content: flex-start;
-
-	& .pip {
-		border-color: light-dark(var(--coral-700), var(--coral-400));
+.character-sheet .death-save.-failure {
+	& .death-save-label {
+		text-align: right;
 	}
 
-	& .pip.-filled {
-		background: light-dark(var(--coral-700), var(--coral-400));
-		border-color: light-dark(var(--coral-700), var(--coral-400));
+	& .pips {
+		flex-direction: row-reverse;
+		justify-content: flex-start;
+
+		& .pip {
+			--pip-color: light-dark(var(--coral-700), var(--coral-400));
+		}
 	}
 }
 
