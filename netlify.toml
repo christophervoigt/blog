@@ -1,0 +1,7 @@
+[build]
+command = "npm run build --workspace @christophervoigt/blog"
+publish = "apps/blog/dist"
+
+[build.environment]
+NPM_FLAGS = "--workspace @christophervoigt/blog --include-workspace-root=false"
+NODE_VERSION = "24"

@@ -1,0 +1,16 @@
+{
+	"name": "@christophervoigt/blog-audits",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"generate-reports": "node scripts/generate-reports.js",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:full": "npm run generate-reports && npm run test"
+	},
+	"devDependencies": {
+		"lighthouse": "^13.4.0",
+		"puppeteer": "^25.3.0",
+		"vitest": "^4.1.10"
+	}
+}

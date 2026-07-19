@@ -34,3 +34,6 @@ deno.lock
 
 .playwright-mcp/
 .opencode/
+
+# generated Lighthouse reports
+tools/audits/reports/*.json

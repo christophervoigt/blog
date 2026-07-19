@@ -18,12 +18,13 @@ jobs:
         with:
           node-version: 24.x
 
+      - name: Install blog dependencies
+        run: npm ci --workspace @christophervoigt/blog --include-workspace-root=false
+
       - name: Fetch webmentions
         env:
           WEBMENTION_API_KEY: ${{ secrets.WEBMENTION_API_KEY }}
-        run: |
-          npm ci
-          node ./scripts/webmentions.mjs
+        run: npm run webmentions --workspace @christophervoigt/blog
 
       - name: Commit to repository
         env:

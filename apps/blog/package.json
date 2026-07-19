@@ -1,0 +1,24 @@
+{
+	"name": "@christophervoigt/blog",
+	"private": true,
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"lint": "stylelint \"src/**/*.css\" --fix",
+		"webmentions": "node scripts/webmentions.mjs"
+	},
+	"dependencies": {
+		"@astrojs/rss": "4.0.19",
+		"@astrojs/sitemap": "3.7.3",
+		"astro": "7.1.1"
+	},
+	"devDependencies": {
+		"@shikijs/colorized-brackets": "4.3.1",
+		"dotenv": "17.4.2",
+		"stylelint": "17.14.0",
+		"stylelint-order": "8.1.1"
+	}
+}

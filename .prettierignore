@@ -1,1 +1,4 @@
-src/data/webmentions
+**/.astro
+**/dist
+apps/blog/src/data/webmentions
+tools/audits/reports
