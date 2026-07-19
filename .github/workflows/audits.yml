@@ -1,4 +1,4 @@
-name: Lighthouse audits
+name: Lighthouse
 
 on:
   workflow_dispatch:
