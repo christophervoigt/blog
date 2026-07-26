@@ -18,12 +18,12 @@ jobs:
           node-version: 24.x
 
       - name: Install audit dependencies
-        run: npm ci --workspace @christophervoigt/blog-audits --include-workspace-root=false
+        run: npm ci --workspace @christophervoigt/audits --include-workspace-root=false
 
       - name: Install Chrome
-        run: npm exec --workspace @christophervoigt/blog-audits -- puppeteer browsers install chrome
+        run: npm exec --workspace @christophervoigt/audits -- puppeteer browsers install chrome
 
       - name: Run audits against live site
         env:
           AUDIT_BASE_URL: https://christophervoigt.dev
-        run: npm run test:full --workspace @christophervoigt/blog-audits
+        run: npm run test:full --workspace @christophervoigt/audits

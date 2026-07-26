@@ -8,5 +8,5 @@ The repository contains the Astro blog and its Lighthouse audit tooling as separ
 ```bash
 npm run dev --workspace @christophervoigt/blog
 npm run build --workspace @christophervoigt/blog
-npm run test:full --workspace @christophervoigt/blog-audits
+npm run test:full --workspace @christophervoigt/audits
 ```

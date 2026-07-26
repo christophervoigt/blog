@@ -1,5 +1,5 @@
 {
-	"name": "@christophervoigt/blog-audits",
+	"name": "@christophervoigt/audits",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -9,7 +9,7 @@
 		"test:full": "npm run generate-reports && npm run test"
 	},
 	"devDependencies": {
-		"lighthouse": "^13.4.0",
+		"lighthouse": "^13.4.1",
 		"puppeteer": "^25.3.0",
 		"vitest": "^4.1.10"
 	}
