@@ -1,9 +1,9 @@
 .character-sheet {
 	--radius: 0.5rem;
-	--surface: light-dark(var(--gray-100), var(--gray-800));
-	--surface-inset: light-dark(var(--gray-50), var(--gray-900));
+	--surface: var(--background-color-inset);
+	--surface-inset: var(--background-color);
 	--muted-color: light-dark(var(--gray-900), var(--gray-200));
-	--accent-color: light-dark(var(--bronze-700), var(--turquoise-400));
+	--accent-color: light-dark(var(--turquoise-700), var(--turquoise-500));
 
 	max-inline-size: var(--grid-max-width);
 	padding-inline: var(--grid-gutter);
@@ -19,8 +19,10 @@
 	border-radius: var(--radius);
 
 	padding-block: var(--space-l-xl);
-	padding-inline: var(--space-xs-l);
-	margin-inline: calc(-1 * var(--space-xs-l));
+
+	--breakout-space: var(--space-xs-l);
+	padding-inline: var(--breakout-space);
+	margin-inline: calc(-1 * var(--breakout-space));
 
 	display: grid;
 	gap: var(--space-s);
@@ -74,6 +76,7 @@
 	color: var(--headline-color);
 	background: var(--surface-inset);
 	border: 0;
+	border-radius: 0.125em;
 	padding: 0.55em 1.1em;
 	cursor: pointer;
 	transition: filter 0.12s;
@@ -128,13 +131,13 @@
 }
 
 .character-sheet .hp-temporary {
-	--solid-fill: light-dark(var(--turquoise-700), var(--turquoise-400));
+	--solid-fill: var(--accent-color);
 }
 
 /* HP slider */
 .character-sheet .hp-range {
 	--track: var(--surface);
-	--fill: light-dark(var(--turquoise-700), var(--turquoise-400));
+	--fill: var(--accent-color);
 
 	appearance: none;
 	-webkit-appearance: none;
@@ -143,13 +146,14 @@
 	margin: 0;
 	background: transparent;
 	cursor: pointer;
+	border-radius: 0.125em;
 
 	&[data-state='wounded'] {
-		--fill: light-dark(var(--yellow-700), var(--yellow-400));
+		--fill: light-dark(var(--yellow-500), var(--yellow-400));
 	}
 
 	&[data-state='critical'] {
-		--fill: light-dark(var(--coral-700), var(--coral-400));
+		--fill: light-dark(var(--coral-600), var(--coral-500));
 	}
 
 	&::-webkit-slider-runnable-track {
@@ -216,6 +220,7 @@
 	border: 0;
 	cursor: pointer;
 	transition: filter 0.12s;
+	border-radius: 0.125em;
 
 	&:hover {
 		filter: brightness(1.1);
@@ -227,11 +232,13 @@
 	}
 
 	&.-damage {
-		color: light-dark(var(--coral-700), var(--coral-400));
+		color: light-dark(var(--white), var(--coral-500));
+		background: light-dark(var(--coral-600), var(--surface));
 	}
 
 	&.-heal {
-		color: light-dark(var(--turquoise-700), var(--turquoise-400));
+		color: light-dark(var(--white), var(--accent-color));
+		background: light-dark(var(--accent-color), var(--surface));
 	}
 }
 
@@ -254,6 +261,7 @@
 	padding: var(--space-2xs);
 	background: var(--surface-inset);
 	text-align: center;
+	border-radius: 0.125em;
 }
 
 .character-sheet .stat {
@@ -270,20 +278,23 @@
 }
 
 .character-sheet .stat-label,
-.character-sheet .hp-group-label,
 .character-sheet .coin-label,
-.character-sheet .attacks-column-head,
-.character-sheet .resource-column-head,
+.character-sheet .sense-label {
+	font-size: var(--step--2);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--muted-color);
+}
+
+.character-sheet .hp-group-label,
 .character-sheet .death-save-label,
 .character-sheet .trait-label,
 .character-sheet .attribute-label,
 .character-sheet .training-label,
 .character-sheet .defenses-label,
-.character-sheet .inventory-label,
-.character-sheet .sense-label {
+.character-sheet .inventory-label {
 	font-size: var(--step--2);
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
+	font-weight: 600;
 	color: var(--muted-color);
 }
 
@@ -294,12 +305,6 @@
 .character-sheet .defenses-label,
 .character-sheet .inventory-label {
 	margin-block-end: var(--space-3xs);
-}
-
-.character-sheet .training-label,
-.character-sheet .defenses-label,
-.character-sheet .inventory-label {
-	font-weight: 400;
 }
 
 /* Body */
@@ -368,38 +373,43 @@
 	list-style: none;
 	padding: 0;
 	margin: 0;
-	display: flex;
-	flex-direction: column;
+	width: 100%;
 }
 
 .character-sheet .list-row {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	gap: var(--space-2xs);
-	padding: var(--space-3xs) var(--space-2xs);
-	font-size: var(--step--1);
-	border-radius: 0;
-	clip-path: inset(0 0 0 0);
+	font-size: var(--step--2);
+
+	& .list-label {
+		padding-block: 0.3em;
+	}
+
+	& .list-value {
+		width: 2.5em;
+		text-align: center;
+	}
+
+	&.-proficient .list-value {
+		color: light-dark(var(--white), var(--accent-color));
+		background: light-dark(var(--accent-color), var(--surface-inset));
+	}
+
+	&.-disadvantaged .list-value {
+		color: light-dark(var(--white), var(--coral-500));
+		background: light-dark(var(--coral-700), var(--surface-inset));
+	}
 }
 
-.character-sheet .list-label {
-	display: flex;
-	align-items: baseline;
-	gap: 0.4em;
-	text-transform: capitalize;
+.character-sheet .list-row:is(.-proficient, .-disadvantaged) + .list-row:is(.-proficient, .-disadvantaged) .list-value {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
 }
 
-.character-sheet .proficient.-highlight {
-	color-scheme: dark;
-}
-
-.character-sheet .disadvantage.-highlight {
-	color-scheme: light;
-}
-
-.character-sheet :is(.proficient, .disadvantage).-highlight .list-value {
-	color: inherit;
+.character-sheet .list-row:is(.-proficient, .-disadvantaged):has(+ :is(.-proficient, .-disadvantaged)) .list-value {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
 }
 
 /* Senses */
@@ -443,21 +453,25 @@
 	padding: 0.3em 0.6em;
 	background: var(--surface-inset);
 	font-size: var(--step--2);
+	border-radius: 0.125em;
 
 	&.-badge {
 		flex: 0 0 auto;
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
-		color: var(--accent-color);
+		color: light-dark(var(--white), var(--accent-color));
+		background: light-dark(var(--accent-color), var(--surface-inset));
 	}
 
 	&.-badge.-reaction,
 	&.-badge.-subclass {
-		color: light-dark(var(--sky-700), var(--sky-400));
+		color: light-dark(var(--white), var(--sky-400));
+		background: light-dark(var(--sky-700), var(--surface-inset));
 	}
 
 	&.-badge.-race {
-		color: light-dark(var(--bronze-700), var(--bronze-400));
+		color: light-dark(var(--white), var(--coral-500));
+		background: light-dark(var(--coral-700), var(--surface-inset));
 	}
 
 	&.-badge.-solid {
@@ -472,7 +486,8 @@
 	}
 
 	&.-stat.-to-hit {
-		color: var(--accent-color);
+		color: light-dark(var(--white), var(--accent-color));
+		background: light-dark(var(--accent-color), var(--surface-inset));
 	}
 }
 
@@ -500,6 +515,7 @@
 .character-sheet .trait {
 	padding: var(--space-2xs);
 	background: var(--surface-inset);
+	border-radius: 0.125em;
 }
 
 .character-sheet .traits-grid .trait-label {
@@ -525,10 +541,6 @@
 	grid-template-columns: 1fr auto auto;
 	align-items: center;
 	gap: var(--space-2xs);
-}
-
-.character-sheet .attacks-column-head.-center {
-	text-align: center;
 }
 
 .character-sheet .attack {
@@ -587,7 +599,7 @@
 	flex: 1;
 
 	&.-gold .coin-value {
-		color: light-dark(var(--yellow-700), var(--yellow-400));
+		color: light-dark(var(--yellow-600), var(--yellow-400));
 	}
 
 	&.-silver .coin-value {
@@ -595,7 +607,7 @@
 	}
 
 	&.-copper .coin-value {
-		color: light-dark(var(--bronze-700), var(--bronze-400));
+		color: light-dark(var(--bronze-600), var(--bronze-400));
 	}
 }
 
@@ -645,7 +657,7 @@
 	}
 
 	&.-success {
-		--pip-color: light-dark(var(--turquoise-700), var(--turquoise-400));
+		--pip-color: var(--accent-color);
 	}
 }
 
@@ -670,10 +682,6 @@
 	grid-template-columns: 1fr auto;
 	align-items: center;
 	gap: var(--space-2xs);
-}
-
-.character-sheet .resource-column-head.-right {
-	text-align: right;
 }
 
 .character-sheet .resource {
@@ -717,7 +725,7 @@
 		justify-content: flex-start;
 
 		& .pip {
-			--pip-color: light-dark(var(--coral-700), var(--coral-400));
+			--pip-color: light-dark(var(--coral-600), var(--coral-500));
 		}
 	}
 }

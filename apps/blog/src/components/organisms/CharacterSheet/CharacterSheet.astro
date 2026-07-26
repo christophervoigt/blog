@@ -79,7 +79,7 @@ const {
 
 function modifier(score: number) {
 	const mod = Math.floor((score - 10) / 2)
-	return mod >= 0 ? `+${mod}` : `${mod}`
+	return formatModifier(mod)
 }
 
 function formatSkillName(key: string) {
@@ -100,14 +100,9 @@ function slugify(value: string) {
 		.replace(/^-|-$/g, '')
 }
 
-function formatSavingThrow(save: { base_value: number; proficiency?: boolean }) {
-	const total = save.base_value + (save.proficiency ? proficiency_bonus : 0)
+function getTotal({ base_value, proficiency }: { base_value: number; proficiency?: boolean }) {
+	const total = base_value + (proficiency ? proficiency_bonus : 0)
 	return formatModifier(total)
-}
-
-function skillModifier(skill: { base_value: number; proficiency?: boolean }) {
-	const total = skill.base_value + (skill.proficiency ? proficiency_bonus : 0)
-	return total >= 0 ? `+${total}` : `${total}`
 }
 
 const abilityOrder = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma']
@@ -239,12 +234,12 @@ const storageKey = `cs-state:${slugify(name)}`
 							const proficient = save.proficiency
 
 							return (
-								<li class:list={['list-row', { 'proficient -highlight': proficient }]}>
+								<li class:list={['list-row', { '-proficient': proficient }]}>
 									<span class="list-label">
 										{proficient && <span class="sr-only">Proficient in </span>}
 										{formatSkillName(key)}
 									</span>
-									<span class="list-value">{formatSavingThrow(save)}</span>
+									<span class:list={['list-value', { chip: proficient }]}>{getTotal(save)}</span>
 								</li>
 							)
 						})
@@ -258,23 +253,18 @@ const storageKey = `cs-state:${slugify(name)}`
 				<ul class="list">
 					{
 						Object.entries(skills).map(([key, skill]) => {
-							const total = skillModifier(skill)
+							const total = getTotal(skill)
 							const proficient = skill.proficiency
 							const disadvantaged = skill.disadvantage
 
 							return (
-								<li
-									class:list={[
-										'list-row',
-										{ 'disadvantage -highlight': disadvantaged, 'proficient -highlight': proficient },
-									]}
-								>
+								<li class:list={['list-row', { '-disadvantaged': disadvantaged, '-proficient': proficient }]}>
 									<span class="list-label">
 										{proficient && <span class="sr-only">Proficient in </span>}
 										{disadvantaged && <span class="sr-only">Disadvantaged in </span>}
 										{formatSkillName(key)}
 									</span>
-									<span class="list-value">{total}</span>
+									<span class:list={['list-value', { chip: proficient || disadvantaged }]}>{total}</span>
 								</li>
 							)
 						})
@@ -359,9 +349,6 @@ const storageKey = `cs-state:${slugify(name)}`
 						<h2 class="section-title">Actions</h2>
 						{actions.note && <p class="note">{actions.note}</p>}
 						<div class="attacks">
-							<p class="attacks-column-head">Weapon</p>
-							<p class="attacks-column-head -center">To Hit</p>
-							<p class="attacks-column-head -center">Damage</p>
 							{actions.attacks.map(({ name, meta, to_hit, damage }) => (
 								<Fragment>
 									<div class="attack">
@@ -438,7 +425,7 @@ const storageKey = `cs-state:${slugify(name)}`
 							{feats.map((feat) => (
 								<li class="feat">
 									<div class="feat-head">
-										{feat.level && <p class="chip -badge -solid">{feat.level}</p>}
+										{feat.level && <p class="chip -badge">{feat.level}</p>}
 										<p class="feat-name">{feat.name}</p>
 									</div>
 									<p class="feat-text">{feat.text}</p>
@@ -511,8 +498,6 @@ const storageKey = `cs-state:${slugify(name)}`
 					<section class="resources">
 						<h2 class="section-title">Resources</h2>
 						<div class="resource-grid">
-							<p class="resource-column-head">Resource</p>
-							<p class="resource-column-head -right">Uses</p>
 							{resources.map((resource) => {
 								const resGroup = `resource-${slugify(resource.name)}`
 								return (
