@@ -69,8 +69,15 @@ body {
 		z-index: -1;
 		border-radius: inherit;
 		background: var(--highlight-gradient);
-		filter: url(#grain);
 	}
+}
+
+[data-theme='dark'] .-highlight::before {
+	filter: url(#grain-dark);
+}
+
+[data-theme='light'] .-highlight::before {
+	filter: url(#grain-light);
 }
 
 /* Inline code */
