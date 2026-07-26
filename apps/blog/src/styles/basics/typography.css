@@ -29,7 +29,6 @@ h1,
 .h1 {
 	font-size: var(--step-4);
 	font-weight: 900;
-	line-height: calc(var(--background-grid-size) * 3);
 }
 
 :is(h2, .h2, h3, .h3, h4, .h4) {
@@ -39,7 +38,6 @@ h1,
 h2,
 .h2 {
 	font-size: var(--step-3);
-	line-height: calc(var(--background-grid-size) * 2);
 }
 
 :is(h3, .h3) {
@@ -52,10 +50,6 @@ h2,
 
 :is(h5, .h5, h6, .h6) {
 	font-size: var(--step-0);
-}
-
-p {
-	line-height: var(--background-grid-size);
 }
 
 /* paragraphs */
@@ -103,7 +97,6 @@ blockquote {
 cite {
 	font-style: normal;
 	font-weight: 400;
-	line-height: var(--background-grid-size);
 
 	& sup {
 		margin-inline-start: 0.25em;
