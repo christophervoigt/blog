@@ -11,6 +11,6 @@
 	"devDependencies": {
 		"lighthouse": "^13.4.1",
 		"puppeteer": "^25.3.0",
-		"vitest": "^4.1.10"
+		"vitest": "^4.1.11"
 	}
 }
