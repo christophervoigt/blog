@@ -9,8 +9,8 @@
 		"test:full": "npm run generate-reports && npm run test"
 	},
 	"devDependencies": {
-		"lighthouse": "^13.4.1",
-		"puppeteer": "^25.3.0",
-		"vitest": "^4.1.11"
+		"lighthouse": "^13.6.0",
+		"puppeteer": "^25.16.0",
+		"vitest": "^4.1.12"
 	}
 }
