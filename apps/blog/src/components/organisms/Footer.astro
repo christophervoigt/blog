@@ -18,6 +18,21 @@ import Link from '../atoms/Link.astro'
 			</small>
 		</p>
 	</div>
+	<a class="analytics" href="https://www.simpleanalytics.com?utm_source=christophervoigt.dev&utm_content=badge" referrerpolicy="origin" target="_blank">
+		<picture>
+			<source
+				srcset="https://simpleanalyticsbadges.com/christophervoigt.dev?mode=dark"
+				media="(prefers-color-scheme: dark)"
+			/>
+			<img
+				src="https://simpleanalyticsbadges.com/christophervoigt.dev?mode=light"
+				loading="lazy"
+				referrerpolicy="no-referrer"
+				crossorigin="anonymous"
+				alt="Simple Analytics Badge"
+			/>
+		</picture>
+	</a>
 </footer>
 
 <style>
@@ -45,5 +60,10 @@ import Link from '../atoms/Link.astro'
 			justify-self: flex-end;
 			text-align: right;
 		}
+	}
+
+	.analytics {
+		display: inline-block;
+		margin-block-start: 1em;
 	}
 </style>
